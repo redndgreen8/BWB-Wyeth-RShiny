@@ -6,6 +6,7 @@ library(parallel)
 library(xml2)
 
 
+.dir <- "~/Documents/" 
 
 
 clean_text <- function(txt) {
@@ -35,62 +36,11 @@ isEligible <- function(ef) {
   return(eli)
 }
 
-isEligible1 <- function(ef) {
-  ef <- tolower(ef)
-  ef[ef == ""] <- NA
-  ef[ef == "yes"] <- TRUE
-  ef[ef == "no"] <- FALSE
-  
-  yes_reqd <- ef[, 7:10] |> purrr::map_dfc(as.logical)
-  
-  no_reqd <- ef[, 11:13] |> purrr::map_dfc(as.logical)
-  
-  # Check for complete cases in both yes.required and no.required
-  complete_cases <- complete.cases(yes_reqd, no_reqd)
-  
-  # Check eligibility criteria
-  eli <- (rowSums(yes_reqd, na.rm = TRUE) == rowSums(!is.na(yes_reqd))) & 
-    (rowSums(no_reqd, na.rm = TRUE) == 0) & 
-    complete_cases
-  
-  return(eli)
-}
-
-isEligible2 <- function(ef) {
-  #ef <- tolower(ef)
-  ef[ef == ""] <- NA
-#  view(ef)
-  
-  ef[ef == "Yes"] <- TRUE
-  ef[ef == "No"] <- FALSE
- # view(ef)
-  
-  # Convert specified columns to logical
-  yes_reqd <- ef[, 7:10] |> purrr::map_dfc(as.logical)
-  no_reqd <- ef[, 11:13] |> purrr::map_dfc(as.logical)
-  # Initialize an empty logical vector for eligibility
-  eli <- logical(nrow(ef))
-  
-  # Check each row for eligibility
-  for (i in 1:nrow(ef)) {
-    # Check all 'yes' required columns are TRUE (and no NA)
-    yes_check <- all(yes_reqd[i, ], na.rm = FALSE) && !any(is.na(yes_reqd[i, ]))
-    
-    # Check all 'no' required columns are FALSE (and no NA)
-    no_check <- all(!no_reqd[i, ], na.rm = FALSE) && !any(is.na(no_reqd[i, ]))
-    
-    # Assign eligibility
-    eli[i] <- yes_check & no_check
-  }
-  view(eli)
-  
-  return(eli)
-}
 
 
 
 getEligiblity <- function(elig_str) {
-  ef <- read.csv(paste0(.dir, elig_str))
+  ef <- read.csv(paste0( elig_str))
   
   interested_cols <- c( 1,2,4,5)
   
@@ -252,23 +202,4 @@ getPie <- function(ss, rl) {
   return(list(gp = gp, df = df))
 }
 
-ss.bcsb.ef <- getEligiblity("demographics/Website Eligibility Survey 1.18.24.csv") |> 
-  dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
-  dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer" , "UNKNOWN", Race),
-                Race = toupper(Race),
-                Race = trimws(Race),
-                Race = ifelse(grepl("BLACK|AFRICAN", Race), "BLACK", Race),
-                Race = ifelse(grepl("KOREAN|CHINESE|ASIAN|ARAB", Race), "ASIAN", Race),
-                Race = ifelse(grepl("PACIFIC|ISLANDER|NATIVE|INDIAN|ALASKAN", Race), "NA.AMERI/P.ISLA", Race),
-                Race = ifelse(grepl("MEXICAN|CENTRAL|HISPANIC", Race), "HISPANIC", Race),
-                diagnosis = ifelse(is.eligible, "BCSB ELIGIBLE", "BCSB INELIGIBLE")) |> 
-  dplyr::select(Race, diagnosis)
-rLevels <- c("ASIAN", "BLACK", "HISPANIC", "WHITE", "MIXED", "NA.AMERI/P.ISLA", "UNKNOWN")
 
-res.bcsb.ef <- getPie(ss.bcsb.ef, rl = rLevels)
-res.bcsb.ef$gp
-ggsave("demographics//Eligibility_pie_chart.png", res.bcsb.ef$gp, height = 7, width = 7)
-
-res.bcsb.comb <- getPieComb(ss.bcsb.ef, rl = rLevels)
-res.bcsb.comb$gp
-ggsave("demographics//Eligibility_pie_chart_COMB.png", res.bcsb.comb$gp, height = 7, width = 7)

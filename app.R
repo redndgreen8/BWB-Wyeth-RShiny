@@ -14,22 +14,23 @@ library(xml2)
 library(parallel)
 
 # Define UI for application that draws a histogram
+library(shiny)
+
 ui <- fluidPage(
-  titlePanel("Complex Shiny Dashboard for Plotting"),
+  titlePanel("Pie Chart Dashboard"),
   
   sidebarLayout(
     sidebarPanel(
-      selectInput("plotType", 
-                  "Select Plot Type:", 
-                  choices = list("Eligibility Pie Chart" = "eligibility", 
-                                 "Comb Pie Chart" = "comb")),
-      actionButton("plotButton", "Generate Plot")  # Add this line for the plot button
+      fileInput("fileInput", "Choose Web Eligibility CSV File"),
+      actionButton("updateButton", "Update Charts")
     ),
     mainPanel(
-      plotOutput("plotOutput")
+      plotOutput("pieChart1"),
+      plotOutput("pieChart2")
     )
   )
 )
+
 
 
 # Define server logic required to draw a histogram
@@ -39,39 +40,80 @@ server <- function(input, output) {
   source("eligible.R")
   
   # Define the directory path
-
-  # Reactive expression for processing eligibility data
-  processedData <- reactive({
-    # Assuming getEligiblity function processes and returns data
-    ef <- getEligiblity(paste0(.dir, "demographics/Website Eligibility Survey 1.18.24.csv"))
-    return(ef)
-  })
+  .dir <- "~/Documents/" 
   
   # Define race levels for the plots
   rLevels <- c("ASIAN", "BLACK", "HISPANIC", "WHITE", "MIXED", "NA.AME/P.ISLA", "UNKNOWN")
   
-  # Observe Event for plotButton
-  observeEvent(input$plotButton, {
-    # Reactive expression for processing eligibility data
-    processedData <- getEligiblity(paste0( "demographics/Website Eligibility Survey 1.18.24.csv"))
+  # Reactive expression for processing eligibility data
+  processedData <- reactive({
+    req(input$fileInput)
+    inFile <- input$fileInput
     
-    # Render plot based on user selection
-    output$plotOutput <- renderPlot({
-      # Get the processed data
-      ss.bcsb.ef <- processedData
+    tryCatch({
+      # Apply getEligiblity and additional data transformations
+      ss.bcsb.ef <- getEligiblity(inFile$datapath) |> 
+        dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
+        dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "UNKNOWN", Race),
+                      Race = toupper(Race),
+                      Race = trimws(Race),
+                      Race = ifelse(grepl("BLACK|AFRICAN", Race), "BLACK", Race),
+                      Race = ifelse(grepl("KOREAN|CHINESE|ASIAN|ARAB", Race), "ASIAN", Race),
+                      Race = ifelse(grepl("PACIFIC|ISLANDER|NATIVE|INDIAN|ALASKAN", Race), "NA.AMERI/P.ISLA", Race),
+                      Race = ifelse(grepl("MEXICAN|CENTRAL|HISPANIC", Race), "HISPANIC", Race),
+                      diagnosis = ifelse(is.eligible, "BCSB ELIGIBLE", "BCSB INELIGIBLE")) |> 
+        dplyr::select(Race, diagnosis)
       
-      # Check the plot type selected by the user
-      if (input$plotType == "eligibility") {
-        # Call the function to generate the Eligibility Pie Chart
-        res.bcsb.ef <- getPie(ss.bcsb.ef, rl = rLevels)
-        return(res.bcsb.ef$gp)
-      } else if (input$plotType == "comb") {
-        # Call the function to generate the Comb Pie Chart
-        res.bcsb.comb <- getPieComb(ss.bcsb.ef, rl = rLevels)
-        return(res.bcsb.comb$gp)
-      }
+      return(ss.bcsb.ef)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing data:", e$message), type = "error")
+      return(NULL)
     })
-  }, ignoreNULL = FALSE)
+  })
+  
+  # Reactive expression for the first pie chart
+  pieChart1Data <- reactive({
+    ef_data <- req(processedData())
+    tryCatch({
+      # Assuming getPie function generates the first pie chart
+      res <- getPie(ef_data, rl = rLevels)  # Update with appropriate parameters
+      return(res$gp)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting 1 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  # Reactive expression for the second pie chart
+  pieChart2Data <- reactive({
+    ef_data <- req(processedData())
+    tryCatch({
+      # Assuming getPieComb function generates the second pie chart
+      res <- getPieComb(ef_data, rl = rLevels)  # Update with appropriate parameters
+      return(res$gp)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  
+  # Within server function
+  
+  output$pieChart1 <- renderPlot({
+    pieChart1Data()
+  })
+  
+  output$pieChart2 <- renderPlot({
+    pieChart2Data()
+  })
+  
+  
+  
+
 }
 
 # Run the application 
