@@ -3,9 +3,10 @@ library(tidyverse)
 library(ggrepel)
 source("theme_DB.R")
 
+.dir <- "~/Documents/" 
 
 getClinDatSimple <- function(clin_str) {
-  cd <- read.csv(paste0(.dir, clin_str))
+  cd <- read.csv(paste0( clin_str))
   cd[cd == ""] <- NA
   cd$RS2 <- strsplit(cd$RS, ", ") |> 
     purrr::map(function(x) {
@@ -51,16 +52,12 @@ clindat <- getClinDatSimple("Master_list/MasterList_1.17.24.csv") |>
   dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
                                   tryFormats = "%m/%d/%Y"))
 
-#clindat0 <- getClinDatSimple("Master_list/MasterList_10.30.23.csv") |> 
-#  dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
-#                                  tryFormats = "%m/%d/%Y"))
 
 df.missing <- data.frame(ID = clindat$StudyID,
                          missing = rowSums(is.na(clindat))) |> 
   dplyr::mutate(all.missing = missing == ncol(clindat)-1,
                 lab = ifelse(all.missing, "NO CLINICAL INFO", "CLINICAL INFO OBTAINED"))
 
-write.csv(df.missing, file = "data_missing.csv", row.names = FALSE)
 
 
 if (1) {
@@ -111,23 +108,6 @@ if (1) {
 }
 
 if (1) {
-  #df <- clindat |>
-  #  mutate(RS3 = ifelse(is.na(RS2), "UNKNOWN",
-  #                      ifelse(grepl(";", RS2), "MULTIPLE", RS2))) |> 
-  #  filter(RS3 != "UNKNOWN") |> 
-  #  select(StudyID, RS3)  |> 
-    # dplyr::group_by(RS3) |> 
-  #  dplyr::reframe(count = as.numeric(table(RS3)),
-  #                 RS3 = names(table(RS3)),
-  #                 total = dplyr::n()) |>
-  #  dplyr::mutate(pct = count/total,
-  #                RS3 = factor(RS3)) |> 
-  #  dplyr::arrange(RS3)
-#  
-  #multi <- clindat %>%
-   # filter(grepl(";", RS2)) %>%
-  #  mutate(RS2 = "MULTIPLE")
-  #write.csv(multi, file = "multi.csv", row.names = FALSE)
   
   df <- clindat %>%
     mutate(RS2 = ifelse(is.na(RS2), "UNKNOWN", RS2),
@@ -154,12 +134,6 @@ if (1) {
     summarize(count = n(), .groups = 'drop') %>%
     mutate(pct = count/sum(count)) %>%
     arrange(RS3)
-  
-  
-    
-    #debug  
-    write.csv(df, file = "RS_sub.csv", row.names = FALSE)
-  
 
     multi2 <- df %>%
     filter(RS3 == "MULTIFOCAL")
@@ -255,7 +229,7 @@ if (1) {
           legend.text = element_text(size = 15, face = "bold"),
           legend.title = element_blank()) +
     guides(fill = guide_legend(nrow = 2, byrow = T))
-  ggsave("clinical_info_plots/diagnosis_date_pie_chart.png", gp, height = 6, width = 6)
+ # ggsave("clinical_info_plots/diagnosis_date_pie_chart.png", gp, height = 6, width = 6)
   
   yearBreaks <- seq(0, 1e5, 365.25)
   names(yearBreaks) <- paste0(1:length(yearBreaks), "Y")
@@ -265,7 +239,7 @@ if (1) {
     xlab("Years Since Diagnosis") +
     scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks)) +
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
-  ggsave("clinical_info_plots/diagnosis_date_histogram.png", gp, height = 6, width = 9)
+#  ggsave("clinical_info_plots/diagnosis_date_histogram.png", gp, height = 6, width = 9)
 }
 
 if (1) {
@@ -335,7 +309,7 @@ if (1) {
           legend.text = element_text(size = 15, face = "bold"),
           legend.title = element_blank()) +
     guides(fill = guide_legend(nrow = 2, byrow = T))
-  ggsave("clinical_info_plots/survey_missing_answers_pie.png", gp, height = 6, width = 6)
+ # ggsave("clinical_info_plots/survey_missing_answers_pie.png", gp, height = 6, width = 6)
 }
 
 
