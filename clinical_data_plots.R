@@ -48,26 +48,28 @@ getClinDatSimple <- function(clin_str) {
 
 
 
-clindat <- getClinDatSimple("Master_list/MasterList_1.17.24.csv") |> 
-  dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
-                                  tryFormats = "%m/%d/%Y"))
+#clindat <- getClinDatSimple("Master_list/MasterList_1.17.24.csv") |> 
+#  dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
+#                                  tryFormats = "%m/%d/%Y"))
 
 
-df.missing <- data.frame(ID = clindat$StudyID,
-                         missing = rowSums(is.na(clindat))) |> 
-  dplyr::mutate(all.missing = missing == ncol(clindat)-1,
-                lab = ifelse(all.missing, "NO CLINICAL INFO", "CLINICAL INFO OBTAINED"))
+#df.missing <- data.frame(ID = clindat$StudyID,
+#                         missing = rowSums(is.na(clindat))) |> 
+#  dplyr::mutate(all.missing = missing == ncol(clindat)-1,
+#                lab = ifelse(all.missing, "NO CLINICAL INFO", 
+#                             "CLINICAL INFO OBTAINED"))
 
 
 
-if (1) {
+getClinMissing <-function(df.missing) {
   df <- df.missing |> 
     # dplyr::group_by(lab) |> 
     dplyr::reframe(count = as.numeric(table(lab)),
                    lab = names(table(lab)),
                    total = dplyr::n()) |>
     dplyr::mutate(pct = count/total,
-                  lab = factor(lab, levels = c("NO CLINICAL INFO", "CLINICAL INFO OBTAINED"))) |> 
+                  lab = factor(lab, levels = c("NO CLINICAL INFO", 
+                                               "CLINICAL INFO OBTAINED"))) |> 
     dplyr::arrange(lab)
   
   df2 <- df |> 
@@ -104,10 +106,12 @@ if (1) {
           legend.text = element_text(size = 15, face = "bold"),
           legend.title = element_blank()) +
     guides(fill = guide_legend(nrow = 2, byrow = T))
-  ggsave("clinical_info_plots/frac_with_any_clinical_data.png", gp, height = 6, width = 6)
+  return(gp)
+#  ggsave("clinical_info_plots/frac_with_any_clinical_data.png",
+  #gp, height = 6, width = 6)
 }
 
-if (1) {
+getClinPie <- function(clindat) {
   
   df <- clindat %>%
     mutate(RS2 = ifelse(is.na(RS2), "UNKNOWN", RS2),
@@ -173,19 +177,24 @@ if (1) {
           legend.text = element_text(size = 15, face = "bold"),
           legend.title = element_blank()) +
     guides(fill = guide_legend(nrow = 3, byrow = T))
-  ggsave("clinical_info_plots/RS_pie_chart.png", gp, height = 7, width = 7)
+  return(gp)
+  #ggsave("clinical_info_plots/RS_pie_chart.png", gp, height = 7, width = 7)
 }
 
-df.DxDate <- clindat |> 
-  select(StudyID, date.Dx) |> 
-  mutate(Days.since.Dx = as.Date("2023-10-01")-date.Dx,
-         Years.since.Dx = as.numeric(floor(Days.since.Dx/365.25)),
-         Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", Years.since.Dx),
-         lab = paste0(Years.since.Dx2, " YEARS"),
-         lab = ifelse(grepl("^NA", lab), "UNKNOWN", lab)) |> 
-  filter(lab != "UNKNOWN")
 
-if (1) {
+
+getYrSinceDiagnosis <- function(clindat) {
+    
+  df.DxDate <- clindat |> 
+      select(StudyID, date.Dx) |> 
+      mutate(Days.since.Dx = as.Date("2023-10-01")-date.Dx,
+             Years.since.Dx = as.numeric(floor(Days.since.Dx/365.25)),
+             Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", 
+                                      Years.since.Dx),
+             lab = paste0(Years.since.Dx2, " YEARS"),
+             lab = ifelse(grepl("^NA", lab), "UNKNOWN", lab)) |> 
+      filter(lab != "UNKNOWN")
+    
   df <- df.DxDate |> 
     # dplyr::group_by(lab) |> 
     dplyr::reframe(count = as.numeric(table(lab)),
@@ -233,16 +242,19 @@ if (1) {
   
   yearBreaks <- seq(0, 1e5, 365.25)
   names(yearBreaks) <- paste0(1:length(yearBreaks), "Y")
-  gp <- ggplot(df.DxDate, aes(x = Days.since.Dx)) +
+  gp2 <- ggplot(df.DxDate, aes(x = Days.since.Dx)) +
     geom_histogram(binwidth = 100, fill = "lightgray", color = "black") +
     ylab("Number of Patients") +
     xlab("Years Since Diagnosis") +
     scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks)) +
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
-#  ggsave("clinical_info_plots/diagnosis_date_histogram.png", gp, height = 6, width = 9)
+  
+  return(list(gp = gp, gp2 = gp2))
+  
+  #  ggsave("clinical_info_plots/diagnosis_date_histogram.png", gp, height = 6, width = 9)
 }
 
-if (1) {
+if (0) {
   files <- list.files("demographics/", "DATA_LABELS.*csv$", recursive = T, full.names = T)
   files <- files[!grepl("Nicotine History|date of diagnosis", files)]
   df <- lapply(files, function(f) {

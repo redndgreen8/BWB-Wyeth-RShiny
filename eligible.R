@@ -19,8 +19,6 @@ clean_text <- function(txt) {
   return(txt)
 }
 
-
-
 isEligible <- function(ef) {
   #ef <- tolower(ef)
   ef[ef == ""] <- NA
@@ -35,9 +33,6 @@ isEligible <- function(ef) {
   #view(eli)
   return(eli)
 }
-
-
-
 
 getEligiblity <- function(elig_str) {
   ef <- read.csv(paste0( elig_str))
@@ -103,10 +98,6 @@ getPieaRating <- function(ss, rl) {
   gp
   return(list(gp = gp, df = df))
 }
-
-
-
-
 
 
 getPieComb <- function(ss, rl) {

@@ -17,16 +17,26 @@ library(parallel)
 library(shiny)
 
 ui <- fluidPage(
-  titlePanel("Pie Chart Dashboard"),
+  titlePanel("BCSB Dashboard"),
   
   sidebarLayout(
     sidebarPanel(
       fileInput("fileInput", "Choose Web Eligibility CSV File"),
+      fileInput("clinFileInput", "Choose Clinical CSV File"),
+      
       actionButton("updateButton", "Update Charts")
     ),
     mainPanel(
-      plotOutput("pieChart1"),
-      plotOutput("pieChart2")
+      tabsetPanel(
+        tabPanel("Eligibility Data",
+                 plotOutput("pieChart1"),
+                 plotOutput("pieChart2")
+        ),
+        tabPanel("Clinical Data",
+                 plotOutput("pieChartClin1"),
+                 plotOutput("pieChartClin2")
+        )
+      )
     )
   )
 )
@@ -38,6 +48,7 @@ server <- function(input, output) {
   source("theme_DB.R")
  # source("clinical_data_plots.R")
   source("eligible.R")
+  source("clinical_data_plots.R")
   
   # Define the directory path
   .dir <- "~/Documents/" 
@@ -67,9 +78,30 @@ server <- function(input, output) {
       return(ss.bcsb.ef)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
-      shiny::showNotification(paste("Error processing data:", e$message), type = "error")
+      shiny::showNotification(paste("Error processing Elig data:", e$message), type = "error")
       return(NULL)
     })
+  })
+  
+  
+  # Reactive expression for processing clinical data
+  processedClinData <- reactive({
+    # We'll use a separate input for the clinical CSV file if needed
+    req(input$clinFileInput) 
+    clinFile <- input$clinFileInput
+    tryCatch({
+    # Here we're directly reading the file
+    # Update the file path according to your setup or use clinFile$datapath
+      clin_dat <- getClinDatSimple(clinFile$datapath) |>
+        dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
+                                        tryFormats = "%m/%d/%Y"))
+      return(clin_dat)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Clin data:", e$message), type = "error")
+      return(NULL)
+    })
+    
   })
   
   # Reactive expression for the first pie chart
@@ -81,7 +113,7 @@ server <- function(input, output) {
       return(res$gp)
     }, error = function(e) {
       # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting 1 data:", e$message), type = "error")
+      shiny::showNotification(paste("Error plotting Elig 1 data:", e$message), type = "error")
       return(NULL)
     })
   })
@@ -95,10 +127,28 @@ server <- function(input, output) {
       return(res$gp)
     }, error = function(e) {
       # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting 2 data:", e$message), type = "error")
+      shiny::showNotification(paste("Error plotting Elig 2 data:", e$message), type = "error")
       return(NULL)
     })
   })
+  
+  
+  pieChartClin1Data <- reactive({
+    clin_dat <- req(processedClinData())
+    # Generate first clinical data pie chart
+    tryCatch({
+    resClin1 <- getClinPie(clin_dat)
+    return(resClin1)
+    },error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Clin data:", e$message), type = "error")
+      return(NULL)
+    
+    })
+  }) 
+  
+  
+
   
   
   # Within server function
@@ -111,7 +161,9 @@ server <- function(input, output) {
     pieChart2Data()
   })
   
-  
+  output$pieChartClin1 <- renderPlot({
+    pieChartClin1Data()
+  })
   
 
 }
