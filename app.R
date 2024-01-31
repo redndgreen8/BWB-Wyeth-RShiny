@@ -32,6 +32,10 @@ ui <- fluidPage(
                  plotOutput("pieChart2"),
                  plotOutput("pieChart1")
         ),
+        tabPanel("Demographic Data",
+                 plotOutput("barChartClin1"),
+                 plotOutput("barChartClin2")
+        ),
         tabPanel("Clinical Data",
                  plotOutput("pieChartClin1")
                 # plotOutput("pieChartClin2")
@@ -48,6 +52,7 @@ server <- function(input, output) {
   source("theme_DB.R")
   source("eligible.R")
   source("clinical_data_plots.R")
+  source("demographic_plots.R")
   
   # Define the directory path
   .dir <- "~/Documents/" 
@@ -57,9 +62,6 @@ server <- function(input, output) {
   
   # Reactive expression for processing eligibility data
   processedData <- reactive({
-    #req(input$fileInput)
-    #$inFile <- input$fileInput
-  
     tryCatch({
       # Apply getEligiblity and additional data transformations
       ss.bcsb.ef <- getEligiblity("/Users/red/Documents/wyeth_script/demographics/Website Eligibility Survey 1.18.24.csv") |> 
@@ -103,6 +105,46 @@ server <- function(input, output) {
     
   })
   
+  processedDemoData <- reactive({
+    tryCatch({
+      demog_dat <- getDemogInfo("demographics/DemographicsRaceEduc_variable labels_12.13.23.csv")
+      return(demog_dat)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Demog data:", e$message), type = "error")
+      return(NULL)
+    })
+    
+  })
+  
+  
+  barChart1Data <- reactive({
+    bar_data <- req(processedDemoData())
+    tryCatch({
+      # Assuming getPie function generates the first pie chart
+      res <- getRaceBar(bar_data$race_df)  # Update with appropriate parameters
+      return(res)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Demog 1 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })  
+  
+  barChart2Data <- reactive({
+    bar_data <- req(processedDemoData())
+    tryCatch({
+      # Assuming getPie function generates the first pie chart
+      res <- getEduBar(bar_data$edu_df)  # Update with appropriate parameters
+      return(res)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Demog 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  }) 
+  
+  
   # Reactive expression for the first pie chart
   pieChart1Data <- reactive({
     ef_data <- req(processedData())
@@ -145,11 +187,7 @@ server <- function(input, output) {
     
     })
   }) 
-  
-  
 
-  
-  
   # Within server function
   
   output$pieChart1 <- renderPlot({
@@ -164,6 +202,13 @@ server <- function(input, output) {
     pieChartClin1Data()
   })
   
+  output$barChartClin1 <- renderPlot({
+    barChart1Data()
+  })
+
+  output$barChartClin2 <- renderPlot({
+    barChart2Data()
+  })
 
 }
 
