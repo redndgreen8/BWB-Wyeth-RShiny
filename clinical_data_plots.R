@@ -128,8 +128,8 @@ getClinPie <- function(clindat) {
     mutate(RS3 = case_when(
       ER_Pos & PR_Pos & HER2_Pos ~ "Triple Positive",
       ER_Neg & PR_Neg & HER2_Neg ~ "Triple Negative",
-      (ER_Pos | PR_Pos) & HER2_Neg ~ "Hormone Receptor +",
-      ER_Neg & PR_Neg & HER2_Pos ~ "HER2 +",
+      ER_Pos & HER2_Neg ~ "HR+/HER2-",
+      ER_Neg & HER2_Pos ~ "HR-/HER2+",
       RS2 == "MULTIFOCAL" ~ "MULTIFOCAL",
       TRUE ~ "UNKNOWN"
     )) %>%

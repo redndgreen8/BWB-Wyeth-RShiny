@@ -19,26 +19,26 @@ library(shiny)
 ui <- fluidPage(
   titlePanel("BCSB Dashboard"),
   
-  sidebarLayout(
-    sidebarPanel(
-      fileInput("fileInput", "Choose Web Eligibility CSV File"),
-      fileInput("clinFileInput", "Choose Clinical CSV File"),
+#  sidebarLayout(
+#    sidebarPanel(
+      #fileInput("fileInput", "Choose Web Eligibility CSV File"),
+     # fileInput("clinFileInput", "Choose Clinical CSV File"),
       
-      actionButton("updateButton", "Update Charts")
-    ),
+     # actionButton("updateButton", "Update Charts")
+  #  ),
     mainPanel(
       tabsetPanel(
         tabPanel("Eligibility Data",
-                 plotOutput("pieChart1"),
-                 plotOutput("pieChart2")
+                 plotOutput("pieChart2"),
+                 plotOutput("pieChart1")
         ),
         tabPanel("Clinical Data",
-                 plotOutput("pieChartClin1"),
-                 plotOutput("pieChartClin2")
+                 plotOutput("pieChartClin1")
+                # plotOutput("pieChartClin2")
         )
       )
     )
-  )
+#  )
 )
 
 
@@ -46,7 +46,6 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   source("theme_DB.R")
- # source("clinical_data_plots.R")
   source("eligible.R")
   source("clinical_data_plots.R")
   
@@ -58,12 +57,12 @@ server <- function(input, output) {
   
   # Reactive expression for processing eligibility data
   processedData <- reactive({
-    req(input$fileInput)
-    inFile <- input$fileInput
-    
+    #req(input$fileInput)
+    #$inFile <- input$fileInput
+  
     tryCatch({
       # Apply getEligiblity and additional data transformations
-      ss.bcsb.ef <- getEligiblity(inFile$datapath) |> 
+      ss.bcsb.ef <- getEligiblity("/Users/red/Documents/wyeth_script/demographics/Website Eligibility Survey 1.18.24.csv") |> 
         dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
         dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "UNKNOWN", Race),
                       Race = toupper(Race),
@@ -87,12 +86,12 @@ server <- function(input, output) {
   # Reactive expression for processing clinical data
   processedClinData <- reactive({
     # We'll use a separate input for the clinical CSV file if needed
-    req(input$clinFileInput) 
-    clinFile <- input$clinFileInput
+    #req(input$clinFileInput) 
+    #clinFile <- input$clinFileInput
     tryCatch({
     # Here we're directly reading the file
     # Update the file path according to your setup or use clinFile$datapath
-      clin_dat <- getClinDatSimple(clinFile$datapath) |>
+      clin_dat <- getClinDatSimple("/Users/red/Documents/wyeth_script/Master_list/MasterList_1.17.24.csv") |>
         dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
                                         tryFormats = "%m/%d/%Y"))
       return(clin_dat)
