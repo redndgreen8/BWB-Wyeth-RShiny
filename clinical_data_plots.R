@@ -48,11 +48,6 @@ getClinDatSimple <- function(clin_str) {
 
 
 
-#clindat <- getClinDatSimple("Master_list/MasterList_1.17.24.csv") |> 
-#  dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
-#                                  tryFormats = "%m/%d/%Y"))
-
-
 #df.missing <- data.frame(ID = clindat$StudyID,
 #                         missing = rowSums(is.na(clindat))) |> 
 #  dplyr::mutate(all.missing = missing == ncol(clindat)-1,

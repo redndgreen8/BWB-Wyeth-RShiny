@@ -64,7 +64,7 @@ server <- function(input, output) {
   processedData <- reactive({
     tryCatch({
       # Apply getEligiblity and additional data transformations
-      ss.bcsb.ef <- getEligiblity("/Users/red/Documents/wyeth_script/demographics/Website Eligibility Survey 1.18.24.csv") |> 
+      ss.bcsb.ef <- getEligiblity("Website Eligibility Survey 1.18.24.csv") |> 
         dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
         dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "UNKNOWN", Race),
                       Race = toupper(Race),
@@ -93,7 +93,7 @@ server <- function(input, output) {
     tryCatch({
     # Here we're directly reading the file
     # Update the file path according to your setup or use clinFile$datapath
-      clin_dat <- getClinDatSimple("/Users/red/Documents/wyeth_script/Master_list/MasterList_1.17.24.csv") |>
+      clin_dat <- getClinDatSimple("MasterList_1.17.24.csv") |>
         dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
                                         tryFormats = "%m/%d/%Y"))
       return(clin_dat)
@@ -107,7 +107,7 @@ server <- function(input, output) {
   
   processedDemoData <- reactive({
     tryCatch({
-      demog_dat <- getDemogInfo("demographics/DemographicsRaceEduc_variable labels_12.13.23.csv")
+      demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_12.13.23.csv")
       return(demog_dat)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
