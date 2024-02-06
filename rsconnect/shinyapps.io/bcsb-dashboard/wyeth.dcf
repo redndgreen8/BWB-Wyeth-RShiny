@@ -1,0 +1,13 @@
+name: wyeth
+title: wyeth
+username: bcsb-dashboard
+account: bcsb-dashboard
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11151307
+bundleId: 8226566
+url: https://bcsb-dashboard.shinyapps.io/wyeth/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: BCSB_map.R|data_completeness.R|state_dist.R|website_elig.R|demographics
