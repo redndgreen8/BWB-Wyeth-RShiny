@@ -170,8 +170,13 @@ getClinPie <- function(clindat) {
           panel.grid.major.y = element_blank(),
           strip.text = element_text(size = 15, face = "bold"),
           legend.text = element_text(size = 15, face = "bold"),
-          legend.title = element_blank()) +
-    guides(fill = guide_legend(nrow = 3, byrow = T))
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(nrow = 3, byrow = T)) +
+    ggtitle("Subtypes for participants that have completed Baseline Session") +   #
+    labs(subtitle = "Multifocal - participants that had multiple tumors with different subtypes
+HR = Hormone Receptor (ER/PR)")  #
   return(gp)
   #ggsave("clinical_info_plots/RS_pie_chart.png", gp, height = 7, width = 7)
 }

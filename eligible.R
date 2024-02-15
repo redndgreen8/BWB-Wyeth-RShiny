@@ -138,8 +138,12 @@ getPieComb <- function(ss, rl) {
           panel.grid.major.y = element_blank(),
           strip.text = element_text(size = 15, face = "bold"),
           legend.text = element_text(size = 15, face = "bold"),
-          legend.title = element_blank()) +
-    guides(fill = guide_legend(nrow = 2, byrow = T))
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(nrow = 2, byrow = T)) +
+    ggtitle("Demographic Distribution of all Web Eligibility Survey Entries") +   #
+    labs(subtitle = "Does not include clinic recruitment information")
   gp
   return(list(gp = gp, df = df))
 }
@@ -187,8 +191,14 @@ getPie <- function(ss, rl) {
           panel.grid.major.y = element_blank(),
           strip.text = element_text(size = 15, face = "bold"),
           legend.text = element_text(size = 15, face = "bold"),
-          legend.title = element_blank()) +
-    guides(fill = guide_legend(nrow = 2, byrow = T))
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(nrow = 2, byrow = T)) +
+    ggtitle("Demographic Distribution of
+Eligible vs. Ineligible
+ Web Eligibility Survey Entries
+")  
   gp
   return(list(gp = gp, df = df))
 }
