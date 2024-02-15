@@ -5,6 +5,7 @@ source("theme_DB.R")
 
 .dir <- "~/Documents/" 
 
+
 getClinDatSimple <- function(clin_str) {
   cd <- read.csv(paste0( clin_str))
   cd[cd == ""] <- NA
@@ -45,18 +46,28 @@ getClinDatSimple <- function(clin_str) {
   }, mc.cores = 8) |> dplyr::bind_rows()
   return(cd.u)
 }
+#clin_str <- "MasterList_2.8.24.csv"
+#clind <- getClinDatSimple(clin_str)
+#df.DxDate <- clind %>% 
+ # select(StudyID, date.Dx) %>% 
+  #mutate(Days.since.Dx = as.Date("2023-10-01")-date.Dx,
+   #      Years.since.Dx = as.numeric(floor(Days.since.Dx/365.25)),
+    #     Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", 
+     #                             Years.since.Dx),
+      #   lab = paste0(Years.since.Dx2, " YEARS"),
+       #  lab = ifelse(grepl("^NA", lab), "UNKNOWN", lab)) %>% 
+  #filter(lab != "UNKNOWN")
 
 
 
-#df.missing <- data.frame(ID = clindat$StudyID,
-#                         missing = rowSums(is.na(clindat))) |> 
-#  dplyr::mutate(all.missing = missing == ncol(clindat)-1,
-#                lab = ifelse(all.missing, "NO CLINICAL INFO", 
-#                             "CLINICAL INFO OBTAINED"))
 
-
-
-getClinMissing <-function(df.missing) {
+getClinMissing <-function(clindat) {
+  
+  df.missing <- data.frame(ID = clindat$StudyID,
+                           missing = rowSums(is.na(clindat))) |> 
+    dplyr::mutate(all.missing = missing == ncol(clindat)-1,
+                  lab = ifelse(all.missing, "NO CLINICAL INFO", 
+                               "CLINICAL INFO OBTAINED"))
   df <- df.missing |> 
     # dplyr::group_by(lab) |> 
     dplyr::reframe(count = as.numeric(table(lab)),
@@ -99,8 +110,13 @@ getClinMissing <-function(df.missing) {
           panel.grid.major.y = element_blank(),
           strip.text = element_text(size = 15, face = "bold"),
           legend.text = element_text(size = 15, face = "bold"),
-          legend.title = element_blank()) +
-    guides(fill = guide_legend(nrow = 2, byrow = T))
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(nrow = 2, byrow = T)) +
+    ggtitle("Clinical information entered for participants consented and active on study.") +   #
+    labs(subtitle = "There is a natural backlog that occurs due to the nature of the OSH record 
+         request process through record review and data entry into the CRF.")
   return(gp)
 #  ggsave("clinical_info_plots/frac_with_any_clinical_data.png",
   #gp, height = 6, width = 6)
@@ -185,26 +201,26 @@ HR = Hormone Receptor (ER/PR)")  #
 
 getYrSinceDiagnosis <- function(clindat) {
     
-  df.DxDate <- clindat |> 
-      select(StudyID, date.Dx) |> 
+  df.DxDate <- clindat %>% 
+      select(StudyID, date.Dx) %>% 
       mutate(Days.since.Dx = as.Date("2023-10-01")-date.Dx,
              Years.since.Dx = as.numeric(floor(Days.since.Dx/365.25)),
              Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", 
                                       Years.since.Dx),
              lab = paste0(Years.since.Dx2, " YEARS"),
-             lab = ifelse(grepl("^NA", lab), "UNKNOWN", lab)) |> 
+             lab = ifelse(grepl("^NA", lab), "UNKNOWN", lab)) %>% 
       filter(lab != "UNKNOWN")
     
-  df <- df.DxDate |> 
+  df <- df.DxDate %>% 
     # dplyr::group_by(lab) |> 
     dplyr::reframe(count = as.numeric(table(lab)),
                    lab = names(table(lab)),
-                   total = dplyr::n()) |>
+                   total = dplyr::n()) %>%
     dplyr::mutate(pct = count/total,
-                  lab = factor(lab)) |> 
+                  lab = factor(lab)) %>% 
     dplyr::arrange(lab)
   
-  df2 <- df |> 
+  df2 <- df %>% 
     # dplyr::group_by(lab) |>
     dplyr::mutate(csum = rev(cumsum(rev(pct))), 
                   pos = pct/2 + dplyr::lead(csum, 1),
@@ -236,8 +252,13 @@ getYrSinceDiagnosis <- function(clindat) {
           panel.grid.major.y = element_blank(),
           strip.text = element_text(size = 15, face = "bold"),
           legend.text = element_text(size = 15, face = "bold"),
-          legend.title = element_blank()) +
-    guides(fill = guide_legend(nrow = 2, byrow = T))
+          legend.title = element_blank(), 
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(nrow = 2, byrow = T)) +
+    ggtitle("Years since diagnosis to current date") +   #
+    labs(subtitle = "Data for participants on study who have completed Baseline Session 
+         (signed consent, completed surveys, blood received, and clinical data entered)")
  # ggsave("clinical_info_plots/diagnosis_date_pie_chart.png", gp, height = 6, width = 6)
   
   yearBreaks <- seq(0, 1e5, 365.25)

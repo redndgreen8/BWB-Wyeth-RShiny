@@ -1,15 +1,13 @@
-library(tidyverse)
-library(ggmap)
-library(DT)
-library(knitr)
-#library(rgdal)
-library(tidygeocoder)
+
 
 df <- read.csv(list.files("residence/", full.names = T))
 names(df)[1] <- "ID"
 names(df) <- gsub("\\.$", "", names(df))
 # df$location <- paste0(df$currentstaddr1, ", ", df$currentcity, ", ", df$currentstate, " ", df$currentzip)
 df$location <- paste0(df$Current.Street.Address.1, ", ", df$Current.City, ", ", df$Current.State, " ", df$Current.Zip)
+
+
+
 lat_longs <- df |> 
   tidygeocoder::geocode(location, method = 'osm', lat = latitude, long = longitude)
 
