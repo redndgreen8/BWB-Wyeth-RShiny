@@ -199,17 +199,20 @@ HR = Hormone Receptor (ER/PR)")  #
 
 
 
-getYrSinceDiagnosis <- function(clindat) {
-    
-  df.DxDate <- clindat %>% 
-      select(StudyID, date.Dx) %>% 
-      mutate(Days.since.Dx = as.Date("2023-10-01")-date.Dx,
-             Years.since.Dx = as.numeric(floor(Days.since.Dx/365.25)),
-             Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", 
-                                      Years.since.Dx),
-             lab = paste0(Years.since.Dx2, " YEARS"),
-             lab = ifelse(grepl("^NA", lab), "UNKNOWN", lab)) %>% 
-      filter(lab != "UNKNOWN")
+getYrSinceDiagnosis <- function(dx_str) {
+  cd <- read.csv(paste0( dx_str))
+  
+  df.DxDate <- cd %>%
+    mutate(
+      NewestConsentDate = pmax(dateconsentsignedbypt, dateconsentsignedbypt_v2, dateconsentsignedbypt_v2_v3, na.rm = TRUE),
+      breastcancerdiagdate = as.Date(breastcancerdiagdate),
+      NewestConsentDate = as.Date(NewestConsentDate),
+      Days.since.Dx = NewestConsentDate - breastcancerdiagdate,
+      Years.since.Dx = floor(Days.since.Dx / 365.25),
+      Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", as.character(Years.since.Dx)),
+      lab = paste0(Years.since.Dx2, " YEARS")
+    ) %>%
+    filter(!is.na(Years.since.Dx2) & Years.since.Dx2 != "NA YEARS")
     
   df <- df.DxDate %>% 
     # dplyr::group_by(lab) |> 
@@ -256,11 +259,10 @@ getYrSinceDiagnosis <- function(clindat) {
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
-    ggtitle("Years since diagnosis to current date") +   #
+    ggtitle("Years since diagnosis to Earliest Consent date") +   #
     labs(subtitle = "Data for participants on study who have completed Baseline Session 
          (signed consent, completed surveys, blood received, and clinical data entered)")
- # ggsave("clinical_info_plots/diagnosis_date_pie_chart.png", gp, height = 6, width = 6)
-  
+
   yearBreaks <- seq(0, 1e5, 365.25)
   names(yearBreaks) <- paste0(1:length(yearBreaks), "Y")
   gp2 <- ggplot(df.DxDate, aes(x = Days.since.Dx)) +
@@ -272,8 +274,12 @@ getYrSinceDiagnosis <- function(clindat) {
   
   return(list(gp = gp, gp2 = gp2))
   
-  #  ggsave("clinical_info_plots/diagnosis_date_histogram.png", gp, height = 6, width = 9)
 }
+
+#dx_str <- "HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv"
+#plt <- getYrSinceDiagnosis(dx_str)
+#plt$gp
+#plt$gp2
 
 if (0) {
   files <- list.files("demographics/", "DATA_LABELS.*csv$", recursive = T, full.names = T)

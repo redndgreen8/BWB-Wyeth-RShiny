@@ -5,7 +5,7 @@ account: bcsb-dashboard
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11151307
-bundleId: 8260939
+bundleId: 8261378
 url: https://bcsb-dashboard.shinyapps.io/wyeth/
 version: 1
 asMultiple: FALSE
