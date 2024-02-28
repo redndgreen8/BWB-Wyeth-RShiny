@@ -191,8 +191,9 @@ getClinPie <- function(clindat) {
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(nrow = 3, byrow = T)) +
     ggtitle("Subtypes for participants that have completed Baseline Session") +   #
-    labs(subtitle = "Multifocal - participants that had multiple tumors with different subtypes
-HR = Hormone Receptor (ER/PR)")  #
+    labs(subtitle = "Multifocal - participants that had multiple tumors 
+    with different subtypes
+         HR - Hormone Receptor (ER/PR)")  #
   return(gp)
   #ggsave("clinical_info_plots/RS_pie_chart.png", gp, height = 7, width = 7)
 }
@@ -204,10 +205,13 @@ getYrSinceDiagnosis <- function(dx_str) {
   
   df.DxDate <- cd %>%
     mutate(
-      NewestConsentDate = pmax(dateconsentsignedbypt, dateconsentsignedbypt_v2, dateconsentsignedbypt_v2_v3, na.rm = TRUE),
+      dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
+      dateconsentsignedbypt_v2 = as.Date(dateconsentsignedbypt_v2),
+      dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
+      EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, dateconsentsignedbypt_v2_v3, na.rm = TRUE),
       breastcancerdiagdate = as.Date(breastcancerdiagdate),
-      NewestConsentDate = as.Date(NewestConsentDate),
-      Days.since.Dx = NewestConsentDate - breastcancerdiagdate,
+      #NewestConsentDate = as.Date(NewestConsentDate),
+      Days.since.Dx = EarliestConsentDate - breastcancerdiagdate,
       Years.since.Dx = floor(Days.since.Dx / 365.25),
       Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", as.character(Years.since.Dx)),
       lab = paste0(Years.since.Dx2, " YEARS")
@@ -259,7 +263,7 @@ getYrSinceDiagnosis <- function(dx_str) {
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
-    ggtitle("Years since diagnosis to Earliest Consent date") +   #
+    ggtitle("Years since diagnosis to Consent date") +   #
     labs(subtitle = "Data for participants on study who have completed Baseline Session 
          (signed consent, completed surveys, blood received, and clinical data entered)")
 
@@ -272,7 +276,7 @@ getYrSinceDiagnosis <- function(dx_str) {
     scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks)) +
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
   
-  return(list(gp = gp, gp2 = gp2))
+  return(list(gp = gp, gp2 = gp2, df=df.DxDate))
   
 }
 

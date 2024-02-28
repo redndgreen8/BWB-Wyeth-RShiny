@@ -4,92 +4,10 @@ source("theme_DB.R")
 library(dplyr)
 library(tidyr)
 
-getDemogInfo_numerical <- function(demog_str) {
-  df <- read.csv(demog_str)
-  names(df)[1] <- "ID"
-  
-  # Adjusting column names to match the expected format
-  race_columns <- c("American Indian or Alaskan Native", "Asian", "Black or African American", 
-                    "Hispanic or Latino", "Native Hawaiian or other Pacific Islander", "White", 
-                    "I prefer Not to Answer")
-  
-  # Rename df2 race columns to match the descriptive names
-  names(df)[2:8] <- race_columns
-  
-  # Convert 0s and 1s to logical
-  df[2:8] <- lapply(df[2:8], function(x) x == 1)
-  
-  # Transform the data from wide to long format
-  df.race <- df %>%
-    pivot_longer(cols = 2:8, names_to = "Race", values_to = "val") %>%
-    group_by(ID) %>%
-    mutate(Race = ifelse(val, Race, NA)) %>%
-    summarise(Race = paste(na.omit(Race), collapse = ", "),
-              Race = ifelse(Race == "", "I prefer Not to Answer", Race),
-              Race = ifelse(n() > 1, "Multiple", Race)) %>%
-    unique()
-  
-  # Further processing to handle "I prefer Not to Answer" and calculate percentages
-  df.race <- df.race %>%
-    mutate(Race = ifelse(Race == "I prefer Not to Answer", "No race indicated", Race))
-  
-  # Summarize the data to count each race category
-  df.race_summary <- df.race %>%
-    group_by(Race) %>%
-    summarise(n = n(), .groups = 'drop')
-  
-  # Calculate percentages
-  df.race_summary <- df.race_summary %>%
-    mutate(pct = round(n / sum(n), 3))
-  
-  # Arrange by the number of responses to get the levels for the factor
-  levelsrace <- df.race_summary %>%
-    arrange(-n) %>%
-    pull(Race)
-  
-  # Set the factor levels for Race based on the arranged order
-  df.race_summary$Race <- factor(df.race_summary$Race, levels = levelsrace)
-  
-  
-  # Education mapping
-  educationLevels <- c("Grade school", "High school graduate", "Some college/technical school", 
-                       "College graduate or beyond")
-  df.edu <- select(df, ID, demo_highesteducation)
-  names(df.edu)[2] <- "Education"
-  df.edu$Education <- factor(mapvalues(df.edu$Education, from = c(1,3,4,5), to = educationLevels), levels = educationLevels)
-  
-  df.edu <- df.edu %>% 
-    group_by(Education) %>% 
-    summarize(n = n()) %>% 
-    ungroup() %>% 
-    mutate(pct = round(n / sum(n), 3))
-  
-  return(list(race_df = df.race_summary, edu_df = df.edu))
-}
 
 getDemogInfo <- function(demog_str) {
   df <- read.csv(demog_str)
   
-  #names(df) <- c("Study ID: XXXX",
-   #               "What is your race? (Please mark all that apply) (choice=American Indian or Alaskan Native)",
-  #                "What is your race? (Please mark all that apply) (choice=Asian)",
-   #               "What is your race? (Please mark all that apply) (choice=Black or African American)",
-    #              "What is your race? (Please mark all that apply) (choice=Hispanic or Latino)",
-     #             "What is your race? (Please mark all that apply) (choice=Native Hawaiian or other Pacific Islander)",
-      #            "What is your race? (Please mark all that apply) (choice=White)",
-       #           "What is your race? (Please mark all that apply) (choice=I prefer Not to Answer)",
-        #          "What is the highest level of education you have received?",
-         #         "Current Zip:")
-  
-#  df[2:8] <- lapply(df[2:8], function(x) ifelse(x == 1, "Checked", "Unchecked"))
-  
- # educationMap <- setNames(c(NA, "Grade school", "High school graduate", "Some college/technical school", 
-  #                           "College graduate or beyond"), c(NA, 1, 3, 4, 5))
-  
-  #df$"What is the highest level of education you have 
-  #received?" <- educationMap[as.character(df$"What is the highest level of education you have received?")]
-  
-  #df <- df %>% select(1:9)
   names(df)[1] <- "ID"
   df.race <- select(df, ID, contains("What.is.your.race"))
   names(df.race) <- gsub(".*choice\\.|\\.$", "", names(df.race))
@@ -152,6 +70,59 @@ getDemogInfo <- function(demog_str) {
 
 }
 
+demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_2.15.24.csv")
+
+
+getRacePie <- function(race_df){
+  
+  total_count <- sum(race_df$n)
+
+  df2 <- race_df |> 
+    # dplyr::group_by(RS3) |>
+    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
+                  pos = pct/10 + dplyr::lead(csum, 1),
+                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%")) 
+  df3 <- race_df |> 
+    # dplyr::group_by(diagnosis) |> 
+    dplyr::summarize(n = paste0("N=", sum(n)))
+  
+# Create the pie chart
+  gp <- ggplot(race_df, aes(x = "", y = pct, fill = fct_inorder(Race))) +
+    geom_col(width = 1, color = 1, linewidth = 0.5) +
+    coord_polar(theta = "y") +  # This creates the pie chart
+    scale_fill_brewer(palette = "Set3") +  # Set color palette
+    geom_label_repel(data = df2,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data=df3, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = F, parse = F, size = 8) +
+  #  geom_label(aes(label = scales::percent(pct)), 
+   #            position = position_stack(vjust = 0.5)) +  # Add percentage labels
+    
+    theme_DB() +  # Remove axes and background
+    ylab("")+
+    xlab("")+
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(nrow = 3, byrow = T)) +
+    ggtitle("Racial demographic distribution of all participants 
+              enrolled and completed surveys") + 
+    labs(subtitle = "This includes participants recruited from the Web and Clinics.",
+         fill = "Race") 
+  return(gp)
+
+}
+getRacePie(demog_dat$race_df)
 
 
 getRaceBar <- function(race_df){
@@ -165,11 +136,64 @@ getRaceBar <- function(race_df){
     theme(plot.title = element_text(hjust = 0.5),  
              plot.subtitle = element_text(hjust = 0.5)) + 
     ylab("Count") +
-    ggtitle("Racial demographic distribution of all participants enrolled and completed surveys") + 
+    ggtitle("Racial demographic distribution of all participants
+            enrolled and completed surveys") + 
     labs(subtitle = "This includes participants recruited from the Web and Clinics.") 
   return(gp)
   #ggsave("plots/BCSB_race_barchart.png", height = 8, width = 4)
 }
+
+getRaceBar(demog_dat$race_df)
+
+getEduPie <- function(edu_df){
+  
+  total_count <- sum(edu_df$n)
+  
+  df2 <- edu_df |> 
+    # dplyr::group_by(RS3) |>
+    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
+                  pos = pct/10 + dplyr::lead(csum, 1),
+                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%")) 
+  df3 <- edu_df |> 
+    # dplyr::group_by(diagnosis) |> 
+    dplyr::summarize(n = paste0("N=", sum(n)))
+  
+  # Create the pie chart
+  gp <- ggplot(edu_df, aes(x = "", y = pct, fill = fct_inorder(Education))) +
+    geom_col(width = 1, color = 1, linewidth = 0.5) +
+    coord_polar(theta = "y") +  # This creates the pie chart
+    scale_fill_brewer(palette = "Set3") +  # Set color palette
+    geom_label_repel(data = df2,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data=df3, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = F, parse = F, size = 8) +
+    #  geom_label(aes(label = scales::percent(pct)), 
+    #            position = position_stack(vjust = 0.5)) +  # Add percentage labels
+    
+    theme_DB() +  # Remove axes and background
+    ylab("")+
+    xlab("")+
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(nrow = 3, byrow = T)) +
+    ggtitle("Education demographic distribution of all participants 
+            enrolled and completed surveys")
+  return(gp)
+  
+}
+getEduPie(demog_dat$edu_df)
+
 
 getEduBar <- function(edu_df){
   gp <- ggplot(edu_df, aes(x = Education, y = n, label = scales::percent(pct))) +
@@ -182,9 +206,10 @@ getEduBar <- function(edu_df){
     theme(plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
     ylab("Count") +
-    ggtitle("Education demographic distribution of all participants enrolled and completed surveys")   
+    ggtitle("Education demographic distribution of all participants 
+            enrolled and completed surveys")   
   return(gp)
     # ggsave("plots/BCSB_education_barchart.png", height = 8, width = 4)
 }
-
+getEduBar(demog_dat$edu_df)
 

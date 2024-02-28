@@ -38,15 +38,15 @@ ui <- fluidPage(
                  plotOutput("pieChart2"),
                  plotOutput("pieChart1")
         ),
-        tabPanel("Diagnosis Date",
+        tabPanel("Years since Diagnosis",
                  plotOutput("histChartDiag"),
                  plotOutput("pieChartDiag")
         ),
         tabPanel("Demographics",
-                 plotOutput("barChartClin1"),
-                 plotOutput("barChartClin2")
+                 plotOutput("demogPieChart1"),
+                 plotOutput("demogPieChart2")
         ),
-        tabPanel("Clinical Data",
+        tabPanel("Molecular Subtype Data",
                  plotOutput("pieChartClin1"),
                  plotOutput("pieChartClin2")
         ),
@@ -239,11 +239,11 @@ server <- function(input, output) {
     
   })
   
-  barChart1Data <- reactive({
+  demogPieChart1Data <- reactive({
     bar_data <- req(processedDemoData())
     tryCatch({
       # Assuming getPie function generates the first pie chart
-      res <- getRaceBar(bar_data$race_df)  # Update with appropriate parameters
+      res <- getRacePie(bar_data$race_df)  # Update with appropriate parameters
       return(res)
     }, error = function(e) {
       # Handle the error gracefully
@@ -252,11 +252,11 @@ server <- function(input, output) {
     })
   })  
   
-  barChart2Data <- reactive({
+  demogPieChart2Data <- reactive({
     bar_data <- req(processedDemoData())
     tryCatch({
       # Assuming getPie function generates the first pie chart
-      res <- getEduBar(bar_data$edu_df)  # Update with appropriate parameters
+      res <- getEduPie(bar_data$edu_df)  # Update with appropriate parameters
       return(res)
     }, error = function(e) {
       # Handle the error gracefully
@@ -352,12 +352,12 @@ server <- function(input, output) {
     pieChartClin2Data()
   })
   
-  output$barChartClin1 <- renderPlot({
-    barChart1Data()
+  output$demogPieChart1 <- renderPlot({
+    demogPieChart1Data()
   })
 
-  output$barChartClin2 <- renderPlot({
-    barChart2Data()
+  output$demogPieChart2 <- renderPlot({
+    demogPieChart2Data()
   })
   
   #output$GeoChart1 <- renderPlot({
