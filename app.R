@@ -18,22 +18,14 @@ library(DT)
 library(knitr)
 #library(rgdal)
 library(tidygeocoder)
+library(leaflet)
 
-
-library(shiny)
 
 ui <- fluidPage(
   titlePanel("BCSB Dashboard"),
   
-#  sidebarLayout(
-#    sidebarPanel(
-      #fileInput("fileInput", "Choose Web Eligibility CSV File"),
-     # fileInput("clinFileInput", "Choose Clinical CSV File"),
-      
-     # actionButton("updateButton", "Update Charts")
-  #  ),
     mainPanel(
-      tabsetPanel(
+      tabsetPanel(id = "mainTabset",
         tabPanel("Eligibility",
                  plotOutput("pieChart2"),
                  plotOutput("pieChart1")
@@ -51,25 +43,21 @@ ui <- fluidPage(
                  plotOutput("pieChartClin2")
         ),
         tabPanel("Geographic Data",
-                # plotOutput("GeoChart1"),
-                 plotOutput("GeoChart2"),
-                # plotOutput("GeoChart3"),
-                 plotOutput("GeoChart4")
+                 leafletOutput("GeoChart2")
         )
       )
     )
-#  )
 )
 
 
 
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output, session) {
   source("theme_DB.R")
   source("eligible.R")
   source("clinical_data_plots.R")
   source("demographic_plots.R")
-  
+  source("BCSB_map.R")
   # Define the directory path
   .dir <- "~/Documents/" 
   
@@ -78,18 +66,13 @@ server <- function(input, output) {
   
   processedGeoData <- reactive({
     tryCatch({
-      df <- read.csv("HS2100716BodourSalhi-ResidenceHistory_DATA_2024-02-08_1653.csv")
-      names(df)[1] <- "ID"
-      names(df) <- gsub("\\.$", "", names(df))
-      df$location <- paste0(df$currentstaddr1, ", ", df$currentcity, ", ", df$currentstate, " ", df$currentzip)
-      #df$location <- paste0(df$Current.Street.Address.1, ", ", df$Current.City, ", ", df$Current.State, " ", df$Current.Zip)
-      lat_longs <- df |> 
-        tidygeocoder::geocode(location, method = 'osm', lat = latitude, long = longitude)
+      lat_longs <- get_LatLong("HS2100716BodourSalhi-ResidenceHistory_DATA_2024-02-08_1653.csv")
       return(lat_longs)
-      
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Geog data:", e$message), type = "error")
+      return(NULL)
     })
-    
-    
   })
   
   # Reactive expression for processing eligibility data
@@ -116,7 +99,6 @@ server <- function(input, output) {
     })
   })
   
-  
   # Reactive expression for processing clinical data
   processedClinData <- reactive({
     #req(input$clinFileInput) 
@@ -131,7 +113,6 @@ server <- function(input, output) {
       shiny::showNotification(paste("Error processing Clin data:", e$message), type = "error")
       return(NULL)
     })
-    
   })
   
   processedDemoData <- reactive({
@@ -143,9 +124,7 @@ server <- function(input, output) {
       shiny::showNotification(paste("Error processing Demog data:", e$message), type = "error")
       return(NULL)
     })
-    
   })
-
   
   DiagChartData1 <- reactive({
     #clin <- req(processedClinData())
@@ -157,8 +136,6 @@ server <- function(input, output) {
       shiny::showNotification(paste("Error plotting Diag 1 data:", e$message), type = "error")
       return(NULL)
     })
-    
-    
   })
   
   DiagChartData2 <- reactive({
@@ -171,32 +148,16 @@ server <- function(input, output) {
       shiny::showNotification(paste("Error plotting Diag 2 data:", e$message), type = "error")
       return(NULL)
     })
-    
-    
   })
-  
-  geoChartData1 <- reactive({
-    lat_longs <- req(processedGeoData())
-    tryCatch({
-      geoPlot1 <- qmplot(longitude, latitude, data = lat_longs, colour = I("red"), maptype = "toner-lite", zoom = 5)
-      #ggsave("plots/BCSB_locations.png", height = 6, width = 6, dpi = 600)
-      return(geoPlot1)
-      
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Geog 1 data:", e$message), type = "error")
-      return(NULL)
-    })
-    
-    
-  })
-  
+
   geoChartData2 <- reactive({
     lat_longs <- req(processedGeoData())
     tryCatch({
-      lat_longs_CUS <- lat_longs |> 
-        filter(!currentstate %in% c("AK", "HI", "Alaska", "Hawaii"))
-      geoPlot2 <- qmplot(longitude, latitude, data = lat_longs_CUS, colour = I("red"), maptype = "toner-lite", zoom = 5)
+      geoPlot2 <- leaflet(data = lat_longs) %>%
+        addTiles() %>%  
+        addCircleMarkers(~longitude, ~latitude, color = "red", radius = 3) %>%
+        setView(lng = mean(lat_longs$longitude, na.rm = TRUE), 
+                lat = mean(lat_longs$latitude, na.rm = TRUE), zoom = 5) 
       return(geoPlot2)
       
     }, error = function(e) {
@@ -204,41 +165,8 @@ server <- function(input, output) {
       shiny::showNotification(paste("Error plotting Geog 2 data:", e$message), type = "error")
       return(NULL)
     })
-    
-    
   })
-  
-  geoChartData3 <- reactive({
-    lat_longs <- req(processedGeoData())
-    tryCatch({
-      lat_longs_CA <- lat_longs[grepl("^ca", ignore.case = T, lat_longs$currentstate), ]
-      geoPlot3 <- qmplot(longitude, latitude, data = lat_longs_CA, colour = I("red"), maptype = "toner-lite", zoom = 8)
-      return(geoPlot3)
-      
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Geog 3 data:", e$message), type = "error")
-      return(NULL)
-    })
-    
-    
-  })
-  
-  geoChartData4 <- reactive({
-    lat_longs <- req(processedGeoData())
-    tryCatch({
-      lat_longs_LA <- lat_longs[lat_longs$currentzip %in% 91001:93000, ] 
-      geoPlot4 <- qmplot(longitude, latitude, data = lat_longs_LA, colour = I("red"), maptype = "toner-lite", zoom = 10)
-      return(geoPlot4)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Geog 4 data:", e$message), type = "error")
-      return(NULL)
-    })
-    
-    
-  })
-  
+
   demogPieChart1Data <- reactive({
     bar_data <- req(processedDemoData())
     tryCatch({
@@ -294,7 +222,6 @@ server <- function(input, output) {
     })
   })
   
-  
   pieChartClin1Data <- reactive({
     clin_dat <- req(processedClinData())
     # Generate first clinical data pie chart
@@ -305,7 +232,6 @@ server <- function(input, output) {
       # Handle the error gracefully
       shiny::showNotification(paste("Error plotting Clin data:", e$message), type = "error")
       return(NULL)
-    
     })
   }) 
   
@@ -319,7 +245,6 @@ server <- function(input, output) {
       # Handle the error gracefully
       shiny::showNotification(paste("Error plotting Clin 2 data:", e$message), type = "error")
       return(NULL)
-      
     })
   }) 
 
@@ -329,7 +254,6 @@ server <- function(input, output) {
     pieChart1Data()
   })
   
-  
   output$histChartDiag <- renderPlot({
     DiagChartData1()
   })
@@ -338,7 +262,6 @@ server <- function(input, output) {
     DiagChartData2()
   })
   
-  
   output$pieChart2 <- renderPlot({
     pieChart2Data()
   })
@@ -346,7 +269,6 @@ server <- function(input, output) {
   output$pieChartClin1 <- renderPlot({
     pieChartClin1Data()
   })
-  
   
   output$pieChartClin2 <- renderPlot({
     pieChartClin2Data()
@@ -360,21 +282,16 @@ server <- function(input, output) {
     demogPieChart2Data()
   })
   
-  #output$GeoChart1 <- renderPlot({
-  #  geoChartData1()
-  #})
-  
- # output$GeoChart2 <- renderPlot({
-  #  geoChartData2()
-  #})
-  
-  #output$GeoChart3 <- renderPlot({
-  #  geoChartData3()
- # })
-  #output$GeoChart4 <- renderPlot({
-  #  geoChartData4()
-#  })
+  output$GeoChart2 <- renderLeaflet({
+    geoChartData2()
+  })
 
+  #observeEvent(input$mainTabset, {
+  #  if(input$mainTabset == "Geographic Data") {
+  #    leafletProxy("GeoChart2", session = session ) %>% invalidateSize()
+  #  }
+  #}, ignoreNULL = TRUE)
+  
 }
 
 # Run the application 

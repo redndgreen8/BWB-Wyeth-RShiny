@@ -70,7 +70,7 @@ getDemogInfo <- function(demog_str) {
 
 }
 
-demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_2.15.24.csv")
+#demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_2.15.24.csv")
 
 
 getRacePie <- function(race_df){
@@ -122,7 +122,7 @@ getRacePie <- function(race_df){
   return(gp)
 
 }
-getRacePie(demog_dat$race_df)
+#getRacePie(demog_dat$race_df)
 
 
 getRaceBar <- function(race_df){
@@ -143,7 +143,7 @@ getRaceBar <- function(race_df){
   #ggsave("plots/BCSB_race_barchart.png", height = 8, width = 4)
 }
 
-getRaceBar(demog_dat$race_df)
+#getRaceBar(demog_dat$race_df)
 
 getEduPie <- function(edu_df){
   
@@ -192,7 +192,7 @@ getEduPie <- function(edu_df){
   return(gp)
   
 }
-getEduPie(demog_dat$edu_df)
+#getEduPie(demog_dat$edu_df)
 
 
 getEduBar <- function(edu_df){
@@ -211,5 +211,5 @@ getEduBar <- function(edu_df){
   return(gp)
     # ggsave("plots/BCSB_education_barchart.png", height = 8, width = 4)
 }
-getEduBar(demog_dat$edu_df)
+#getEduBar(demog_dat$edu_df)
 
