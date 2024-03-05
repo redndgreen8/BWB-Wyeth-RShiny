@@ -55,51 +55,6 @@ getEligiblity <- function(elig_str) {
 }
 
 
-getPieaRating <- function(ss, rl) {
-  df <- ss |> 
-    dplyr::reframe(count = as.numeric(table(Race)),
-                   Race = names(table(Race)),
-                   total = dplyr::n()) |>
-    dplyr::mutate(pct = count/total,
-                  Race = factor(Race, levels = rl)) |> 
-    dplyr::arrange(Race)
-  
-  df2 <- df |> 
-    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
-                  pos = pct/2 + dplyr::lead(csum, 1),
-                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
-                  label = paste0("N=", count, "\n", round(pct*100, 1), "%")) 
-  
-  df3 <- df |> 
-    dplyr::summarize(n = paste0("N=", sum(count)))
-  
-  gp <- ggplot(df, aes(x = "" , y = pct, fill = fct_inorder(Race))) +
-    geom_col(width = 1, color = 1, size = 0.5) +
-    coord_polar(theta = "y") +
-    scale_fill_brewer(palette = "Set3") +
-    geom_label_repel(data = df2,
-                     aes(y = pos, label = label),
-                     size = 3.75, 
-                     nudge_x = 1,
-                     show.legend = FALSE, 
-                     label.padding = unit(0.75, "mm")) +
-    geom_text(data=df3, x = -1.15, y = 0, aes(label = n), 
-              colour = "black", inherit.aes = F, parse = F, size = 8) + 
-    theme_DB() +
-    ylab("") + 
-    xlab("") +
-    theme(axis.text = element_blank(),
-          axis.ticks = element_blank(),
-          panel.grid.major.y = element_blank(),
-          strip.text = element_text(size = 15, face = "bold"),
-          legend.text = element_text(size = 15, face = "bold"),
-          legend.title = element_blank()) +
-    guides(fill = guide_legend(nrow = 2, byrow = T))
-  gp
-  return(list(gp = gp, df = df))
-}
-
-
 getPieComb <- function(ss, rl) {
   df <- ss |> 
     dplyr::reframe(count = as.numeric(table(Race)),
@@ -144,7 +99,7 @@ getPieComb <- function(ss, rl) {
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
     ggtitle("Demographic Distribution of all Web Eligibility Survey Entries") +   #
     labs(subtitle = "Does not include clinic recruitment information")
-  gp
+  #gp
   return(list(gp = gp, df = df))
 }
 
@@ -199,7 +154,7 @@ getPie <- function(ss, rl) {
 Eligible vs. Ineligible
  Web Eligibility Survey Entries
 ")  
-  gp
+  #gp
   return(list(gp = gp, df = df))
 }
 

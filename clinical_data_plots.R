@@ -58,7 +58,7 @@ getClinDatSimple <- function(clin_str) {
        #  lab = ifelse(grepl("^NA", lab), "UNKNOWN", lab)) %>% 
   #filter(lab != "UNKNOWN")
 
-
+#missing_clin <- getClinMissing(clind)
 
 
 getClinMissing <-function(clindat) {
@@ -116,8 +116,10 @@ getClinMissing <-function(clindat) {
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
     ggtitle("Clinical information entered for participants consented and active on study.") +   #
     labs(subtitle = "There is a natural backlog that occurs due to the nature of the OSH record 
-         request process through record review and data entry into the CRF.")
-  return(gp)
+         request process through record review and data entry into the CRF.",
+        caption ="***N's from Subtype and Clinical Info might not match 
+         since some records have partial information entered.(i.e. No Subtype info)")
+  return(list(gp=gp,miss=df.missing))
 #  ggsave("clinical_info_plots/frac_with_any_clinical_data.png",
   #gp, height = 6, width = 6)
 }
