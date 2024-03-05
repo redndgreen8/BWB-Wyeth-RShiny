@@ -81,13 +81,13 @@ server <- function(input, output, session) {
       # Apply getEligiblity and additional data transformations
       ss.bcsb.ef <- getEligiblity("Website Eligibiity Survey Entries_2.8.24.csv") |> 
         dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
-        dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "UNKNOWN", Race),
-                      Race = toupper(Race),
-                      Race = trimws(Race),
-                      Race = ifelse(grepl("BLACK|AFRICAN", Race), "BLACK", Race),
-                      Race = ifelse(grepl("KOREAN|CHINESE|ASIAN|ARAB", Race), "ASIAN", Race),
-                      Race = ifelse(grepl("PACIFIC|ISLANDER|NATIVE|INDIAN|ALASKAN", Race), "NA.AMERI/P.ISLA", Race),
-                      Race = ifelse(grepl("MEXICAN|CENTRAL|HISPANIC", Race), "HISPANIC", Race),
+        dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race),
+                     # Race = toupper(Race),
+                    #  Race = trimws(Race),
+                    #  Race = ifelse(grepl("BLACK|AFRICAN", Race), "BLACK", Race),
+                    #  Race = ifelse(grepl("KOREAN|CHINESE|ASIAN|ARAB", Race), "ASIAN", Race),
+                    #  Race = ifelse(grepl("PACIFIC|ISLANDER|NATIVE|INDIAN|ALASKAN", Race), "NA.AMERI/P.ISLA", Race),
+                    #  Race = ifelse(grepl("MEXICAN|CENTRAL|HISPANIC", Race), "HISPANIC", Race),
                       diagnosis = ifelse(is.eligible, "BCSB ELIGIBLE", "BCSB INELIGIBLE")) |> 
         dplyr::select(Race, diagnosis)
       
@@ -199,7 +199,7 @@ server <- function(input, output, session) {
     ef_data <- req(processedData())
     tryCatch({
       # Assuming getPie function generates the first pie chart
-      res <- getPie(ef_data, rl = rLevels)  # Update with appropriate parameters
+      res <- getPie(ef_data)  # Update with appropriate parameters
       return(res$gp)
     }, error = function(e) {
       # Handle the error gracefully
@@ -213,7 +213,7 @@ server <- function(input, output, session) {
     ef_data <- req(processedData())
     tryCatch({
       # Assuming getPieComb function generates the second pie chart
-      res <- getPieComb(ef_data, rl = rLevels)  # Update with appropriate parameters
+      res <- getPieComb(ef_data)  # Update with appropriate parameters
       return(res$gp)
     }, error = function(e) {
       # Handle the error gracefully

@@ -114,7 +114,7 @@ getRacePie <- function(race_df){
           legend.title = element_blank(),
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
-    guides(fill = guide_legend(nrow = 3, byrow = T)) +
+    guides(fill = guide_legend(ncol = 2)) +
     ggtitle("Racial demographic distribution of all participants 
               enrolled and completed surveys") + 
     labs(subtitle = "This includes participants recruited from the Web and Clinics.",

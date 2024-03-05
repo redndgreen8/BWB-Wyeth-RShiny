@@ -55,26 +55,26 @@ getEligiblity <- function(elig_str) {
 }
 
 
-getPieComb <- function(ss, rl) {
+getPieComb <- function(ss) {  # Removed 'rl' from the function parameters
   df <- ss |> 
-    dplyr::reframe(count = as.numeric(table(Race)),
-                   Race = names(table(Race)),
-                   total = dplyr::n()) |>
-    dplyr::mutate(pct = count/total,
-                  Race = factor(Race, levels = rl)) |> 
-    dplyr::arrange(Race)
+    dplyr::count(Race) |>  # Simplified counting using dplyr::count
+    dplyr::mutate(pct = n / sum(n))  # Calculate percentage
+  
+  # Removed the factor level setting using 'rl'
+  df <- df |> 
+    dplyr::arrange(Race)  # Keeping the arrange in case ordering by Race is desired
   
   df2 <- df |> 
     dplyr::mutate(csum = rev(cumsum(rev(pct))), 
                   pos = pct/2 + dplyr::lead(csum, 1),
                   pos = dplyr::if_else(is.na(pos), pct/2, pos),
-                  label = paste0("N=", count, "\n", round(pct*100, 1), "%")) 
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%"))  # Changed 'count' to 'n' to reflect dplyr::count usage
   
   df3 <- df |> 
-    dplyr::summarize(n = paste0("N=", sum(count)))
+    dplyr::summarize(n = paste0("N=", sum(n)))  # Summarize total count
   
-  gp <- ggplot(df, aes(x = "" , y = pct, fill = fct_inorder(Race))) +
-    geom_col(width = 1, color = 1, size = 0.5) +
+  gp <- ggplot(df, aes(x = "" , y = pct, fill = Race)) +  # Removed fct_inorder since we're not specifying levels
+    geom_col(width = 1, color = "black", size = 0.5) +  # Changed color to black for consistency
     coord_polar(theta = "y") +
     scale_fill_brewer(palette = "Set3") +
     geom_label_repel(data = df2,
@@ -93,40 +93,42 @@ getPieComb <- function(ss, rl) {
           panel.grid.major.y = element_blank(),
           strip.text = element_text(size = 15, face = "bold"),
           legend.text = element_text(size = 15, face = "bold"),
-          legend.title = element_blank(),
+          legend.title = element_blank(), 
           plot.title = element_text(hjust = 0.5),  
-          plot.subtitle = element_text(hjust = 0.5)) +
-    guides(fill = guide_legend(nrow = 2, byrow = T)) +
-    ggtitle("Demographic Distribution of all Web Eligibility Survey Entries") +   #
+          plot.subtitle = element_text(hjust = 0.5),
+          legend.position = "none") +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Demographic Distribution of all Web Eligibility Survey Entries") +   
     labs(subtitle = "Does not include clinic recruitment information")
-  #gp
+  
   return(list(gp = gp, df = df))
 }
 
 
-getPie <- function(ss, rl) {
-  df <- ss |> 
-    dplyr::group_by(diagnosis) |> 
-    dplyr::reframe(count = as.numeric(table(Race)),
-                   Race = names(table(Race)),
-                   total = dplyr::n()) |>
-    dplyr::mutate(pct = count/total,
-                  Race = factor(Race, levels = rl)) |> 
-    dplyr::arrange(Race)
+getPie <- function(ss) {
+  df <- ss %>%
+    dplyr::count(diagnosis, Race) %>%
+    dplyr::group_by(diagnosis) %>%
+    dplyr::mutate(total = sum(n)) %>%
+    dplyr::mutate(pct = n / total) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(diagnosis, Race)
   
-  df2 <- df |> 
-    dplyr::group_by(diagnosis) |> 
+  df2 <- df %>%
+    dplyr::group_by(diagnosis) %>%
     dplyr::mutate(csum = rev(cumsum(rev(pct))), 
                   pos = pct/2 + dplyr::lead(csum, 1),
                   pos = dplyr::if_else(is.na(pos), pct/2, pos),
-                  label = paste0("N=", count, "\n", round(pct*100, 1), "%")) 
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%")) %>%
+    dplyr::ungroup()
   
-  df3 <- df |> 
-    dplyr::group_by(diagnosis) |> 
-    dplyr::summarize(n = paste0("N=", sum(count)))
+  df3 <- df %>%
+    dplyr::group_by(diagnosis) %>%
+    dplyr::summarize(n = paste0("N=", sum(n))) %>%
+    dplyr::ungroup()
   
-  gp <- ggplot(df, aes(x = "" , y = pct, fill = fct_inorder(Race))) +
-    geom_col(width = 1, color = 1, size = 0.5) +
+  gp <- ggplot(df, aes(x = "" , y = pct, fill = Race)) +
+    geom_col(width = 1, color = "black", size = 0.5) +
     facet_grid(cols = vars(diagnosis)) +
     coord_polar(theta = "y") +
     scale_fill_brewer(palette = "Set3") +
@@ -136,8 +138,8 @@ getPie <- function(ss, rl) {
                      nudge_x = 1,
                      show.legend = FALSE, 
                      label.padding = unit(0.75, "mm")) +
-    geom_text(data=df3, x = -1.15, y = 0, aes(label = n), 
-              colour = "black", inherit.aes = F, parse = F, size = 8) + 
+    geom_text(data = df3, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = FALSE, parse = FALSE, size = 8) + 
     theme_DB() +
     ylab("") + 
     xlab("") +
@@ -149,13 +151,13 @@ getPie <- function(ss, rl) {
           legend.title = element_blank(),
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
-    guides(fill = guide_legend(nrow = 2, byrow = T)) +
-    ggtitle("Demographic Distribution of
-Eligible vs. Ineligible
- Web Eligibility Survey Entries
-")  
-  #gp
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Demographic Distribution of 
+    Eligible vs. Ineligible 
+            Web Eligibility Survey Entries")  
+  
   return(list(gp = gp, df = df))
 }
+
 
 
