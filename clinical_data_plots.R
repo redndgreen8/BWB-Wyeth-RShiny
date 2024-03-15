@@ -202,25 +202,62 @@ getClinPie <- function(clindat) {
 
 
 
-getYrSinceDiagnosis <- function(dx_str) {
+getYrSinceDiagnosis <- function(dx_str, clindat) {
   cd <- read.csv(paste0( dx_str))
   
-  df.DxDate <- cd %>%
+  # Process cd (file_df)
+  na_rows <- cd %>% filter(is.na(dateconsentsignedbypt) & is.na(dateconsentsignedbypt_v2) & is.na(dateconsentsignedbypt_v2_v3))
+  df.DxDa <- cd %>%
     mutate(
       dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
       dateconsentsignedbypt_v2 = as.Date(dateconsentsignedbypt_v2),
       dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
-      EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, dateconsentsignedbypt_v2_v3, na.rm = TRUE),
-      breastcancerdiagdate = as.Date(breastcancerdiagdate),
-      #NewestConsentDate = as.Date(NewestConsentDate),
-      Days.since.Dx = EarliestConsentDate - breastcancerdiagdate,
+      EarliestConsentDate = pmin(dateconsentsignedbypt, 
+                                 dateconsentsignedbypt_v2, 
+                                 dateconsentsignedbypt_v2_v3, 
+                                 na.rm = TRUE),
+      breastcancerdiagdate = as.Date(breastcancerdiagdate)
+    ) %>%
+    filter(!is.na(EarliestConsentDate))
+  
+  # Process clindat (df)
+  multiple_dates_df <- clindat %>%
+    select(StudyID, BreastCancerDiagnosisDate) %>%
+    mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
+    filter(sapply(SplitDates, length) > 1)
+  
+  clindat <- clindat %>%
+    select(StudyID, BreastCancerDiagnosisDate) %>%
+    mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
+    filter(sapply(SplitDates, length) <= 1)
+  
+  # Left join cd and clindat
+  joined_df <- merge(df.DxDa, clindat, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
+  
+  # Address NA in diagnosisdate
+  joined_df <- joined_df %>%
+    mutate(BreastCancerDiagnosisDate = as.Date(BreastCancerDiagnosisDate, format = "%m/%d/%Y"),
+      diagnosisdate = ifelse(is.na(BreastCancerDiagnosisDate), breastcancerdiagdate, BreastCancerDiagnosisDate),
+      diagnosisdate = as.Date(diagnosisdate)) %>%
+    filter(!is.na(diagnosisdate))
+  
+  # Calculate years since diagnosis
+  joined_df <- joined_df %>%
+    mutate(
+      Days.since.Dx = EarliestConsentDate - diagnosisdate,
       Years.since.Dx = floor(Days.since.Dx / 365.25),
       Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", as.character(Years.since.Dx)),
-      lab = paste0(Years.since.Dx2, " YEARS")
-    ) %>%
-    filter(!is.na(Years.since.Dx2) & Years.since.Dx2 != "NA YEARS")
-    
-  df <- df.DxDate %>% 
+      lab = paste0(Years.since.Dx2, " YEARS")) %>%
+  filter(!is.na(Years.since.Dx2) & Years.since.Dx2 != "NA YEARS")
+  
+  outlier_days_since_dx <- joined_df %>%
+    filter(Days.since.Dx < 0 | Days.since.Dx >= 3652.5)
+  
+  
+  joined_df <- joined_df %>%
+    filter(Days.since.Dx >= 0)
+  
+  df <- joined_df %>% 
     # dplyr::group_by(lab) |> 
     dplyr::reframe(count = as.numeric(table(lab)),
                    lab = names(table(lab)),
@@ -271,15 +308,15 @@ getYrSinceDiagnosis <- function(dx_str) {
 
   yearBreaks <- seq(0, 1e5, 365.25)
   names(yearBreaks) <- paste0(1:length(yearBreaks), "Y")
-  gp2 <- ggplot(df.DxDate, aes(x = Days.since.Dx)) +
+  gp2 <- ggplot(joined_df, aes(x = Days.since.Dx)) +
     geom_histogram(binwidth = 100, fill = "lightgray", color = "black") +
     ylab("Number of Patients") +
     xlab("Years Since Diagnosis") +
-    scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks)) +
+    scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks),  limits = c(0, 3652.5) ) +
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
   
-  return(list(gp = gp, gp2 = gp2, df=df.DxDate))
-  
+  return(list(noConsent = na_rows, outlier_days = outlier_days_since_dx, multiple_dates = multiple_dates_df, df.DxDate = joined_df, gp = gp, gp2 = gp2))
+
 }
 
 #dx_str <- "HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv"
