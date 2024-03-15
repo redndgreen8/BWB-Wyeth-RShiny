@@ -127,9 +127,9 @@ server <- function(input, output, session) {
   })
   
   DiagChartData1 <- reactive({
-    #clin <- req(processedClinData())
+    clin <- req(processedClinData())
     tryCatch({
-      Diag <- getYrSinceDiagnosis("HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv")
+      Diag <- getYrSinceDiagnosis("HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv",clin)
       return(Diag$gp)
     }, error = function(e) {
       # Handle the error gracefully
@@ -139,9 +139,9 @@ server <- function(input, output, session) {
   })
   
   DiagChartData2 <- reactive({
-    #clin <- req(processedClinData())
+    clin <- req(processedClinData())
     tryCatch({
-      Diag <- getYrSinceDiagnosis("HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv")
+      Diag <- getYrSinceDiagnosis("HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv",clin)
       return(Diag$gp2)
     }, error = function(e) {
       # Handle the error gracefully
