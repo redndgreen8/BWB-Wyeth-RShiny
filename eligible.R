@@ -34,6 +34,7 @@ isEligible <- function(ef) {
   return(eli)
 }
 
+#elig_str <- "BCSB Web eligibility survey_3.15.24.csv"
 getEligiblity <- function(elig_str) {
   ef <- read.csv(paste0( elig_str))
   
@@ -49,7 +50,7 @@ getEligiblity <- function(elig_str) {
   ef <- ef[!duplicated(ef[, 5]),]
   
   ef$is.eligible <- isEligible(ef)
-#  write.csv(ef, file = "post_dup.csv", row.names = FALSE)
+  #write.csv(ef, file = "post_dup.csv", row.names = FALSE)
   
   return(ef)
 }

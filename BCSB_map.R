@@ -89,7 +89,7 @@ get_LatLong <- function(residence_str) {
 
 
 
-ll <- get_LatLong("HS2100716BodourSalhi-ResidenceHistory_DATA_2024-02-08_1653.csv")
+#ll <- get_LatLong("HS2100716BodourSalhi-ResidenceHistory_DATA_2024-02-08_1653.csv")
 #qmplot(longitude, latitude, data = ll, colour = I("red"), maptype = "toner-lite", zoom = 5)
 #qmplot(longitude, latitude, data = ll, colour = I("red"), source = "osm", zoom = 5)
 #m_full <- leaflet(data = ll) %>%

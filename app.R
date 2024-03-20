@@ -22,7 +22,7 @@ library(leaflet)
 
 
 ui <- fluidPage(
-  titlePanel("BCSB Dashboard"),
+  titlePanel("BCSB Dashboard - March 19, 2024"),
   
     mainPanel(
       tabsetPanel(id = "mainTabset",
@@ -30,20 +30,20 @@ ui <- fluidPage(
                  plotOutput("pieChart2"),
                  plotOutput("pieChart1")
         ),
-        tabPanel("Years since Diagnosis",
-                 plotOutput("histChartDiag"),
-                 plotOutput("pieChartDiag")
-        ),
         tabPanel("Demographics",
                  plotOutput("demogPieChart1"),
                  plotOutput("demogPieChart2")
+        ),
+        tabPanel("Years since Diagnosis",
+                 plotOutput("histChartDiag"),
+                 plotOutput("pieChartDiag")
         ),
         tabPanel("Molecular Subtype Data",
                  plotOutput("pieChartClin1"),
                  plotOutput("pieChartClin2")
         ),
         tabPanel("Geographic Data",
-                 leafletOutput("GeoChart2")
+                 leafletOutput("GeoChart2", width = "1400px", height =  "800px")
         )
       )
     )
@@ -62,11 +62,11 @@ server <- function(input, output, session) {
   .dir <- "~/Documents/" 
   
   # Define race levels for the plots
-  rLevels <- c("ASIAN", "BLACK", "HISPANIC", "WHITE", "MIXED", "NA.AME/P.ISLA", "UNKNOWN")
+  #rLevels <- c("ASIAN", "BLACK", "HISPANIC", "WHITE", "MIXED", "NA.AME/P.ISLA", "UNKNOWN")
   
   processedGeoData <- reactive({
     tryCatch({
-      lat_longs <- get_LatLong("HS2100716BodourSalhi-ResidenceHistory_DATA_2024-02-08_1653.csv")
+      lat_longs <- get_LatLong("RedCap_out.csv")
       return(lat_longs)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
@@ -79,7 +79,7 @@ server <- function(input, output, session) {
   processedData <- reactive({
     tryCatch({
       # Apply getEligiblity and additional data transformations
-      ss.bcsb.ef <- getEligiblity("Website Eligibiity Survey Entries_2.8.24.csv") |> 
+      ss.bcsb.ef <- getEligiblity("BCSB Web eligibility survey_3.15.24.csv") |> 
         dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
         dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race),
                      # Race = toupper(Race),
@@ -117,7 +117,7 @@ server <- function(input, output, session) {
   
   processedDemoData <- reactive({
     tryCatch({
-      demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_2.15.24.csv")
+      demog_dat <- getDemogInfo("BCSB_REDCap_DemographicsRaceEduc_variable labels_3.18.24.csv")
       return(demog_dat)
     }, error = function(e) {
       # Return NULL or a default value if there's an error

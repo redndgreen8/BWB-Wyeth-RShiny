@@ -9,6 +9,7 @@ getDemogInfo <- function(demog_str) {
   df <- read.csv(demog_str)
   
   names(df)[1] <- "ID"
+  
   df.race <- select(df, ID, contains("What.is.your.race"))
   names(df.race) <- gsub(".*choice\\.|\\.$", "", names(df.race))
   df.race <- lapply(as.list(df.race), function(x) {
@@ -18,24 +19,42 @@ getDemogInfo <- function(demog_str) {
   }) |> bind_cols()
   
   df.race <- df.race %>% 
-    gather(key, val, -ID) %>%  
-    group_by(ID) |> 
+    gather(key, val, -ID) 
+  
+  df.race <- df.race %>%  
+    group_by(ID) 
+  
+  df.race <- df.race |> 
     mutate(val = as.logical(val),
            Race = paste0(key[val], collapse = ", "),
            Race = ifelse(sum(val) > 1, "Multiple", Race),
            Race = ifelse(Race == "", "I prefer Not to Answer", Race),
            Race = gsub("\\.", " ", Race),
-           Race = ifelse(Race %in% "I prefer Not to Answer", "No race indicated", Race)) |> 
+           Race = ifelse(Race %in% "I prefer Not to Answer", "No race indicated", Race)) 
+  
+  df.race <- df.race |> 
     select(-key, -val) |> 
     unique()
+
+    #df.race <- df.race |> 
+  #  group_by(ID) |>
+    #summarise(Race = paste(unique(Race), collapse = ", "))
+  
+#  missing_rows <- anti_join(df, df.race, by = c("ID"))
+  
+ #  duplicated_rows <- df.race[duplicated(df.race) | duplicated(df.race, fromLast = TRUE), ]
+  
+  
   
   #saveRDS(df.race, "misc/race_info.rds")
+  dfrace <- df.race
   
   levelsrace <- df.race |> 
     group_by(Race) |> 
     summarize(n = n()) |> 
     arrange(-n) |> 
     pull(Race)
+  
   
   df.race <- df.race |> 
     select(-ID) |> 
@@ -52,6 +71,8 @@ getDemogInfo <- function(demog_str) {
   df.edu <- df.edu |> 
     mutate(Education = ifelse(Education == "", "Unknown", Education)) 
   
+  dfedu <- df.edu
+  
   levelsedu <- df.edu |> 
     group_by(Education) |> 
     summarize(n = n()) |> 
@@ -66,7 +87,7 @@ getDemogInfo <- function(demog_str) {
   
   df.edu$Education <- factor(df.edu$Education, levelsedu)
   
-  return(list(race_df=df.race, edu_df=df.edu))
+  return(list(race_df=df.race, edu_df=df.edu, r_df=dfrace, e_df=dfedu))
 
 }
 
@@ -122,7 +143,6 @@ getRacePie <- function(race_df){
   return(gp)
 
 }
-#getRacePie(demog_dat$race_df)
 
 
 getRaceBar <- function(race_df){
@@ -192,7 +212,6 @@ getEduPie <- function(edu_df){
   return(gp)
   
 }
-#getEduPie(demog_dat$edu_df)
 
 
 getEduBar <- function(edu_df){

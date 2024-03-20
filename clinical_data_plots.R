@@ -61,11 +61,11 @@ getClinDatSimple <- function(clin_str) {
 #missing_clin <- getClinMissing(clind)
 
 
-getClinMissing <-function(clindat) {
+getClinMissing <-function(clind) {
   
-  df.missing <- data.frame(ID = clindat$StudyID,
-                           missing = rowSums(is.na(clindat))) |> 
-    dplyr::mutate(all.missing = missing == ncol(clindat)-1,
+  df.missing <- data.frame(ID = clind$StudyID,
+                           missing = rowSums(is.na(clind))) |> 
+    dplyr::mutate(all.missing = missing == ncol(clind)-1,
                   lab = ifelse(all.missing, "NO CLINICAL INFO", 
                                "CLINICAL INFO OBTAINED"))
   df <- df.missing |> 
@@ -124,28 +124,37 @@ getClinMissing <-function(clindat) {
   #gp, height = 6, width = 6)
 }
 
-getClinPie <- function(clindat) {
+getClinPie <- function(clind) {
   
-  df <- clindat %>%
+  df <- clind %>%
     mutate(RS2 = ifelse(is.na(RS2), "UNKNOWN", RS2),
-           RS2 = ifelse(grepl(";", RS2), "MULTIFOCAL", RS2)) %>%
-    select(StudyID, RS2) %>%
+           RS2 = ifelse(grepl(";", RS2), "MULTIFOCAL", RS2))
+    
+  df <- df %>%  
+    select(StudyID, RS2)
+  
+  df <- df %>%
     mutate(
       ER_Pos = grepl("ER\\+", RS2),
       PR_Pos = grepl("PR\\+", RS2),
       HER2_Pos = grepl("HER2\\+", RS2),
       ER_Neg = grepl("ER\\-", RS2),
       PR_Neg = grepl("PR\\-", RS2),
-      HER2_Neg = grepl("HER2\\-", RS2)
-    ) %>%
+      HER2_Neg = grepl("HER2\\-", RS2))
+  
+  df <- df %>%
     mutate(RS3 = case_when(
       ER_Pos & PR_Pos & HER2_Pos ~ "Triple Positive",
+      (ER_Pos | PR_Pos) & HER2_Pos ~ "Triple Positive",      
       ER_Neg & PR_Neg & HER2_Neg ~ "Triple Negative",
-      ER_Pos & HER2_Neg ~ "HR+/HER2-",
-      ER_Neg & HER2_Pos ~ "HR-/HER2+",
+      (ER_Pos | PR_Pos) & HER2_Neg ~ "HR+/HER2-",
+      ER_Neg & PR_Neg & HER2_Pos ~ "HR-/HER2+",
       RS2 == "MULTIFOCAL" ~ "MULTIFOCAL",
       TRUE ~ "UNKNOWN"
-    )) %>%
+    )) 
+  
+  
+  df <- df %>%
     filter(RS3 != "UNKNOWN") %>%
     group_by(RS3) %>%
     summarize(count = n(), .groups = 'drop') %>%
@@ -202,7 +211,7 @@ getClinPie <- function(clindat) {
 
 
 
-getYrSinceDiagnosis <- function(dx_str, clindat) {
+getYrSinceDiagnosis <- function(dx_str, clind) {
   cd <- read.csv(paste0( dx_str))
   
   # Process cd (file_df)
@@ -221,18 +230,18 @@ getYrSinceDiagnosis <- function(dx_str, clindat) {
     filter(!is.na(EarliestConsentDate))
   
   # Process clindat (df)
-  multiple_dates_df <- clindat %>%
+  multiple_dates_df <- clind %>%
     select(StudyID, BreastCancerDiagnosisDate) %>%
     mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
     filter(sapply(SplitDates, length) > 1)
   
-  clindat <- clindat %>%
+  clind <- clind %>%
     select(StudyID, BreastCancerDiagnosisDate) %>%
     mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
     filter(sapply(SplitDates, length) <= 1)
   
   # Left join cd and clindat
-  joined_df <- merge(df.DxDa, clindat, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
+  joined_df <- merge(df.DxDa, clind, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
   
   # Address NA in diagnosisdate
   joined_df <- joined_df %>%
@@ -303,18 +312,31 @@ getYrSinceDiagnosis <- function(dx_str, clindat) {
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
     ggtitle("Years since diagnosis to Consent date") +   #
-    labs(subtitle = "Data for participants on study who have completed Baseline Session 
-         (signed consent, completed surveys, blood received, and clinical data entered)")
+    labs(subtitle = "Data for participants on study who have completed Baseline Session, 
+         signed consent and completed surveys. 
+         (blood sample and/or clinical data may be pending)")
 
-  yearBreaks <- seq(0, 1e5, 365.25)
-  names(yearBreaks) <- paste0(1:length(yearBreaks), "Y")
+  #print(gp)
+  
+  days_in_year <- 365.25
+  
+  joined_df$Days.since.Dx <- as.numeric(joined_df$Days.since.Dx)
+  max_days_since_dx <- as.numeric(max(joined_df$Days.since.Dx))
+  
+  
+  yearBreaks <- seq(0, max(joined_df$Days.since.Dx) + days_in_year, by = days_in_year)
+  names(yearBreaks) <- paste0(0:(length(yearBreaks) - 1), "Y")
+  
+  # Create the histogram
   gp2 <- ggplot(joined_df, aes(x = Days.since.Dx)) +
-    geom_histogram(binwidth = 100, fill = "lightgray", color = "black") +
+    geom_histogram(binwidth = days_in_year, fill = "lightgray", color = "black", 
+                 boundary = 0) +
     ylab("Number of Patients") +
     xlab("Years Since Diagnosis") +
     scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks),  limits = c(0, 3652.5) ) +
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
   
+  #print(gp2)
   return(list(noConsent = na_rows, outlier_days = outlier_days_since_dx, multiple_dates = multiple_dates_df, df.DxDate = joined_df, gp = gp, gp2 = gp2))
 
 }
