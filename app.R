@@ -30,6 +30,16 @@ ui <- fluidPage(
                  plotOutput("pieChart2"),
                  plotOutput("pieChart1")
         ),
+        tabPanel("Enrollment",
+                 fluidRow(
+                   column(4, plotOutput("PCOC")),
+                   column(8, plotOutput("PCO"))
+                 ),
+                 fluidRow(
+                   column(4,plotOutput("PCRC")),  
+                   column(8, plotOutput("PCR"))
+                 )
+        ),
         tabPanel("Demographics",
                  plotOutput("demogPieChart1"),
                  plotOutput("demogPieChart2")
@@ -43,7 +53,7 @@ ui <- fluidPage(
                  plotOutput("pieChartClin2")
         ),
         tabPanel("Geographic Data",
-                 leafletOutput("GeoChart2", width = "1400px", height =  "800px")
+                 leafletOutput("GeoChart2", width = "2500px", height =  "1400px")
         )
       )
     )
@@ -55,6 +65,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   source("theme_DB.R")
   source("eligible.R")
+  source("enrollment.R")
   source("clinical_data_plots.R")
   source("demographic_plots.R")
   source("BCSB_map.R")
@@ -115,9 +126,20 @@ server <- function(input, output, session) {
     })
   })
   
+  processedPhoneConsult <- reactive({
+    tryCatch({
+      PC <- getPhoneConsult("HS2100716BodourSalhi-EnrollmentSummary_DATA_LABELS_2024-03-22_1440.csv") 
+      return(PC)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Phone Consult:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   processedDemoData <- reactive({
     tryCatch({
-      demog_dat <- getDemogInfo("BCSB_REDCap_DemographicsRaceEduc_variable labels_3.18.24.csv")
+      demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_3.19.24.csv")
       return(demog_dat)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
@@ -126,10 +148,60 @@ server <- function(input, output, session) {
     })
   })
   
+   PCOpieComb <- reactive({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getPCFpieComb(PC)
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting PCO Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+   
+   PCOpie <- reactive({
+     PC <- req(processedPhoneConsult())
+     tryCatch({
+       PCO <- getPCFpie(PC)
+       return(PCO)
+     }, error = function(e) {
+       # Handle the error gracefully
+       shiny::showNotification(paste("Error plotting PCO data:", e$message), type = "error")
+       return(NULL)
+     })
+   })
+   
+   PCRpieComb <- reactive({
+     PC <- req(processedPhoneConsult())
+     tryCatch({
+       PCO <- getPCRpieComb(PC)
+       return(PCO)
+     }, error = function(e) {
+       # Handle the error gracefully
+       shiny::showNotification(paste("Error plotting PCR Comb data:", e$message), type = "error")
+       return(NULL)
+     })
+   })
+   
+   PCRpie <- reactive({
+     PC <- req(processedPhoneConsult())
+     tryCatch({
+       PCO <- getPCRpie(PC)
+       return(PCO)
+     }, error = function(e) {
+       # Handle the error gracefully
+       shiny::showNotification(paste("Error plotting PCR data:", e$message), type = "error")
+       return(NULL)
+     })
+   })
+  
+  
+  
   DiagChartData1 <- reactive({
     clin <- req(processedClinData())
     tryCatch({
-      Diag <- getYrSinceDiagnosis("HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv",clin)
+      Diag <- getYrSinceDiagnosis("RedCap_out.csv",clin)
       return(Diag$gp)
     }, error = function(e) {
       # Handle the error gracefully
@@ -279,13 +351,21 @@ server <- function(input, output, session) {
   })
 
   output$demogPieChart2 <- renderPlot({
-    demogPieChart2Data()
-  })
+    demogPieChart2Data()  })
   
   output$GeoChart2 <- renderLeaflet({
     geoChartData2()
   })
-
+  
+  output$PCOC <- renderPlot({
+    PCOpieComb()  })
+  output$PCO <- renderPlot({
+    PCOpie()  })
+  output$PCRC <- renderPlot({
+    PCRpieComb()  })
+  output$PCR <- renderPlot({
+    PCRpie()  })
+  
   #observeEvent(input$mainTabset, {
   #  if(input$mainTabset == "Geographic Data") {
   #    leafletProxy("GeoChart2", session = session ) %>% invalidateSize()
