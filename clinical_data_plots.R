@@ -2,12 +2,13 @@ library(ggplot2)
 library(tidyverse)
 library(ggrepel)
 source("theme_DB.R")
+source("str_list.R")
 
 .dir <- "~/Documents/" 
 
 
-getClinDatSimple <- function(clin_str) {
-  cd <- read.csv(paste0( clin_str))
+getClinDatSimple <- function(master_str) {
+  cd <- read.csv(paste0( master_str))
   cd[cd == ""] <- NA
   cd$RS2 <- strsplit(cd$RS, ", ") |> 
     purrr::map(function(x) {
@@ -46,7 +47,7 @@ getClinDatSimple <- function(clin_str) {
   }, mc.cores = 8) |> dplyr::bind_rows()
   return(cd.u)
 }
-#clin_str <- "MasterList_2.8.24.csv"
+#clin_str <- "MasterList_Clinical Information_3.19.24.csv"
 #clind <- getClinDatSimple(clin_str)
 #df.DxDate <- clind %>% 
  # select(StudyID, date.Dx) %>% 
@@ -206,10 +207,11 @@ getClinPie <- function(clind) {
     with different subtypes
          HR - Hormone Receptor (ER/PR)")  #
   return(gp)
-  #ggsave("clinical_info_plots/RS_pie_chart.png", gp, height = 7, width = 7)
+  ggsave("RS_pie_chart.png", gp, height = 9, width = 16, dpi = 600)
 }
 
 
+#clind <- getClinDatSimple(master_str)
 
 getYrSinceDiagnosis <- function(dx_str, clind) {
   cd <- read.csv(paste0( dx_str))

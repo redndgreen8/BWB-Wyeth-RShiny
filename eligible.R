@@ -1,6 +1,7 @@
 #library(bsseq)
 library(ggplot2)
 source("theme_DB.R")
+source("str_list.R")
 
 library(parallel)
 library(xml2)
@@ -101,6 +102,7 @@ getPieComb <- function(ss) {  # Removed 'rl' from the function parameters
     guides(fill = guide_legend(ncol = 2)) +
     ggtitle("Demographic Distribution of all Web Eligibility Survey Entries") +   
     labs(subtitle = "Does not include clinic recruitment information")
+  ggsave("Elig_comb.png", gp, height = 9, width = 16, dpi = 600)
   
   return(list(gp = gp, df = df))
 }
@@ -156,6 +158,7 @@ getPie <- function(ss) {
     ggtitle("Demographic Distribution of 
     Eligible vs. Ineligible 
             Web Eligibility Survey Entries")  
+  ggsave("Elig.png", gp, height = 9, width = 16, dpi = 600)
   
   return(list(gp = gp, df = df))
 }

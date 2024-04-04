@@ -22,27 +22,42 @@ library(leaflet)
 
 
 ui <- fluidPage(
-  titlePanel("BCSB Dashboard - March 19, 2024"),
-  
+  titlePanel("BCSB Dashboard - April 4, 2024"),
     mainPanel(
       tabsetPanel(id = "mainTabset",
-        tabPanel("Eligibility",
+        tabPanel("Web Eligibility",
                  plotOutput("pieChart2"),
                  plotOutput("pieChart1")
         ),
-        tabPanel("Enrollment",
+        tabPanel("Screening",
                  fluidRow(
-                   column(4, plotOutput("PCOC")),
-                   column(8, plotOutput("PCO"))
+                   column(9, plotOutput("PCO")),
+                   column(3, plotOutput("PCOC"))
                  ),
                  fluidRow(
-                   column(4,plotOutput("PCRC")),  
-                   column(8, plotOutput("PCR"))
+                   column(9,plotOutput("PCR")),  
+                   column(3, plotOutput("PCRC"))
                  )
         ),
+        tabPanel("Enrollment",
+                 fluidRow(
+                   column(9, plotOutput("ES")),
+                   column(3, plotOutput("ESC"))
+                 ),
+                 fluidRow(
+                   column(9,plotOutput("EB")),  
+                   column(3, plotOutput("EBC"))
+                 )      
+        ),
         tabPanel("Demographics",
-                 plotOutput("demogPieChart1"),
-                 plotOutput("demogPieChart2")
+                 fluidRow(
+                   column(9, plotOutput("DR")),
+                   column(3, plotOutput("DRC"))
+                 ),
+                 fluidRow(
+                   column(9, plotOutput("DE")),
+                   column(3, plotOutput("DEC"))
+                 )
         ),
         tabPanel("Years since Diagnosis",
                  plotOutput("histChartDiag"),
@@ -66,9 +81,11 @@ server <- function(input, output, session) {
   source("theme_DB.R")
   source("eligible.R")
   source("enrollment.R")
+  source("screening.R")
   source("clinical_data_plots.R")
   source("demographic_plots.R")
   source("BCSB_map.R")
+  source("str_list.R")
   # Define the directory path
   .dir <- "~/Documents/" 
   
@@ -77,7 +94,7 @@ server <- function(input, output, session) {
   
   processedGeoData <- reactive({
     tryCatch({
-      lat_longs <- get_LatLong("RedCap_out.csv")
+      lat_longs <- get_LatLong(dx_str)
       return(lat_longs)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
@@ -90,7 +107,7 @@ server <- function(input, output, session) {
   processedData <- reactive({
     tryCatch({
       # Apply getEligiblity and additional data transformations
-      ss.bcsb.ef <- getEligiblity("BCSB Web eligibility survey_3.15.24.csv") |> 
+      ss.bcsb.ef <- getEligiblity(eligible_str) |> 
         dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
         dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race),
                      # Race = toupper(Race),
@@ -115,7 +132,7 @@ server <- function(input, output, session) {
     #req(input$clinFileInput) 
     #clinFile <- input$clinFileInput
     tryCatch({
-      clin_dat <- getClinDatSimple("MasterList_2.8.24.csv") %>%
+      clin_dat <- getClinDatSimple(master_str) %>%
         dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
                                         tryFormats = "%m/%d/%Y"))
       return(clin_dat)
@@ -126,9 +143,44 @@ server <- function(input, output, session) {
     })
   })
   
+  DiagChartData1 <- reactive({
+    clin <- req(processedClinData())
+    tryCatch({
+      Diag <- getYrSinceDiagnosis(dx_str,clin)
+      return(Diag$gp)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Diag 1 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  DiagChartData2 <- reactive({
+    clin <- req(processedClinData())
+    tryCatch({
+      Diag <- getYrSinceDiagnosis(dx_str,clin)
+      return(Diag$gp2)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Diag 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+
+  processedEnroll <- reactive({
+    tryCatch({
+      EC <- getEnrollment(enroll_str) 
+      return(EC)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Phone Consult:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+    
   processedPhoneConsult <- reactive({
     tryCatch({
-      PC <- getPhoneConsult("HS2100716BodourSalhi-EnrollmentSummary_DATA_LABELS_2024-03-22_1440.csv") 
+      PC <- getPhoneConsult(screen_str) 
       return(PC)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
@@ -139,7 +191,7 @@ server <- function(input, output, session) {
   
   processedDemoData <- reactive({
     tryCatch({
-      demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_3.19.24.csv")
+      demog_dat <- getDemogInfo(demographics_str)
       return(demog_dat)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
@@ -147,6 +199,106 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
+  
+  EBpieComb <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      EBC <- getEBloodpieComb(PC)
+      return(EBC)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting EBC Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  EBpie <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getEBloodpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting EB data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  DRpieComb <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      DRC <- getDRpieComb(PC)
+      return(DRC)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting DR Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  DRpie <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getDRpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting DR data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  
+  DEpieComb <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      DEC <- getDEpieComb(PC)
+      return(DEC)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting DE Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  DEpie <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getDEpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting DE data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  
+  
+  ESpieComb <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      ESC <- getESurveypieComb(PC)
+      return(ESC)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting ES Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  ESpie <- reactive({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getESurveypie(PC)
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting ES data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   
    PCOpieComb <- reactive({
     PC <- req(processedPhoneConsult())
@@ -198,29 +350,7 @@ server <- function(input, output, session) {
   
   
   
-  DiagChartData1 <- reactive({
-    clin <- req(processedClinData())
-    tryCatch({
-      Diag <- getYrSinceDiagnosis("RedCap_out.csv",clin)
-      return(Diag$gp)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Diag 1 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  DiagChartData2 <- reactive({
-    clin <- req(processedClinData())
-    tryCatch({
-      Diag <- getYrSinceDiagnosis("HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv",clin)
-      return(Diag$gp2)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Diag 2 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
+
 
   geoChartData2 <- reactive({
     lat_longs <- req(processedGeoData())
@@ -306,19 +436,20 @@ server <- function(input, output, session) {
       return(NULL)
     })
   }) 
-  
+ 
   pieChartClin2Data <- reactive({
-    clin_dat <- req(processedClinData())
-    # Generate first clinical data pie chart
+    PC <- req(processedEnroll())
     tryCatch({
-      resClin1 <- getClinMissing(clin_dat)
-      return(resClin1)
+      PCO <- getERrecpieComb(PC)
+      return(PCO)
     },error = function(e) {
       # Handle the error gracefully
       shiny::showNotification(paste("Error plotting Clin 2 data:", e$message), type = "error")
       return(NULL)
     })
-  }) 
+  })  
+  
+
 
   # Within server function
   
@@ -346,12 +477,12 @@ server <- function(input, output, session) {
     pieChartClin2Data()
   })
   
-  output$demogPieChart1 <- renderPlot({
-    demogPieChart1Data()
-  })
+  #output$demogPieChart1 <- renderPlot({
+  #  demogPieChart1Data()
+  #})
 
-  output$demogPieChart2 <- renderPlot({
-    demogPieChart2Data()  })
+#  output$demogPieChart2 <- renderPlot({
+#    demogPieChart2Data()  })
   
   output$GeoChart2 <- renderLeaflet({
     geoChartData2()
@@ -365,6 +496,26 @@ server <- function(input, output, session) {
     PCRpieComb()  })
   output$PCR <- renderPlot({
     PCRpie()  })
+  
+  output$ES <- renderPlot({
+    ESpie()  })
+  output$ESC <- renderPlot({
+    ESpieComb()  })
+ 
+  output$EB <- renderPlot({
+    EBpie()  })
+  output$EBC <- renderPlot({
+    EBpieComb()  })
+  
+  output$DE <- renderPlot({
+    DEpie()  })
+  output$DEC <- renderPlot({
+    DEpieComb()  })
+  
+  output$DR <- renderPlot({
+    DRpie()  })
+  output$DRC <- renderPlot({
+    DRpieComb()  })
   
   #observeEvent(input$mainTabset, {
   #  if(input$mainTabset == "Geographic Data") {

@@ -44,8 +44,6 @@ getDemogInfo <- function(demog_str) {
   
  #  duplicated_rows <- df.race[duplicated(df.race) | duplicated(df.race, fromLast = TRUE), ]
   
-  
-  
   #saveRDS(df.race, "misc/race_info.rds")
   dfrace <- df.race
   
@@ -91,8 +89,9 @@ getDemogInfo <- function(demog_str) {
 
 }
 
-#demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_2.15.24.csv")
+demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_3.19.24.csv")
 
+race_df<-demog_dat$race_df
 
 getRacePie <- function(race_df){
   
@@ -140,30 +139,14 @@ getRacePie <- function(race_df){
               enrolled and completed surveys") + 
     labs(subtitle = "This includes participants recruited from the Web and Clinics.",
          fill = "Race") 
+  ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  
   return(gp)
 
 }
 
 
-getRaceBar <- function(race_df){
-  gp <- ggplot(race_df, aes(x = Race, y = n, label = scales::percent(pct))) +
-    geom_bar(stat = "identity", fill = "lightgray", color = "black") +
-    geom_text(position = position_dodge(width = .9),   
-              vjust = -0.5,   
-              size = 3.5) +
-    ylim(c(0, max(race_df['n']) + 20  )) +
-    theme_DB(rotate.x = T) +
-    theme(plot.title = element_text(hjust = 0.5),  
-             plot.subtitle = element_text(hjust = 0.5)) + 
-    ylab("Count") +
-    ggtitle("Racial demographic distribution of all participants
-            enrolled and completed surveys") + 
-    labs(subtitle = "This includes participants recruited from the Web and Clinics.") 
-  return(gp)
-  #ggsave("plots/BCSB_race_barchart.png", height = 8, width = 4)
-}
 
-#getRaceBar(demog_dat$race_df)
 
 getEduPie <- function(edu_df){
   
@@ -213,22 +196,273 @@ getEduPie <- function(edu_df){
   
 }
 
-
-getEduBar <- function(edu_df){
-  gp <- ggplot(edu_df, aes(x = Education, y = n, label = scales::percent(pct))) +
-    geom_bar(stat = "identity", fill = "lightgray", color = "black") +
-    geom_text(position = position_dodge(width = .9),
-              vjust = -0.5, 
-              size = 5) +
-    ylim(c(0, max(edu_df['n']) + 20)) +
-    theme_DB(rotate.x = T) + 
-    theme(plot.title = element_text(hjust = 0.5),  
+getDRpie <- function(df.enroll){
+  dfPCR <- df.enroll %>%
+    dplyr::filter(ConsentSigned == "Yes") %>%
+    dplyr::filter(survey == "Completed") %>%
+    dplyr::mutate(Race = ifelse(grepl(",",Race), "Multiple", Race)) %>%
+    dplyr::count(location, Race) %>%
+    dplyr::group_by(location) %>%
+    dplyr::mutate(total = sum(n)) %>%
+    dplyr::mutate(pct = n / total) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(location, Race) %>%
+    dplyr::filter(!is.na(location)) 
+  
+  
+  df2PCR <- dfPCR %>%
+    dplyr::group_by(location) %>%
+    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
+                  pos = pct/2 + dplyr::lead(csum, 1),
+                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%")) %>%
+    dplyr::ungroup()
+  
+  df3PCR <- dfPCR %>%
+    dplyr::group_by(location) %>%
+    dplyr::summarize(n = paste0("N=", sum(n))) %>%
+    dplyr::ungroup()
+  
+  gpPCR <- ggplot(dfPCR, aes(x = "" , y = pct, fill = Race)) +
+    geom_col(width = 1, color = "black", size = 0.5) +
+    facet_grid(cols = vars(location) ) +
+    coord_polar(theta = "y") +
+    scale_fill_brewer(palette = "Set3") +
+    geom_label_repel(data = df2PCR,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data = df3PCR, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = FALSE, parse = FALSE, size = 8) + 
+    theme_DB() +
+    ylab("") + 
+    xlab("") +
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
-    ylab("Count") +
-    ggtitle("Education demographic distribution of all participants 
-            enrolled and completed surveys")   
-  return(gp)
-    # ggsave("plots/BCSB_education_barchart.png", height = 8, width = 4)
-}
-#getEduBar(demog_dat$edu_df)
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Race Breakdown Based on location of approach")  
 
+  gpPCR
+  ggsave("PCR.png", gpPCR, height = 9, width = 16, dpi = 600)
+  
+  return(gpPCR)
+  
+}
+
+
+getDRpieComb <- function(df.enroll){
+  
+  df.phoneConsultRace <- df.enroll |>
+    select(-ID) |>
+    filter(ConsentSigned == "Yes") |>
+    filter(survey == "Completed") |>
+    mutate(Race = ifelse(grepl(",",Race), "Multiple", Race)) |>
+    group_by(Race) |>
+    summarize(n = n()) |> 
+    ungroup() |> 
+    mutate(pct = round(n/sum(n), 3))
+  
+  levelsRace <- df.phoneConsultRace|>
+    group_by(Race) |>
+    summarize(n = n()) |> 
+    arrange(-n) |>
+    pull(Race)
+  
+  df.phoneConsultRace$Race <- factor(df.phoneConsultRace$Race, levelsRace)
+  
+  df2Race <- df.phoneConsultRace |> 
+    # dplyr::group_by(RS3) |>
+    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
+                  pos = pct/10 + dplyr::lead(csum, 1),
+                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%"))
+  
+  df3Race <- df.phoneConsultRace |>
+    dplyr::summarize(n = paste0("N=", sum(n)))
+  
+  gpRace <- ggplot(df.phoneConsultRace, aes(x = "", y = pct, fill = fct_inorder(Race))) +
+    geom_col(width = 1, color = 1, linewidth = 0.5) +
+    coord_polar(theta = "y") +  # This creates the pie chart
+    scale_fill_brewer(palette = "Set3") +  # Set color palette
+    geom_label_repel(data = df2Race,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data=df3Race, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = F, parse = F, size = 8) +
+    #  geom_label(aes(label = scales::percent(pct)), 
+    #            position = position_stack(vjust = 0.5)) +  # Add percentage labels
+    
+    theme_DB() +  # Remove axes and background
+    ylab("")+
+    xlab("")+
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5),
+          legend.position = "none") +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Race Demographics") #+ 
+    #labs(subtitle = "This includes participants from the Web and Clinics.",
+     #    fill = "Race") 
+  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #gpRace  
+  ggsave("PCRC.png", gpRace, height = 9, width = 16, dpi = 600)
+  
+  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #gpFlag  
+  return(gpRace)  
+  
+}
+
+getDEpie <- function(df.enroll){
+  dfPCR <- df.enroll %>%
+    dplyr::filter(ConsentSigned == "Yes") %>%
+    dplyr::filter(survey == "Completed") %>%
+    dplyr::count(location, edu) %>%
+    dplyr::group_by(location) %>%
+    dplyr::mutate(total = sum(n)) %>%
+    dplyr::mutate(pct = n / total) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(location, edu) %>%
+    dplyr::filter(!is.na(location)) 
+  
+  
+  df2PCR <- dfPCR %>%
+    dplyr::group_by(location) %>%
+    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
+                  pos = pct/2 + dplyr::lead(csum, 1),
+                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%")) %>%
+    dplyr::ungroup()
+  
+  df3PCR <- dfPCR %>%
+    dplyr::group_by(location) %>%
+    dplyr::summarize(n = paste0("N=", sum(n))) %>%
+    dplyr::ungroup()
+  
+  gpPCE <- ggplot(dfPCR, aes(x = "" , y = pct, fill = edu)) +
+    geom_col(width = 1, color = "black", size = 0.5) +
+    facet_grid(cols = vars(location) ) +
+    coord_polar(theta = "y") +
+    scale_fill_brewer(palette = "Set3") +
+    geom_label_repel(data = df2PCR,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data = df3PCR, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = FALSE, parse = FALSE, size = 8) + 
+    theme_DB() +
+    ylab("") + 
+    xlab("") +
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Education Breakdown Based on location of approach (Consented, Enrolled)")  +
+    labs(subtitle = "NAs due to incomplete baseline survey")
+  ggsave("DE.png", gpPCE, height = 9, width = 16, dpi = 600)
+  
+  return(gpPCE)
+  
+}
+
+
+
+
+
+
+
+
+
+getDEpieComb <- function(df.enroll){
+  
+  df.phoneConsultRace <- df.enroll |>
+    select(-ID) |>
+    filter(ConsentSigned == "Yes") |>
+    filter(survey == "Completed") |>
+    group_by(edu) |>
+    summarize(n = n()) |> 
+    ungroup() |> 
+    mutate(pct = round(n/sum(n), 3))
+  
+  levelsRace <- df.phoneConsultRace|>
+    group_by(edu) |>
+    summarize(n = n()) |> 
+    arrange(-n) |>
+    pull(edu)
+  
+  df.phoneConsultRace$edu <- factor(df.phoneConsultRace$edu, levelsRace)
+  
+  df2Race <- df.phoneConsultRace |> 
+    # dplyr::group_by(RS3) |>
+    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
+                  pos = pct/10 + dplyr::lead(csum, 1),
+                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%"))
+  
+  df3Race <- df.phoneConsultRace |>
+    dplyr::summarize(n = paste0("N=", sum(n)))
+  
+  gpEdu <- ggplot(df.phoneConsultRace, aes(x = "", y = pct, fill = fct_inorder(edu))) +
+    geom_col(width = 1, color = 1, linewidth = 0.5) +
+    coord_polar(theta = "y") +  # This creates the pie chart
+    scale_fill_brewer(palette = "Set3") +  # Set color palette
+    geom_label_repel(data = df2Race,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data=df3Race, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = F, parse = F, size = 8) +
+    #  geom_label(aes(label = scales::percent(pct)), 
+    #            position = position_stack(vjust = 0.5)) +  # Add percentage labels
+    
+    theme_DB() +  # Remove axes and background
+    ylab("")+
+    xlab("")+
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5),
+          legend.position = "none") +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Education Demographics") #+ 
+    #labs(subtitle = "Consented, Enrolled",
+#         fill = "edu") 
+  gpEdu
+  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #gpRace  
+  ggsave("DEC.png", gpEdu, height = 9, width = 16, dpi = 600)
+  
+  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #gpFlag  
+  return(gpEdu)  
+  
+}

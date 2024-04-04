@@ -1,3 +1,4 @@
+source("str_list.R")
 
 get_LatLong <- function(residence_str) {
   df <- read.csv(residence_str, stringsAsFactors = FALSE)
