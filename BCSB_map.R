@@ -10,7 +10,7 @@ get_LatLong <- function(residence_str) {
   df$currentzip <- substr(as.character(df$currentzip), 1, 5)
   df$location <- paste0(df$currentstaddr1, ", ", df$currentcity, ", ", df$currentstate, " ", df$currentzip)
   
-  cache_file <- "geocode_cache_census.csv"
+  cache_file <- "geocode_cache_gis.csv"
   if(file.exists(cache_file)) {
     cache <- read.csv(cache_file, stringsAsFactors = FALSE)
   } else {
@@ -25,7 +25,7 @@ get_LatLong <- function(residence_str) {
     tryCatch({
       new_addresses_df <- data.frame(location = new_addresses, stringsAsFactors = FALSE)
     #view(new_addresses_df)
-      new_geocoded <- tidygeocoder::geocode(new_addresses_df, address  = "location", method = 'census', lat = 'latitude', long = 'longitude')
+      new_geocoded <- tidygeocoder::geocode(new_addresses_df, address  = "location", method = 'arcgis', lat = 'latitude', long = 'longitude')
     
 #    new_geocoded$currentzip <- substr(as.character(new_geocoded$location), 1, 5)
       cache <- rbind(cache, new_geocoded)
@@ -90,7 +90,7 @@ get_LatLong <- function(residence_str) {
 
 
 
-#ll <- get_LatLong("HS2100716BodourSalhi-ResidenceHistory_DATA_2024-02-08_1653.csv")
+ll <- get_LatLong(dx_str)
 #qmplot(longitude, latitude, data = ll, colour = I("red"), maptype = "toner-lite", zoom = 5)
 #qmplot(longitude, latitude, data = ll, colour = I("red"), source = "osm", zoom = 5)
 #m_full <- leaflet(data = ll) %>%

@@ -121,7 +121,7 @@ getClinMissing <-function(clind) {
         caption ="***N's from Subtype and Clinical Info might not match 
          since some records have partial information entered.(i.e. No Subtype info)")
   return(list(gp=gp,miss=df.missing))
-#  ggsave("clinical_info_plots/frac_with_any_clinical_data.png",
+#  ggsave("plots/clinical_info_plots/frac_with_any_clinical_data.png",
   #gp, height = 6, width = 6)
 }
 
@@ -207,11 +207,11 @@ getClinPie <- function(clind) {
     with different subtypes
          HR - Hormone Receptor (ER/PR)")  #
   return(gp)
-  ggsave("RS_pie_chart.png", gp, height = 9, width = 16, dpi = 600)
+  ggsave("plots/RS_pie_chart.png", gp, height = 9, width = 16, dpi = 600)
 }
 
 
-#clind <- getClinDatSimple(master_str)
+clind <- getClinDatSimple(master_str)
 
 getYrSinceDiagnosis <- function(dx_str, clind) {
   cd <- read.csv(paste0( dx_str))
@@ -236,6 +236,7 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
     select(StudyID, BreastCancerDiagnosisDate) %>%
     mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
     filter(sapply(SplitDates, length) > 1)
+  write.csv(multiple_dates_df$StudyID, file = "multiple_dx.txt", row.names = FALSE)
   
   clind <- clind %>%
     select(StudyID, BreastCancerDiagnosisDate) %>%
@@ -263,6 +264,11 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
   
   outlier_days_since_dx <- joined_df %>%
     filter(Days.since.Dx < 0 | Days.since.Dx >= 3652.5)
+  write.csv(outlier_days_since_dx$bcsbusername, file = "outlierCase_dx.txt", row.names = FALSE)
+  
+  edgeCase_days_since_dx <- joined_df %>%
+    filter(Days.since.Dx > 2555 & Days.since.Dx <= 3652.5)
+  write.csv(edgeCase_days_since_dx$bcsbusername, file = "edgeCase_dx.txt", row.names = FALSE)
   
   
   joined_df <- joined_df %>%
@@ -318,7 +324,7 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
          signed consent and completed surveys. 
          (blood sample and/or clinical data may be pending)")
 
-  #print(gp)
+  #gp
   
   days_in_year <- 365.25
   
@@ -415,7 +421,7 @@ if (0) {
           legend.text = element_text(size = 15, face = "bold"),
           legend.title = element_blank()) +
     guides(fill = guide_legend(nrow = 2, byrow = T))
- # ggsave("clinical_info_plots/survey_missing_answers_pie.png", gp, height = 6, width = 6)
+ # ggsave("plots/clinical_info_plots/survey_missing_answers_pie.png", gp, height = 6, width = 6)
 }
 
 

@@ -94,11 +94,11 @@ getESurveypieComb <- function(df.enroll){
   #  labs(subtitle = "Consented, Enrolled",
      #    fill = "edu") 
   gpEdu
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpRace  
-  ggsave("ESC.png", gpEdu, height = 9, width = 16, dpi = 600)
+  ggsave("plots/ESC.png", gpEdu, height = 9, width = 16, dpi = 600)
   
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  
   return(gpEdu)  
   
@@ -108,6 +108,7 @@ getEBloodpieComb <- function(df.enroll){
   
   df.phoneConsultRace <- df.enroll |>
     select(-ID) |>
+    filter(!SurveyStatus %in% c("Withdrew", "Lost to contact", "NA")) |>
     group_by(BloodDrawStatus) |>
     summarize(n = n()) |> 
     ungroup() |> 
@@ -163,11 +164,11 @@ getEBloodpieComb <- function(df.enroll){
   #  labs(subtitle = "Consented, Enrolled",
   #    fill = "edu") 
   gpEdu
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpRace  
-  ggsave("EBC.png", gpEdu, height = 9, width = 16, dpi = 600)
+  ggsave("plots/plots/EBC.png", gpEdu, height = 9, width = 16, dpi = 600)
   
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  
   return(gpEdu)  
   
@@ -175,14 +176,14 @@ getEBloodpieComb <- function(df.enroll){
 
 getEBloodpie <- function(df.enroll){
   dfPCR <- df.enroll %>%
+    dplyr::filter(!SurveyStatus %in% c("Withdrew", "Lost to contact", "NA")) %>%
     dplyr::count(location, BloodDrawStatus) %>%
     dplyr::group_by(location) %>%
     dplyr::mutate(total = sum(n)) %>%
     dplyr::mutate(pct = n / total) %>%
     dplyr::ungroup() %>%
     dplyr::arrange(location, BloodDrawStatus) %>%
-    dplyr::filter(!is.na(location)) 
-  
+    dplyr::filter(!is.na(location) )
   
   df2PCR <- dfPCR %>%
     dplyr::group_by(location) %>%
@@ -225,7 +226,7 @@ getEBloodpie <- function(df.enroll){
     ggtitle("Blood Draw Status Based on location of approach")  #+
   #    labs(subtitle = "NAs due to incomplete baseline survey")
   gpPCE
-  ggsave("EB.png", gpPCE, height = 9, width = 16, dpi = 600)
+  ggsave("plots/EB.png", gpPCE, height = 9, width = 16, dpi = 600)
   
   return(gpPCE)
   
@@ -283,7 +284,7 @@ getESurveypie <- function(df.enroll){
     ggtitle("Survey Status Based on location of approach")  #+
 #    labs(subtitle = "NAs due to incomplete baseline survey")
   gpPCE
-  ggsave("ES.png", gpPCE, height = 9, width = 16, dpi = 600)
+  ggsave("plots/ES.png", gpPCE, height = 9, width = 16, dpi = 600)
   
   return(gpPCE)
   
@@ -349,11 +350,11 @@ getERreqpieComb <- function(df.enroll){
   #  labs(subtitle = "Consented, Enrolled",
   #    fill = "edu") 
   gpEdu
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpRace  
-  ggsave("ERreqC.png", gpEdu, height = 9, width = 16, dpi = 600)
+  ggsave("plots/ERreqC.png", gpEdu, height = 9, width = 16, dpi = 600)
   
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  
   return(gpEdu)  
   
@@ -419,11 +420,11 @@ getERrecpieComb <- function(df.enroll){
   #  labs(subtitle = "Consented, Enrolled",
   #    fill = "edu") 
   gpEdu
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpRace  
-  ggsave("ERreqC.png", gpEdu, height = 9, width = 16, dpi = 600)
+  ggsave("plots/ERreqC.png", gpEdu, height = 9, width = 16, dpi = 600)
   
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  
   return(gpEdu)  
   

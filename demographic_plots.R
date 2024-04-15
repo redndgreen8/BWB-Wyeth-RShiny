@@ -89,9 +89,9 @@ getDemogInfo <- function(demog_str) {
 
 }
 
-demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_3.19.24.csv")
+#demog_dat <- getDemogInfo("DemographicsRaceEduc_variable labels_3.19.24.csv")
 
-race_df<-demog_dat$race_df
+#race_df<-demog_dat$race_df
 
 getRacePie <- function(race_df){
   
@@ -139,7 +139,7 @@ getRacePie <- function(race_df){
               enrolled and completed surveys") + 
     labs(subtitle = "This includes participants recruited from the Web and Clinics.",
          fill = "Race") 
-  ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   
   return(gp)
 
@@ -251,7 +251,7 @@ getDRpie <- function(df.enroll){
     ggtitle("Race Breakdown Based on location of approach")  
 
   gpPCR
-  ggsave("PCR.png", gpPCR, height = 9, width = 16, dpi = 600)
+  ggsave("plots/PCR.png", gpPCR, height = 9, width = 16, dpi = 600)
   
   return(gpPCR)
   
@@ -319,11 +319,11 @@ getDRpieComb <- function(df.enroll){
     ggtitle("Race Demographics") #+ 
     #labs(subtitle = "This includes participants from the Web and Clinics.",
      #    fill = "Race") 
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpRace  
-  ggsave("PCRC.png", gpRace, height = 9, width = 16, dpi = 600)
+  ggsave("plots/PCRC.png", gpRace, height = 9, width = 16, dpi = 600)
   
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  
   return(gpRace)  
   
@@ -382,7 +382,7 @@ getDEpie <- function(df.enroll){
     guides(fill = guide_legend(ncol = 2)) +
     ggtitle("Education Breakdown Based on location of approach (Consented, Enrolled)")  +
     labs(subtitle = "NAs due to incomplete baseline survey")
-  ggsave("DE.png", gpPCE, height = 9, width = 16, dpi = 600)
+  ggsave("plots/DE.png", gpPCE, height = 9, width = 16, dpi = 600)
   
   return(gpPCE)
   
@@ -457,11 +457,11 @@ getDEpieComb <- function(df.enroll){
     #labs(subtitle = "Consented, Enrolled",
 #         fill = "edu") 
   gpEdu
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpRace  
-  ggsave("DEC.png", gpEdu, height = 9, width = 16, dpi = 600)
+  ggsave("plots/DEC.png", gpEdu, height = 9, width = 16, dpi = 600)
   
-  #ggsave("Race_demog.png", gp, height = 9, width = 16, dpi = 600)
+  #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  
   return(gpEdu)  
   
