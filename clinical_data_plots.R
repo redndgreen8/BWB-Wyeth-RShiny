@@ -349,8 +349,7 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
 
 }
 
-#dx_str <- "HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-02-08_1737.csv"
-#plt <- getYrSinceDiagnosis(dx_str)
+plt <- getYrSinceDiagnosis(dx_str, clind)
 #plt$gp
 #plt$gp2
 

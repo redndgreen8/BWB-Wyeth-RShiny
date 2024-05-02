@@ -17,12 +17,13 @@ library(ggmap)
 library(DT)
 library(knitr)
 #library(rgdal)
+
 library(tidygeocoder)
 library(leaflet)
 
 
 ui <- fluidPage(
-  titlePanel("BCSB Dashboard - April 4, 2024"),
+  titlePanel("BCSB Dashboard - May 1, 2024"),
     mainPanel(
       tabsetPanel(id = "mainTabset",
         tabPanel("Web Eligibility",
@@ -38,6 +39,20 @@ ui <- fluidPage(
                    column(9,plotOutput("PCR")),  
                    column(3, plotOutput("PCRC"))
                  )
+        ),
+        tabPanel("Retention",
+                 fluidRow(
+                   column(9, plotOutput("RETr")),
+                   column(3, plotOutput("RETCr"))
+                 ),
+                 fluidRow(
+                   column(9,plotOutput("RETc")),  
+                   column(3, plotOutput("RETCc"))
+                 ),
+                 fluidRow(
+                   column(9,plotOutput("RETu")),  
+                   column(3, plotOutput("RETCu"))
+                 )      
         ),
         tabPanel("Enrollment",
                  fluidRow(
@@ -86,6 +101,7 @@ server <- function(input, output, session) {
   source("demographic_plots.R")
   source("BCSB_map.R")
   source("str_list.R")
+  source("retention.R")
   # Define the directory path
   .dir <- "~/Documents/" 
   
@@ -298,6 +314,76 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
+  RetpieCombr <- reactive({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetCOMBpie(PC, "Refused", "'Refused'")
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Ret Comb r data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  Retpier <- reactive({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetpie(PC, "Refused", "'Refused'")
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Ret r data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  RetpieCombc <- reactive({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetCOMBpie(PC, "Considering", "'Considering'")
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Ret Comb c data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  Retpiec <- reactive({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetpie(PC, "Considering", "'Considering'")
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Ret c data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  RetpieCombu <- reactive({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetCOMBpie(PC, "Unable to Contact", "'Unable to Contact'")
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Ret Comb u data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  Retpieu <- reactive({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetpie(PC, "Unable to Contact", "'Unable to Contact'")
+      return(PCO)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Ret u data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
   
    PCOpieComb <- reactive({
@@ -453,6 +539,12 @@ server <- function(input, output, session) {
 
   # Within server function
   
+
+  output$pieChart1 <- renderPlot({
+    pieChart1Data()
+  })
+  
+  
   output$pieChart1 <- renderPlot({
     pieChart1Data()
   })
@@ -477,12 +569,20 @@ server <- function(input, output, session) {
     pieChartClin2Data()
   })
   
-  #output$demogPieChart1 <- renderPlot({
-  #  demogPieChart1Data()
-  #})
-
-#  output$demogPieChart2 <- renderPlot({
-#    demogPieChart2Data()  })
+  output$RETCr <- renderPlot({
+    RetpieCombr()  })
+  output$RETr <- renderPlot({
+    Retpier()  })
+  
+  output$RETCc <- renderPlot({
+    RetpieCombc()  })
+  output$RETc <- renderPlot({
+    Retpiec()  })
+  
+  output$RETCu <- renderPlot({
+    RetpieCombu()  })
+  output$RETu <- renderPlot({
+    Retpieu()  })
   
   output$GeoChart2 <- renderLeaflet({
     geoChartData2()

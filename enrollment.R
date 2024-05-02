@@ -37,9 +37,11 @@ df.enroll <- getEnrollment(enroll_str)
 #sS
 getESurveypie <- function(df.enroll){
   dfPCR <- df.enroll %>%
-    dplyr::filter(SurveyStatus != "Survey Link Emailed (remote)") %>%
-    dplyr::filter(SurveyStatus !=   "Scheduled (if in-person)") %>%
-    dplyr::mutate(SurveyStatus =  ifelse(SurveyStatus == "Completed", "Consent Signed", SurveyStatus)) %>%
+    #dplyr::filter(SurveyStatus != "Survey Link Emailed (remote)") %>%
+    #dplyr::filter(SurveyStatus !=   "Scheduled (if in-person)") %>%
+    dplyr::mutate(SurveyStatus = ifelse(SurveyStatus == "Survey Link Emailed (remote)", "Pending", SurveyStatus )) %>%
+    dplyr::mutate(SurveyStatus = ifelse(SurveyStatus == "Scheduled (if in-person)", "Pending", SurveyStatus )) %>%
+    dplyr::mutate(SurveyStatus =  ifelse(SurveyStatus == "Completed", "Completed", SurveyStatus)) %>%
     dplyr::count(location, SurveyStatus) %>%
     dplyr::group_by(location) %>%
     dplyr::mutate(total = sum(n)) %>%
@@ -87,7 +89,7 @@ getESurveypie <- function(df.enroll){
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(ncol = 2)) +
-    ggtitle("Survey Status Based on location of approach")  #+
+    ggtitle("Survey Status Based on location of approach, (Consent Signed)")  #+
   #    labs(subtitle = "NAs due to incomplete baseline survey")
   gpPCE
   ggsave("plots/ES.png", gpPCE, height = 9, width = 16, dpi = 600)
@@ -100,8 +102,10 @@ getESurveypieComb <- function(df.enroll){
   
   df.phoneConsultRace <- df.enroll |>
     select(-ID) |>
-    filter(SurveyStatus != "Survey Link Emailed (remote)") |>
-    filter(SurveyStatus != "Scheduled (if in-person)") |>
+    #filter(SurveyStatus != "Survey Link Emailed (remote)") |>
+   # filter(SurveyStatus != "Scheduled (if in-person)") |>
+    mutate(SurveyStatus = ifelse(SurveyStatus == "Survey Link Emailed (remote)", "Pending", SurveyStatus )) |>
+    mutate(SurveyStatus = ifelse(SurveyStatus == "Scheduled (if in-person)", "Pending", SurveyStatus )) |>
     group_by(SurveyStatus) |>
     summarize(n = n()) |> 
     ungroup() |> 
@@ -153,7 +157,7 @@ getESurveypieComb <- function(df.enroll){
           plot.subtitle = element_text(hjust = 0.5),
           legend.position = "none") +
     guides(fill = guide_legend(ncol = 2)) +
-    ggtitle("Survey Status") #+ 
+    ggtitle("Survey Status, (Consent Signed)") #+ 
   #  labs(subtitle = "Consented, Enrolled",
      #    fill = "edu") 
   gpEdu
@@ -171,7 +175,7 @@ getEBloodpieComb <- function(df.enroll){
   
   df.phoneConsultRace <- df.enroll |>
     select(-ID) |>
-    filter(!SurveyStatus %in% c("Withdrew", "Lost to contact", "NA")) |>
+    filter(SurveyStatus %in% c("Completed")) |>
     group_by(BloodDrawStatus) |>
     summarize(n = n()) |> 
     ungroup() |> 
@@ -223,7 +227,7 @@ getEBloodpieComb <- function(df.enroll){
           plot.subtitle = element_text(hjust = 0.5),
           legend.position = "none") +
     guides(fill = guide_legend(ncol = 2)) +
-    ggtitle("Blood Draw Status") #+ 
+    ggtitle("Blood Draw Status, (Survey Complete)") #+ 
   #  labs(subtitle = "Consented, Enrolled",
   #    fill = "edu") 
   gpEdu
@@ -237,9 +241,11 @@ getEBloodpieComb <- function(df.enroll){
   
 }
 
+
+#c("Withdrew", "Lost to contact", "NA", "Pending")
 getEBloodpie <- function(df.enroll){
   dfPCR <- df.enroll %>%
-    dplyr::filter(!SurveyStatus %in% c("Withdrew", "Lost to contact", "NA")) %>%
+    dplyr::filter(SurveyStatus %in% c("Completed")) %>%
     dplyr::count(location, BloodDrawStatus) %>%
     dplyr::group_by(location) %>%
     dplyr::mutate(total = sum(n)) %>%
@@ -286,7 +292,7 @@ getEBloodpie <- function(df.enroll){
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(ncol = 2)) +
-    ggtitle("Blood Draw Status Based on location of approach")  #+
+    ggtitle("Blood Draw Status Based on location of approach, (Survey Complete)")  #+
   #    labs(subtitle = "NAs due to incomplete baseline survey")
   gpPCE
   ggsave("plots/EB.png", gpPCE, height = 9, width = 16, dpi = 600)
