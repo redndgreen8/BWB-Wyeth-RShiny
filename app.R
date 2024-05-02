@@ -207,330 +207,7 @@ server <- function(input, output, session) {
   })
   
   
-  DiagChartData1 <- reactive({
-    clin <- req(processedClinData())
-    tryCatch({
-      Diag <- getYrSinceDiagnosis(dx_str,clin)
-      return(Diag$gp)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Diag 1 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  DiagChartData2 <- reactive({
-    clin <- req(processedClinData())
-    tryCatch({
-      Diag <- getYrSinceDiagnosis(dx_str,clin)
-      return(Diag$gp2)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Diag 2 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
 
-
-  EBpieComb <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      EBC <- getEBloodpieComb(PC)
-      return(EBC)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting EBC Comb data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  EBpie <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      PCO <- getEBloodpie(PC)
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting EB data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  DRpieComb <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      DRC <- getDRpieComb(PC)
-      return(DRC)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting DR Comb data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  DRpie <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      PCO <- getDRpie(PC)
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting DR data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  
-  DEpieComb <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      DEC <- getDEpieComb(PC)
-      return(DEC)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting DE Comb data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  DEpie <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      PCO <- getDEpie(PC)
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting DE data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  
-  
-  ESpieComb <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      ESC <- getESurveypieComb(PC)
-      return(ESC)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting ES Comb data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  ESpie <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      PCO <- getESurveypie(PC)
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting ES data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  RetpieCombr <- reactive({
-    PC <- req(processedPhoneConsult())
-    tryCatch({
-      PCO <- getRetCOMBpie(PC, "Refused", "'Refused'")
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Ret Comb r data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  Retpier <- reactive({
-    PC <- req(processedPhoneConsult())
-    tryCatch({
-      PCO <- getRetpie(PC, "Refused", "'Refused'")
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Ret r data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  RetpieCombc <- reactive({
-    PC <- req(processedPhoneConsult())
-    tryCatch({
-      PCO <- getRetCOMBpie(PC, "Considering", "'Considering'")
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Ret Comb c data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  Retpiec <- reactive({
-    PC <- req(processedPhoneConsult())
-    tryCatch({
-      PCO <- getRetpie(PC, "Considering", "'Considering'")
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Ret c data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  RetpieCombu <- reactive({
-    PC <- req(processedPhoneConsult())
-    tryCatch({
-      PCO <- getRetCOMBpie(PC, "Unable to Contact", "'Unable to Contact'")
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Ret Comb u data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  Retpieu <- reactive({
-    PC <- req(processedPhoneConsult())
-    tryCatch({
-      PCO <- getRetpie(PC, "Unable to Contact", "'Unable to Contact'")
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Ret u data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  
-   PCOpieComb <- reactive({
-    PC <- req(processedPhoneConsult())
-    tryCatch({
-      PCO <- getPCFpieComb(PC)
-      return(PCO)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting PCO Comb data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-   
-   PCOpie <- reactive({
-     PC <- req(processedPhoneConsult())
-     tryCatch({
-       PCO <- getPCFpie(PC)
-       return(PCO)
-     }, error = function(e) {
-       # Handle the error gracefully
-       shiny::showNotification(paste("Error plotting PCO data:", e$message), type = "error")
-       return(NULL)
-     })
-   })
-   
-   PCRpieComb <- reactive({
-     PC <- req(processedPhoneConsult())
-     tryCatch({
-       PCO <- getPCRpieComb(PC)
-       return(PCO)
-     }, error = function(e) {
-       # Handle the error gracefully
-       shiny::showNotification(paste("Error plotting PCR Comb data:", e$message), type = "error")
-       return(NULL)
-     })
-   })
-   
-   PCRpie <- reactive({
-     PC <- req(processedPhoneConsult())
-     tryCatch({
-       PCO <- getPCRpie(PC)
-       return(PCO)
-     }, error = function(e) {
-       # Handle the error gracefully
-       shiny::showNotification(paste("Error plotting PCR data:", e$message), type = "error")
-       return(NULL)
-     })
-   })
-  
-
-
-  demogPieChart1Data <- reactive({
-    bar_data <- req(processedDemoData())
-    tryCatch({
-      # Assuming getPie function generates the first pie chart
-      res <- getRacePie(bar_data$race_df)  # Update with appropriate parameters
-      return(res)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Demog 1 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })  
-  
-  demogPieChart2Data <- reactive({
-    bar_data <- req(processedDemoData())
-    tryCatch({
-      # Assuming getPie function generates the first pie chart
-      res <- getEduPie(bar_data$edu_df)  # Update with appropriate parameters
-      return(res)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Demog 2 data:", e$message), type = "error")
-      return(NULL)
-    })
-  }) 
-  
-  
-  # Reactive expression for the first pie chart
-  pieChart1Data <- reactive({
-    ef_data <- req(processedData())
-    tryCatch({
-      # Assuming getPie function generates the first pie chart
-      res <- getPie(ef_data)  # Update with appropriate parameters
-      return(res$gp)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Elig 1 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  # Reactive expression for the second pie chart
-  pieChart2Data <- reactive({
-    ef_data <- req(processedData())
-    tryCatch({
-      # Assuming getPieComb function generates the second pie chart
-      res <- getPieComb(ef_data)  # Update with appropriate parameters
-      return(res$gp)
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Elig 2 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  pieChartClin1Data <- reactive({
-    clin_dat <- req(processedClinData())
-    # Generate first clinical data pie chart
-    tryCatch({
-    resClin1 <- getClinPie(clin_dat)
-    return(resClin1)
-    },error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Clin data:", e$message), type = "error")
-      return(NULL)
-    })
-  }) 
- 
-  pieChartClin2Data <- reactive({
-    PC <- req(processedEnroll())
-    tryCatch({
-      PCO <- getERrecpieComb(PC)
-      return(PCO)
-    },error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Clin 2 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })  
   
 
 
@@ -581,81 +258,291 @@ server <- function(input, output, session) {
     })
   })
   
-  
-  output$pieChart1 <- renderPlot({
-    pieChart1Data()
-  })
-  
-  
-  output$pieChart1 <- renderPlot({
-    pieChart1Data()
-  })
-  
   output$histChartDiag <- renderPlot({
-    DiagChartData1()
+    clin <- req(processedClinData())
+    tryCatch({
+      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      return(Diag$gp)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Diag 1 data:", e$message), type = "error")
+      return(NULL)
+    })
   })
   
   output$pieChartDiag <- renderPlot({
-    DiagChartData2()
+    clin <- req(processedClinData())
+    tryCatch({
+      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      return(Diag$gp2)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Diag 2 data:", e$message), type = "error")
+      return(NULL)
+    })
   })
   
-  output$pieChart2 <- renderPlot({
-    pieChart2Data()
+  output$EBC <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      EBC <- getEBloodpieComb(PC)
+      return(EBC)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting EBC Comb data:", e$message), type = "error")
+      return(NULL)
+    })
   })
   
-  output$pieChartClin1 <- renderPlot({
-    pieChartClin1Data()
+  output$EB <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getEBloodpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting EB data:", e$message), type = "error")
+      return(NULL)
+    })
   })
   
-  output$pieChartClin2 <- renderPlot({
-    pieChartClin2Data()
+  output$DRC <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      DRC <- getDRpieComb(PC)
+      return(DRC)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting DR Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$DR <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getDRpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting DR data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$DEC <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      DEC <- getDEpieComb(PC)
+      return(DEC)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting DE Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$DE <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getDEpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting DE data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$ESC <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      ESC <- getESurveypieComb(PC)
+      return(ESC)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting ES Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$ES <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getESurveypie(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting ES data:", e$message), type = "error")
+      return(NULL)
+    })
   })
   
   output$RETCr <- renderPlot({
-    RetpieCombr()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetCOMBpie(PC, "Refused", "'Refused'")
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Ret Comb r data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   output$RETr <- renderPlot({
-    Retpier()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetpie(PC, "Refused", "'Refused'")
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Ret r data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
   output$RETCc <- renderPlot({
-    RetpieCombc()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetCOMBpie(PC, "Considering", "'Considering'")
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Ret Comb c data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   output$RETc <- renderPlot({
-    Retpiec()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetpie(PC, "Considering", "'Considering'")
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Ret c data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
   output$RETCu <- renderPlot({
-    RetpieCombu()  })
-  output$RETu <- renderPlot({
-    Retpieu()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetCOMBpie(PC, "Unable to Contact", "'Unable to Contact'")
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Ret Comb u data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
-
+  output$RETu <- renderPlot({
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getRetpie(PC, "Unable to Contact", "'Unable to Contact'")
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Ret u data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
   output$PCOC <- renderPlot({
-    PCOpieComb()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getPCFpieComb(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting PCO Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   output$PCO <- renderPlot({
-    PCOpie()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getPCFpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting PCO data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   output$PCRC <- renderPlot({
-    PCRpieComb()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getPCRpieComb(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting PCR Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   output$PCR <- renderPlot({
-    PCRpie()  })
+    PC <- req(processedPhoneConsult())
+    tryCatch({
+      PCO <- getPCRpie(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting PCR data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
-  output$ES <- renderPlot({
-    ESpie()  })
-  output$ESC <- renderPlot({
-    ESpieComb()  })
- 
-  output$EB <- renderPlot({
-    EBpie()  })
-  output$EBC <- renderPlot({
-    EBpieComb()  })
+  output$demogPieChart1 <- renderPlot({
+    bar_data <- req(processedDemoData())
+    tryCatch({
+      res <- getRacePie(bar_data$race_df)
+      return(res)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Demog 1 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
-  output$DE <- renderPlot({
-    DEpie()  })
-  output$DEC <- renderPlot({
-    DEpieComb()  })
+  output$demogPieChart2 <- renderPlot({
+    bar_data <- req(processedDemoData())
+    tryCatch({
+      res <- getEduPie(bar_data$edu_df)
+      return(res)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Demog 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
   
-  output$DR <- renderPlot({
-    DRpie()  })
-  output$DRC <- renderPlot({
-    DRpieComb()  })
+  output$pieChart1 <- renderPlot({
+    ef_data <- req(processedData())
+    tryCatch({
+      res <- getPie(ef_data)
+      return(res$gp)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Elig 1 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$pieChart2 <- renderPlot({
+    ef_data <- req(processedData())
+    tryCatch({
+      res <- getPieComb(ef_data)
+      return(res$gp)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Elig 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$pieChartClin1 <- renderPlot({
+    clin_dat <- req(processedClinData())
+    tryCatch({
+      resClin1 <- getClinPie(clin_dat)
+      return(resClin1)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Clin data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$pieChartClin2 <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getERrecpieComb(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Clin 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
 
   
 }
