@@ -17,8 +17,7 @@ get_LatLong <- function(residence_str) {
     cache <- data.frame(location = character(), currentzip = character(), latitude = numeric(), longitude = numeric(), stringsAsFactors = FALSE)
   }
   
-  #$currentzip <- substr(as.character(cache$currentzip), 1, 5)
-  
+
   new_addresses <- setdiff(df$location, cache$location)
   
   if(length(new_addresses) > 0) {

@@ -83,7 +83,21 @@ ui <- fluidPage(
                  plotOutput("pieChartClin2")
         ),
         tabPanel("Geographic Data",
-                 leafletOutput("GeoChart2", width = "2500px", height =  "1400px")
+                 fluidRow(
+                   column(width = 12,
+                          selectInput("selectedColumn", "Select Column:",
+                                      choices = c("BloodDrawStatus", 
+                                                  "ExternalRecordsRequestStatus",
+                                                  "ExternalRecordsDataEntryStatus",
+                                                  "Race", "location", "edu"),
+                                      selected = "Race")
+                   )
+                 ),
+                 fluidRow(
+                   column(width = 12,
+                          leafletOutput("GeoChart2", height = "calc(100vh - 200px)")
+                   )
+                 )
         )
       )
     )
@@ -159,6 +173,40 @@ server <- function(input, output, session) {
     })
   })
   
+  processedEnroll <- reactive({
+    tryCatch({
+      EC <- getEnrollment(enroll_str) 
+      return(EC)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Phone Consult:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  processedPhoneConsult <- reactive({
+    tryCatch({
+      PC <- getPhoneConsult(screen_str) 
+      return(PC)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Phone Consult:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  processedDemoData <- reactive({
+    tryCatch({
+      demog_dat <- getDemogInfo(demographics_str)
+      return(demog_dat)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing Demog data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  
   DiagChartData1 <- reactive({
     clin <- req(processedClinData())
     tryCatch({
@@ -183,39 +231,7 @@ server <- function(input, output, session) {
     })
   })
 
-  processedEnroll <- reactive({
-    tryCatch({
-      EC <- getEnrollment(enroll_str) 
-      return(EC)
-    }, error = function(e) {
-      # Return NULL or a default value if there's an error
-      shiny::showNotification(paste("Error processing Phone Consult:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-    
-  processedPhoneConsult <- reactive({
-    tryCatch({
-      PC <- getPhoneConsult(screen_str) 
-      return(PC)
-    }, error = function(e) {
-      # Return NULL or a default value if there's an error
-      shiny::showNotification(paste("Error processing Phone Consult:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
-  processedDemoData <- reactive({
-    tryCatch({
-      demog_dat <- getDemogInfo(demographics_str)
-      return(demog_dat)
-    }, error = function(e) {
-      # Return NULL or a default value if there's an error
-      shiny::showNotification(paste("Error processing Demog data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
-  
+
   EBpieComb <- reactive({
     PC <- req(processedEnroll())
     tryCatch({
@@ -434,26 +450,7 @@ server <- function(input, output, session) {
      })
    })
   
-  
-  
 
-
-  geoChartData2 <- reactive({
-    lat_longs <- req(processedGeoData())
-    tryCatch({
-      geoPlot2 <- leaflet(data = lat_longs) %>%
-        addTiles() %>%  
-        addCircleMarkers(~longitude, ~latitude, color = "red", radius = 3) %>%
-        setView(lng = mean(lat_longs$longitude, na.rm = TRUE), 
-                lat = mean(lat_longs$latitude, na.rm = TRUE), zoom = 5) 
-      return(geoPlot2)
-      
-    }, error = function(e) {
-      # Handle the error gracefully
-      shiny::showNotification(paste("Error plotting Geog 2 data:", e$message), type = "error")
-      return(NULL)
-    })
-  })
 
   demogPieChart1Data <- reactive({
     bar_data <- req(processedDemoData())
@@ -539,7 +536,52 @@ server <- function(input, output, session) {
 
   # Within server function
   
-
+  output$GeoChart2 <- renderLeaflet({
+    ll <- req(processedGeoData())
+    enrolled <- req(processedEnroll())
+    enrolled[["Race"]] <- ifelse(grepl(",", enrolled[["Race"]]), "Multiple", enrolled[["Race"]])
+    tryCatch({
+      lat_longs <- inner_join(enrolled, ll, by = c("ID" = "ID"))
+      
+      # Get the selected column from input
+      selectedColumn <- input$selectedColumn
+      
+      # Create the color palette based on the selected column
+      colorPalette <- colorFactor(palette = "Set1", domain = unique(lat_longs[[selectedColumn]]))
+      
+      geoPlot2 <- leaflet(data = lat_longs) %>%
+        addTiles() %>%
+        addCircleMarkers(
+          ~longitude,
+          ~latitude,
+          color = ~colorPalette(lat_longs[[selectedColumn]]),
+          radius = 3,
+          popup = ~paste(
+            selectedColumn, ": ", lat_longs[[selectedColumn]]
+          )
+        ) %>%
+        addLegend(
+          "bottomright",
+          pal = colorPalette,
+          values = ~lat_longs[[selectedColumn]],
+          title = selectedColumn,
+          opacity = 0.8
+        ) %>%
+        setView(
+          lng = mean(lat_longs$longitude, na.rm = TRUE),
+          lat = mean(lat_longs$latitude, na.rm = TRUE),
+          zoom = 5
+        )
+      
+      return(geoPlot2)
+    }, error = function(e) {
+      # Handle the error gracefully
+      shiny::showNotification(paste("Error plotting Geog 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  
   output$pieChart1 <- renderPlot({
     pieChart1Data()
   })
@@ -584,9 +626,7 @@ server <- function(input, output, session) {
   output$RETu <- renderPlot({
     Retpieu()  })
   
-  output$GeoChart2 <- renderLeaflet({
-    geoChartData2()
-  })
+
   
   output$PCOC <- renderPlot({
     PCOpieComb()  })
@@ -616,12 +656,7 @@ server <- function(input, output, session) {
     DRpie()  })
   output$DRC <- renderPlot({
     DRpieComb()  })
-  
-  #observeEvent(input$mainTabset, {
-  #  if(input$mainTabset == "Geographic Data") {
-  #    leafletProxy("GeoChart2", session = session ) %>% invalidateSize()
-  #  }
-  #}, ignoreNULL = TRUE)
+
   
 }
 
