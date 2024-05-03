@@ -24,83 +24,116 @@ library(leaflet)
 
 ui <- fluidPage(
   titlePanel("BCSB Dashboard - May 1, 2024"),
-    mainPanel(
-      tabsetPanel(id = "mainTabset",
-        tabPanel("Web Eligibility",
-                 plotOutput("pieChart2"),
-                 plotOutput("pieChart1")
-        ),
-        tabPanel("Screening",
-                 fluidRow(
-                   column(9, plotOutput("PCO")),
-                   column(3, plotOutput("PCOC"))
-                 ),
-                 fluidRow(
-                   column(9,plotOutput("PCR")),  
-                   column(3, plotOutput("PCRC"))
-                 )
-        ),
-        tabPanel("Retention",
-                 fluidRow(
-                   column(9, plotOutput("RETr")),
-                   column(3, plotOutput("RETCr"))
-                 ),
-                 fluidRow(
-                   column(9,plotOutput("RETc")),  
-                   column(3, plotOutput("RETCc"))
-                 ),
-                 fluidRow(
-                   column(9,plotOutput("RETu")),  
-                   column(3, plotOutput("RETCu"))
-                 )      
-        ),
-        tabPanel("Enrollment",
-                 fluidRow(
-                   column(9, plotOutput("ES")),
-                   column(3, plotOutput("ESC"))
-                 ),
-                 fluidRow(
-                   column(9,plotOutput("EB")),  
-                   column(3, plotOutput("EBC"))
-                 )      
-        ),
-        tabPanel("Demographics",
-                 fluidRow(
-                   column(9, plotOutput("DR")),
-                   column(3, plotOutput("DRC"))
-                 ),
-                 fluidRow(
-                   column(9, plotOutput("DE")),
-                   column(3, plotOutput("DEC"))
-                 )
-        ),
-        tabPanel("Years since Diagnosis",
-                 plotOutput("histChartDiag"),
-                 plotOutput("pieChartDiag")
-        ),
-        tabPanel("Molecular Subtype Data",
-                 plotOutput("pieChartClin1"),
-                 plotOutput("pieChartClin2")
-        ),
-        tabPanel("Geographic Data",
-                 fluidRow(
-                   column(width = 12,
-                          selectInput("selectedColumn", "Select Column:",
-                                      choices = c("BloodDrawStatus", 
-                                                  "ExternalRecordsRequestStatus",
-                                                  "ExternalRecordsDataEntryStatus",
-                                                  "Race", "location", "edu"),
-                                      selected = "Race")
-                   )
-                 ),
-                 fluidRow(
-                   column(width = 12,
-                          leafletOutput("GeoChart2", height = "calc(100vh - 200px)")
-                   )
-                 )
-        )
-      )
+  mainPanel(
+    tabsetPanel(id = "mainTabset",
+                tabPanel("Web Eligibility",
+                         plotOutput("pieChart2"),
+                         plotOutput("pieChart1")
+                ),
+                tabPanel("Screening",
+                         fluidRow(
+                           column(9, plotOutput("PCO")),
+                           column(3, plotOutput("PCOC"))
+                         ),
+                         fluidRow(
+                           column(9,plotOutput("PCR")),  
+                           column(3, plotOutput("PCRC"))
+                         )
+                ),
+                tabPanel("Retention",
+                         fluidRow(
+                           column(9, plotOutput("RETr")),
+                           column(3, plotOutput("RETCr"))
+                         ),
+                         fluidRow(
+                           column(9,plotOutput("RETc")),  
+                           column(3, plotOutput("RETCc"))
+                         ),
+                         fluidRow(
+                           column(9,plotOutput("RETu")),  
+                           column(3, plotOutput("RETCu"))
+                         )      
+                ),
+                tabPanel("Enrollment",
+                         fluidRow(
+                           column(9, plotOutput("ES")),
+                           column(3, plotOutput("ESC"))
+                         ),
+                         fluidRow(
+                           column(9,plotOutput("EB")),  
+                           column(3, plotOutput("EBC"))
+                         )      
+                ),
+                tabPanel("Demographics",
+                         fluidRow(
+                           column(9, plotOutput("DR")),
+                           column(3, plotOutput("DRC"))
+                         ),
+                         fluidRow(
+                           column(9, plotOutput("DE")),
+                           column(3, plotOutput("DEC"))
+                         )
+                ),
+                tabPanel("Years since Diagnosis",
+                         plotOutput("histChartDiag"),
+                         plotOutput("pieChartDiag")
+                ),
+                tabPanel("Molecular Subtype Data",
+                         plotOutput("pieChartClin1"),
+                         plotOutput("pieChartClin2")
+                ),
+                tabPanel("Geographic Data",
+                         fluidRow(
+                           column(width = 12,
+                                  selectInput("selectedColumnG", "Select Column:",
+                                              choices = c("BloodDrawStatus", 
+                                                          "ExternalRecordsRequestStatus",
+                                                          "ExternalRecordsDataEntryStatus",
+                                                          "Race", "location.x", "edu"),
+                                              selected = "Race")
+                           )
+                         ),
+                         fluidRow(
+                           column(width = 12,
+                                  leafletOutput("GeoChart2", height = "calc(100vh - 200px)")
+                           )
+                         )
+                ),
+                tabPanel("Enrollment Assessment",
+                        fluidRow(
+                          column(width = 12,
+                                 selectInput("selectedColumnEA", "Select Column:",
+                                             choices = c("Race", "location", "edu"),
+                                             selected = "Race")
+                          )
+#                           column(width = 6,
+#                                  textInput("startDate1", "Start Date (YYYY-MM):", value = "2022-05")
+#                           ),
+#                           column(width = 6,
+#                                  textInput("endDate1", "End Date (YYYY-MM):", value = "2024-03")
+#                           )
+                        ),
+                         fluidRow(
+                           column(width = 12,
+                                  plotOutput("ENRAS")
+                           )
+                         ),
+#                         fluidRow(
+#                           column(width = 6,
+#                                  textInput("startDate2", "Start Date (YYYY-MM):", value = "2022-05")
+#                           ),
+#                           column(width = 6,
+#                                  textInput("endDate2", "End Date (YYYY-MM):", value = "2024-03")
+#                           )
+#                         ),
+                         fluidRow(
+                           column(width = 12,
+                                  plotOutput("MENRAS")
+                           )
+                         )
+                )
     )
+  )
 )
 
 
@@ -116,6 +149,7 @@ server <- function(input, output, session) {
   source("BCSB_map.R")
   source("str_list.R")
   source("retention.R")
+  source("6month.R")
   # Define the directory path
   .dir <- "~/Documents/" 
   
@@ -140,12 +174,12 @@ server <- function(input, output, session) {
       ss.bcsb.ef <- getEligiblity(eligible_str) |> 
         dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
         dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race),
-                     # Race = toupper(Race),
-                    #  Race = trimws(Race),
-                    #  Race = ifelse(grepl("BLACK|AFRICAN", Race), "BLACK", Race),
-                    #  Race = ifelse(grepl("KOREAN|CHINESE|ASIAN|ARAB", Race), "ASIAN", Race),
-                    #  Race = ifelse(grepl("PACIFIC|ISLANDER|NATIVE|INDIAN|ALASKAN", Race), "NA.AMERI/P.ISLA", Race),
-                    #  Race = ifelse(grepl("MEXICAN|CENTRAL|HISPANIC", Race), "HISPANIC", Race),
+                      # Race = toupper(Race),
+                      #  Race = trimws(Race),
+                      #  Race = ifelse(grepl("BLACK|AFRICAN", Race), "BLACK", Race),
+                      #  Race = ifelse(grepl("KOREAN|CHINESE|ASIAN|ARAB", Race), "ASIAN", Race),
+                      #  Race = ifelse(grepl("PACIFIC|ISLANDER|NATIVE|INDIAN|ALASKAN", Race), "NA.AMERI/P.ISLA", Race),
+                      #  Race = ifelse(grepl("MEXICAN|CENTRAL|HISPANIC", Race), "HISPANIC", Race),
                       diagnosis = ifelse(is.eligible, "BCSB ELIGIBLE", "BCSB INELIGIBLE")) |> 
         dplyr::select(Race, diagnosis)
       
@@ -207,11 +241,46 @@ server <- function(input, output, session) {
   })
   
   
-
   
-
-
+  
+  
+  
   # Within server function
+  
+  output$ENRAS <- renderPlot({
+    clin <- req(processedClinData())
+    PC <- req(processedEnroll())
+    startDate <- input$dateRange1[1]
+    endDate <- input$dateRange1[2]
+    tryCatch({
+      selectedColumn <- input$selectedColumnEA
+      
+      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      chart <- getLineChartEveryone(PC, Diag$df.DxDate, selectedColumn)
+#      chart <- getLineChartEveryone(PC, Diag$df.DxDate, "Race", startDate, endDate)
+      return(chart)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Assess 1 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  output$MENRAS <- renderPlot({
+    clin <- req(processedClinData())
+    PC <- req(processedEnroll())
+    startDate <- input$dateRange2[1]
+    endDate <- input$dateRange2[2]
+    tryCatch({
+      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      chart <- getLineChart(PC, Diag$df.DxDate, "Race")
+#      chart <- getLineChart(PC, Diag$df.DxDate, "Race", startDate, endDate)
+      return(chart)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting Assess 2 data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   
   output$GeoChart2 <- renderLeaflet({
     ll <- req(processedGeoData())
@@ -221,13 +290,14 @@ server <- function(input, output, session) {
       lat_longs <- inner_join(enrolled, ll, by = c("ID" = "ID"))
       
       # Get the selected column from input
-      selectedColumn <- input$selectedColumn
+      selectedColumn <- input$selectedColumnG
       
       # Create the color palette based on the selected column
       colorPalette <- colorFactor(palette = "Set1", domain = unique(lat_longs[[selectedColumn]]))
       
       geoPlot2 <- leaflet(data = lat_longs) %>%
-        addTiles() %>%
+        #addTiles() %>%
+        addProviderTiles(providers$Esri.WorldTopoMap) %>%
         addCircleMarkers(
           ~longitude,
           ~latitude,
@@ -268,6 +338,7 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
+  
   
   output$pieChartDiag <- renderPlot({
     clin <- req(processedClinData())
@@ -543,7 +614,7 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
-
+  
   
 }
 
