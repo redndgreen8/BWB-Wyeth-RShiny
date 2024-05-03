@@ -5,7 +5,7 @@ library(lubridate)
 df.DxDate <- plt$df.DxDate
 enrollField <- "Race"
 
-getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = "2024-03") {
+getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = "2024-03" ) {
   # Merge the dataframes
   df.merged <- inner_join(df.enroll, df.DxDate, by = c("ID" = "bcsbusername"))
   
@@ -50,11 +50,12 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
       panel.border = element_blank(),
       axis.line = element_line(color = "black")
     )
+  ggsave(paste0("plots/EnrAssesment.png"), lineChart, height = 9, width = 16, dpi = 600)
   
   return(lineChart)
 }
 
-getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = "2024-03") {
+getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = "2024-03" ) {
   # Merge the dataframes
   df.merged <- inner_join(df.enroll, df.DxDate, by = c("ID" = "bcsbusername"))
   
@@ -88,7 +89,7 @@ getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05
     scale_x_discrete(name = "Month") +
     scale_y_continuous(name = "Enrollment Count") +
     scale_color_brewer(palette = "Set2") +
-    ggtitle(paste0("Minority Enrollment Assessment by for date range ", as.character(startDate), " - ", as.character(endDate))) +
+    ggtitle(paste0("Minority Enrollment Assessment for date range ", as.character(startDate), " - ", as.character(endDate))) +
     labs(color = "Race") +
     theme_minimal() +
     theme(
@@ -101,6 +102,7 @@ getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05
       panel.border = element_blank(),
       axis.line = element_line(color = "black")
     )
+  ggsave(paste0("plots/MinAssesment.png"), lineChart, height = 9, width = 16, dpi = 600)
   
   return(lineChart)
 }
