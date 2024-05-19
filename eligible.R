@@ -5,7 +5,7 @@ source("str_list.R")
 
 library(parallel)
 library(xml2)
-
+library(stringdist)
 
 .dir <- "~/Documents/" 
 
@@ -164,4 +164,129 @@ getPie <- function(ss) {
 }
 
 
+df.elig <- getEligiblity(eligible_str) |> 
+  dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
+  dplyr::rename(Fname = What.is.your.name...First) |> 
+  dplyr::rename(Lname = What.is.your.name...Last) |> 
+  dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race)) |>
+  dplyr::mutate(Minority = ifelse( Race == "White", "FALSE", "TRUE")) |>
+  dplyr::select(Fname, Lname, Email, Phone.Number, Race, is.eligible, Minority)
+
+
+cleanCalend <- function(calend_str) {
+  ef <- read.csv(paste0( calend_str))
+  
+  interested_cols <- c( 4,5,6,13)
+  
+  char_cols <- which(sapply(ef[interested_cols], is.character))
+  for (col in interested_cols) {
+    ef[[col]] <- sapply(ef[[col]], clean_text)
+  }
+
+  
+  
+  return(ef)
+}
+
+
+calendly_df <- cleanCalend(calend_str) |>
+  dplyr::select(Invitee.First.Name, Invitee.Last.Name, Invitee.Email, 
+                Invitee.Time.Zone, Start.Date...Time, End.Date...Time, Location)
+
+
+
+# Define the threshold for fuzzy matching
+threshold <- 0.83
+
+# Perform fuzzy matching and intersection
+# Define the field pairs for matching
+field_pairs <- c("Invitee.Email" = "Email")#, "Location" = "Phone.Number")
+
+# Initialize an empty data frame to store the concatenated results
+final_data <- data.frame()
+
+# Iterate over the field pairs
+for (i in seq_along(field_pairs)) {
+  calendly_field <- names(field_pairs)[i]
+  elig_field <- field_pairs[i]
+  
+  # Perform fuzzy matching and intersection based on the current field pair
+  intersected_data <- calendly_df %>%
+    rowwise() %>%
+    mutate(match_id = possibly(
+      df.elig %>%
+          mutate(dist = stringdist(!!sym(elig_field), !!sym(calendly_field), method = "lv")) %>%
+          filter(dist <= nchar(!!sym(calendly_field)) * (1 - threshold)) %>%
+          pull(row_number()), otherwise = NA_integer_ )()
+    ) %>%
+    ungroup() %>%
+    left_join(df.elig, by = setNames(elig_field, calendly_field))
+  
+  
+  # Concatenate the matched data
+  final_data <- bind_rows(final_data, intersected_data)
+}
+
+write.csv(final_data, file = "calendly_race.csv")
+write.csv(final_data[which(final_data$Minority == TRUE), ], file = "calendly_minorities.csv")
+
+
+getCalendPie <- function(final_data) {
+  df <- final_data %>%
+    dplyr::filter(!(grepl("European|UK", Invitee.Time.Zone, ignore.case = TRUE))) %>%
+    dplyr::filter(is.eligible) %>%
+    dplyr::count(Invitee.Time.Zone, Race) %>%
+    dplyr::group_by(Invitee.Time.Zone) %>%
+    dplyr::mutate(total = sum(n)) %>%
+    dplyr::mutate(pct = n / total) %>%
+    dplyr::ungroup() %>%
+    dplyr::arrange(Invitee.Time.Zone, Race)
+  
+  df2 <- df %>%
+    dplyr::group_by(Invitee.Time.Zone) %>%
+    dplyr::mutate(csum = rev(cumsum(rev(pct))), 
+                  pos = pct/2 + dplyr::lead(csum, 1),
+                  pos = dplyr::if_else(is.na(pos), pct/2, pos),
+                  label = paste0("N=", n, "\n", round(pct*100, 1), "%")) %>%
+    dplyr::ungroup()
+  
+  df3 <- df %>%
+    dplyr::group_by(Invitee.Time.Zone) %>%
+    dplyr::summarize(n = paste0("N=", sum(n))) %>%
+    dplyr::ungroup()
+  
+  gp <- ggplot(df, aes(x = "" , y = pct, fill = Race)) +
+    geom_col(width = 1, color = "black", size = 0.5) +
+    facet_grid(cols = vars(Invitee.Time.Zone)) +
+    coord_polar(theta = "y") +
+    scale_fill_brewer(palette = "Set3") +
+    geom_label_repel(data = df2,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data = df3, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = FALSE, parse = FALSE, size = 8) + 
+    theme_DB() +
+    ylab("") + 
+    xlab("") +
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(hjust = 0.5),  
+          plot.subtitle = element_text(hjust = 0.5)) +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Demographic Distribution of 
+    Calendly Scheduled participants")  
+ # gp  
+  ggsave("plots/CalendTimezone.png", gp, height = 9, width = 24, dpi = 600)
+  
+  return(list(gp = gp, df = df))
+}
+
+calend_pie <- getCalendPie(final_data )
 
