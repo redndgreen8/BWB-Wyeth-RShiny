@@ -12,19 +12,19 @@ getEnrollment <- function(enroll_str) {
   names(df)[1] <- "ID"
   
   
-  df.enroll <- select(df, ID,  Clinic, ConsentSigned, SurveyStatus, BloodDrawStatus, Whatisthehighestlevelofeducationyouhavereceived, WhatisyourracePleasemarkallthatapply, DateofcompletionofWebsiteEligibilitySurvey, ExternalRecordsRequestStatus, ExternalRecordsDataEntryStatus)
+  df.enroll <- select(df, ID,  Clinic, ConsentSigned, SurveyStatus, BloodDrawStatus, Whatisthehighestlevelofeducationyouhavereceived, WhatisyourracePleasemarkallthatapply, DateofWebsiteEligibilitySurvey, ExternalRecordsRequestStatus, ExternalRecordsDataEntryStatus)
   
   df.enroll <- df.enroll |>
     mutate(
       Race = ifelse( WhatisyourracePleasemarkallthatapply == "", "No race indicated", WhatisyourracePleasemarkallthatapply),
       Race = ifelse(Race %in% "I prefer Not to Answer", 
                     "No race indicated", Race),
-      location = ifelse(!is.na(DateofcompletionofWebsiteEligibilitySurvey)  ,
+      location = ifelse(!is.na(DateofWebsiteEligibilitySurvey)  ,
                         "Web", as.character(Clinic)),
       edu = ifelse(is.na(Whatisthehighestlevelofeducationyouhavereceived), 
                    "NA", Whatisthehighestlevelofeducationyouhavereceived),
       survey = ifelse(SurveyStatus == "Completed", SurveyStatus, "Incomplete")) |>
-    select(-WhatisyourracePleasemarkallthatapply, -Clinic, -Whatisthehighestlevelofeducationyouhavereceived, -DateofcompletionofWebsiteEligibilitySurvey) |>
+    select(-WhatisyourracePleasemarkallthatapply, -Clinic, -Whatisthehighestlevelofeducationyouhavereceived, -DateofWebsiteEligibilitySurvey) |>
     filter(ConsentSigned == "Yes") |>
     unique()
   

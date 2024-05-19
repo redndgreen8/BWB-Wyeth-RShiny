@@ -11,13 +11,13 @@ getPhoneConsult <- function(screen_str) {
   names(df) <- gsub("[[:punct:] ]", "", names(df))
   names(df)[1] <- "ID"
   
-  df.phoneConsult <- select(df, ID, Dispositionflag, DateofcompletionofWebsiteEligibilitySurvey, Clinic, WhatisyourRaceEthnicity)
+  df.phoneConsult <- select(df, ID, Dispositionflag, DateofWebsiteEligibilitySurvey, Clinic, WhatisyourRaceEthnicity)
   
   df.phoneConsult <- df.phoneConsult |>
     mutate(
       Race = ifelse( WhatisyourRaceEthnicity == "", "No race indicated", WhatisyourRaceEthnicity),
       Race = ifelse(Race %in% "I prefer Not to Answer", "No race indicated", Race),
-      location = ifelse(!is.na(DateofcompletionofWebsiteEligibilitySurvey)  , "Web", as.character(Clinic)),
+      location = ifelse(!is.na(DateofWebsiteEligibilitySurvey)  , "Web", as.character(Clinic)),
       Dispositionflag = ifelse(Dispositionflag == "Eligible", "Enrolled", Dispositionflag),
       Dispositionflag = ifelse(Dispositionflag == "Ineligible", "Ineligible on re-screen", Dispositionflag)) |>
     select(-WhatisyourRaceEthnicity, -Clinic) |>

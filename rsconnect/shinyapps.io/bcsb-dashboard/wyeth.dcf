@@ -5,9 +5,9 @@ account: bcsb-dashboard
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11151307
-bundleId: 8566101
+bundleId: 8576223
 url: https://bcsb-dashboard.shinyapps.io/wyeth/
 version: 1
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: BCSB_utils.R|demographic|edgeCase_dx.txt|multiple_dx.txt|outlierCase_dx.txt|README.md|data|demographics|plots
+ignoredFiles: BCSB Web Eligibility Survey 4.9.24.csv|BCSB_utils.R|demographic|edgeCase_dx.txt|geocode_cache_census.csv|multiple_dx.txt|outlierCase_dx.txt|README.md|data|demographics|plots
