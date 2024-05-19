@@ -145,7 +145,37 @@ getPCFpieComb <- function(df.phoneConsult){
     ggtitle("Phone Consult Outcomes") + 
     labs(subtitle = "This includes participants from Web and Clinic.",
          fill = "Race") 
-  ggsave("plots/PCFC.png", gpFlag, height = 9, width = 16, dpi = 600)
+  gpFlag2 <- ggplot(df.phoneConsultFlag, aes(x = "", y = pct, fill = fct_inorder(Dispositionflag))) +
+    geom_col(width = 1, color = 1, linewidth = 0.5) +
+    coord_polar(theta = "y") +  # This creates the pie chart
+    scale_fill_brewer(palette = "Set3") +  # Set color palette
+    geom_label_repel(data = df2,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data=df3, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = F, parse = F, size = 8) +
+    #  geom_label(aes(label = scales::percent(pct)), 
+    #            position = position_stack(vjust = 0.5)) +  # Add percentage labels
+    
+    theme_DB() +  # Remove axes and background
+    ylab("")+
+    xlab("")+
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(size = 25, hjust = 0.5),  
+          plot.subtitle = element_text(size = 15, hjust = 0.5)) +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Phone Consult Outcomes") + 
+    labs(subtitle = "This includes participants from Web and Clinic.",
+         fill = "Race") 
+  ggsave("plots/PCFC.png", gpFlag2, height = 9, width = 16, dpi = 600)
   
   return(gpFlag)
   
@@ -268,9 +298,40 @@ getPCRpieComb <- function(df.phoneConsult){
     ggtitle("Phone Consult Race Demographics") + 
     labs(subtitle = "This includes participants from the Web and Clinics.",
          fill = "Race") 
+  
+  gpRace2 <- ggplot(df.phoneConsultRace, aes(x = "", y = pct, fill = fct_inorder(Race))) +
+    geom_col(width = 1, color = 1, linewidth = 0.5) +
+    coord_polar(theta = "y") +  # This creates the pie chart
+    scale_fill_brewer(palette = "Set3") +  # Set color palette
+    geom_label_repel(data = df2Race,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data=df3Race, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = F, parse = F, size = 8) +
+    #  geom_label(aes(label = scales::percent(pct)), 
+    #            position = position_stack(vjust = 0.5)) +  # Add percentage labels
+    
+    theme_DB() +  # Remove axes and background
+    ylab("")+
+    xlab("")+
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(),
+          plot.title = element_text(size = 25, hjust = 0.5),  
+          plot.subtitle = element_text(size = 15, hjust = 0.5)) +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Phone Consult Race Demographics") + 
+    labs(subtitle = "This includes participants from the Web and Clinics.",
+         fill = "Race") 
   #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpRace  
-  ggsave("plots/PCRC.png", gpRace, height = 9, width = 16, dpi = 600)
+  ggsave("plots/PCRC.png", gpRace2, height = 9, width = 16, dpi = 600)
   
   #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  

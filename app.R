@@ -17,13 +17,13 @@ library(ggmap)
 library(DT)
 library(knitr)
 #library(rgdal)
-
+library(stringdist)
 library(tidygeocoder)
 library(leaflet)
 
 
 ui <- fluidPage(
-  titlePanel("BCSB Dashboard - May 1, 2024"),
+  titlePanel("BCSB Dashboard - May 3, 2024"),
   mainPanel(
     tabsetPanel(id = "mainTabset",
                 tabPanel("Web Eligibility",
@@ -87,9 +87,9 @@ ui <- fluidPage(
                            column(width = 12,
                                   selectInput("selectedColumnG", "Select Column:",
                                               choices = c("BloodDrawStatus", 
-                                                          "ExternalRecordsRequestStatus",
-                                                          "ExternalRecordsDataEntryStatus",
-                                                          "Race", "location.x", "edu"),
+                                                         # "ExternalRecordsRequestStatus",
+                                                        #  "ExternalRecordsDataEntryStatus",
+                                                          "Race", "RecruitmentSource", "edu"),
                                               selected = "Race")
                            )
                          ),
@@ -174,12 +174,6 @@ server <- function(input, output, session) {
       ss.bcsb.ef <- getEligiblity(eligible_str) |> 
         dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
         dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race),
-                      # Race = toupper(Race),
-                      #  Race = trimws(Race),
-                      #  Race = ifelse(grepl("BLACK|AFRICAN", Race), "BLACK", Race),
-                      #  Race = ifelse(grepl("KOREAN|CHINESE|ASIAN|ARAB", Race), "ASIAN", Race),
-                      #  Race = ifelse(grepl("PACIFIC|ISLANDER|NATIVE|INDIAN|ALASKAN", Race), "NA.AMERI/P.ISLA", Race),
-                      #  Race = ifelse(grepl("MEXICAN|CENTRAL|HISPANIC", Race), "HISPANIC", Race),
                       diagnosis = ifelse(is.eligible, "BCSB ELIGIBLE", "BCSB INELIGIBLE")) |> 
         dplyr::select(Race, diagnosis)
       
@@ -285,6 +279,7 @@ server <- function(input, output, session) {
   output$GeoChart2 <- renderLeaflet({
     ll <- req(processedGeoData())
     enrolled <- req(processedEnroll())
+    enrolled$RecruitmentSource <- enrolled$location
     enrolled[["Race"]] <- ifelse(grepl(",", enrolled[["Race"]]), "Multiple", enrolled[["Race"]])
     tryCatch({
       lat_longs <- inner_join(enrolled, ll, by = c("ID" = "ID"))

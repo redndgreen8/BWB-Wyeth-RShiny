@@ -38,7 +38,7 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
     scale_y_continuous(name = "Enrollment Count") +
     scale_color_brewer(palette = "Set2") +
     ggtitle(paste0("Enrollment Assessment by ",enrollField, " for date range ", as.character(startDate), " - ", as.character(endDate))) +
-    labs(color = "Race") +
+    labs(color = enrollField) +
     theme_minimal() +
     theme(
       legend.title = element_text(face = "bold"),

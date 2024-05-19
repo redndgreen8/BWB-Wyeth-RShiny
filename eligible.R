@@ -13,10 +13,14 @@ library(stringdist)
 clean_text <- function(txt) {
   # Remove punctuation
   txt <- gsub("[[:punct:]]", "", txt)
+  
   # Convert to lowercase
   txt <- tolower(txt)
-  # Trim leading and trailing white spaces
+  
+  # Trim leading, trailing, and middle white spaces
+  txt <- gsub("\\s+", " ", txt)
   txt <- trimws(txt)
+  
   return(txt)
 }
 
@@ -102,7 +106,37 @@ getPieComb <- function(ss) {  # Removed 'rl' from the function parameters
     guides(fill = guide_legend(ncol = 2)) +
     ggtitle("Demographic Distribution of all Web Eligibility Survey Entries") +   
     labs(subtitle = "Does not include clinic recruitment information")
-  ggsave("plots/Elig_comb.png", gp, height = 9, width = 16, dpi = 600)
+
+  gp2 <- ggplot(df, aes(x = "" , y = pct, fill = Race)) +  # Removed fct_inorder since we're not specifying levels
+    geom_col(width = 1, color = "black", size = 0.5) +  # Changed color to black for consistency
+    coord_polar(theta = "y") +
+    scale_fill_brewer(palette = "Set3") +
+    geom_label_repel(data = df2,
+                     aes(y = pos, label = label),
+                     size = 3.75, 
+                     nudge_x = 1,
+                     show.legend = FALSE, 
+                     label.padding = unit(0.75, "mm")) +
+    geom_text(data=df3, x = -1.15, y = 0, aes(label = n), 
+              colour = "black", inherit.aes = F, parse = F, size = 8) + 
+    theme_DB() +
+    ylab("") + 
+    xlab("") +
+    theme(axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid.major.y = element_blank(),
+          strip.text = element_text(size = 15, face = "bold"),
+          legend.text = element_text(size = 15, face = "bold"),
+          legend.title = element_blank(), 
+          plot.title = element_text(size = 25, hjust = 0.5),  
+          plot.subtitle = element_text(size = 15, hjust = 0.5) ) +
+    guides(fill = guide_legend(ncol = 2)) +
+    ggtitle("Demographic Distribution of all Web Eligibility Survey Entries") +   
+    labs(subtitle = "Does not include clinic recruitment information")
+  
+  
+  
+    ggsave("plots/Elig_comb.png", gp2, height = 9, width = 16, dpi = 600)
   
   return(list(gp = gp, df = df))
 }

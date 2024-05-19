@@ -199,19 +199,21 @@ getClinPie <- function(clind) {
           strip.text = element_text(size = 15, face = "bold"),
           legend.text = element_text(size = 15, face = "bold"),
           legend.title = element_blank(),
-          plot.title = element_text(hjust = 0.5),  
-          plot.subtitle = element_text(hjust = 0.5)) +
+          plot.title = element_text(hjust = 0.5, size = 25),  
+          plot.subtitle = element_text(hjust = 0.5, size = 15)) +
     guides(fill = guide_legend(nrow = 3, byrow = T)) +
     ggtitle("Subtypes for participants that have completed Baseline Session") +   #
     labs(subtitle = "Multifocal - participants that had multiple tumors 
     with different subtypes
          HR - Hormone Receptor (ER/PR)")  #
-  return(gp)
   ggsave("plots/RS_pie_chart.png", gp, height = 9, width = 16, dpi = 600)
+  return(gp)
 }
 
 
 clind <- getClinDatSimple(master_str)
+subtype <- getClinPie(clind)
+subtype
 
 getYrSinceDiagnosis <- function(dx_str, clind) {
   cd <- read.csv(paste0( dx_str))
