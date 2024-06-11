@@ -227,7 +227,7 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
       dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
       EarliestConsentDate = pmin(dateconsentsignedbypt, 
                                  dateconsentsignedbypt_v2, 
-                                 dateconsentsignedbypt_v2_v3, 
+                                 dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,dateconsentsignedbypt_v2sp,
                                  na.rm = TRUE),
       breastcancerdiagdate = as.Date(breastcancerdiagdate)
     ) %>%

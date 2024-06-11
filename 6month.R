@@ -5,7 +5,7 @@ library(lubridate)
 df.DxDate <- plt$df.DxDate
 enrollField <- "Race"
 
-getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = "2024-03" ) {
+getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = format(Sys.Date(), "%Y-%m") ) {
   # Merge the dataframes
   df.merged <- inner_join(df.enroll, df.DxDate, by = c("ID" = "bcsbusername"))
   
@@ -55,7 +55,9 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
   return(lineChart)
 }
 
-getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = "2024-03" ) {
+startDate <- "2022-05"
+endDate <- format(Sys.Date(), "%Y-%m")
+getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = format(Sys.Date(), "%Y-%m") ) {
   # Merge the dataframes
   df.merged <- inner_join(df.enroll, df.DxDate, by = c("ID" = "bcsbusername"))
   
@@ -106,7 +108,7 @@ getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05
   
   return(lineChart)
 }
-chart6month <- getLineChart(df.enroll, df.DxDate, "Race", "2023-07", "2024-03")
+chart6month <- getLineChart(df.enroll, df.DxDate, "Race", "2023-07", "2024-02")
 chart6month
 
 chartStart <- getLineChart(df.enroll, df.DxDate, "Race")
