@@ -19,6 +19,7 @@ getPhoneConsult <- function(screen_str) {
       Race = ifelse(Race %in% "I prefer Not to Answer", "No race indicated", Race),
       location = ifelse(!is.na(DateofWebsiteEligibilitySurvey)  , "Web", as.character(Clinic)),
       Dispositionflag = ifelse(Dispositionflag == "Eligible", "Enrolled", Dispositionflag),
+      Dispositionflag = ifelse(Dispositionflag == "Defer (Study Staff only)", "Deferred", Dispositionflag),
       Dispositionflag = ifelse(Dispositionflag == "Ineligible", "Ineligible on re-screen", Dispositionflag)) |>
     select(-WhatisyourRaceEthnicity, -Clinic) |>
     unique()

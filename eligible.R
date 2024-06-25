@@ -29,9 +29,34 @@ isEligible <- function(ef) {
   ef[ef == ""] <- NA
   ef[ef == "Yes"] <- T
   ef[ef == "No"] <- F
- # view(ef)
+  #view(ef)
+  #yes.reqd <- ef[, 7:10] |> purrr::map(as.logical) |> bind_cols()
+  #no.reqd <- ef[, 11:13] |> purrr::map(as.logical) |> bind_cols()
+  
   yes.reqd <- ef[, 7:10] |> purrr::map(as.logical) |> bind_cols()
-  no.reqd <- ef[, 11:13] |> purrr::map(as.logical) |> bind_cols()
+  no.reqd <- ef[, 12:14] |> purrr::map(as.logical) |> bind_cols()
+  
+  # Define column names for yes and no requirements
+  #no_reqd_cols <- c("Have you ever had stage IV (metastatic) breast cancer?",
+  #                  "Have you ever had a recurrence of your cancer (Except recurrence following ductal carcinoma in situ)? 
+  #                  A recurrence is when your cancer goes away for a while but then comes back later.",
+  #                  "Excluding endocrine therapy or maintenance therapy, are you on active chemotherapy treatment?")
+  
+  #yes_reqd_cols <- c("Are you willing to donate blood and complete surveys  for this breast cancer research?",
+  #                   "Have you ever had invasive breast cancer (stage I-III)? Most breast cancers are invasive,
+  #                   the two most common are invasive ductal carcinoma and invasive lobular carcinoma.",
+  #                   "Are you 18 years or older?",
+  #                   "Were you diagnosed within the last 7 years?")
+
+  # Check if columns exist in the dataframe
+  #missing_yes_cols <- setdiff(yes_reqd_cols, colnames(ef))
+  #missing_no_cols <- setdiff(no_reqd_cols, colnames(ef))
+  
+  # Extract relevant columns and convert to logical
+  #yes_reqd <- ef %>% select(all_of(yes_reqd_cols)) %>% map(as.logical) %>% bind_cols()
+  #no_reqd <- ef %>% select(all_of(no_reqd_cols)) %>% map(as.logical) %>% bind_cols()
+  
+  
   cc <- complete.cases(yes.reqd) & complete.cases(no.reqd)
   eli <- rowSums(!yes.reqd) == 0 & rowSums(no.reqd) == 0
   eli[is.na(eli)] <- F

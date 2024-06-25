@@ -289,7 +289,7 @@ getEBloodpieComb <- function(df.enroll){
           plot.subtitle = element_text(size = 15, hjust=0.5)) +
     guides(fill = guide_legend(ncol = 2)) +
     ggtitle("Blood Draw Status, (Survey Complete)")
-  ggsave("plots/plots/EBC.png", gpEdu2, height = 9, width = 16, dpi = 600)
+  ggsave("plots/EBC.png", gpEdu2, height = 9, width = 16, dpi = 600)
   
   #ggsave("plots/Race_demog.png", gp, height = 9, width = 16, dpi = 600)
   #gpFlag  
