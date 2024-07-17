@@ -238,23 +238,21 @@ server <- function(input, output, session) {
     })
   })
   
-  
-  
-  
-  
+
   
   # Within server function
   
   output$ENRAS <- renderPlot({
-    clin <- req(processedClinData())
+    #clin <- req(processedClinData())
     PC <- req(processedEnroll())
     startDate <- input$dateRange1[1]
     endDate <- input$dateRange1[2]
     tryCatch({
       selectedColumn <- input$selectedColumnEA
       
-      Diag <- getYrSinceDiagnosis(dx_str, clin)
-      chart <- getLineChartEveryone(PC, Diag$df.DxDate, selectedColumn)
+     # Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getEarliestConsentDate(dx_strFull)
+      chart <- getLineChartEveryone(PC, Diag, selectedColumn)
 #      chart <- getLineChartEveryone(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)
     }, error = function(e) {
@@ -264,13 +262,14 @@ server <- function(input, output, session) {
   })
   
   output$MENRAS <- renderPlot({
-    clin <- req(processedClinData())
+    #clin <- req(processedClinData())
     PC <- req(processedEnroll())
     startDate <- input$dateRange2[1]
     endDate <- input$dateRange2[2]
     tryCatch({
-      Diag <- getYrSinceDiagnosis(dx_str, clin)
-      chart <- getLineChart(PC, Diag$df.DxDate, "Race")
+      #Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getEarliestConsentDate(dx_strFull)
+      chart <- getLineChart(PC, Diag, "Race")
 #      chart <- getLineChart(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)
     }, error = function(e) {

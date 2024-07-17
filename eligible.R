@@ -36,6 +36,8 @@ isEligible <- function(ef) {
   yes.reqd <- ef[, 7:10] |> purrr::map(as.logical) |> bind_cols()
   no.reqd <- ef[, 12:14] |> purrr::map(as.logical) |> bind_cols()
   
+  
+  
   # Define column names for yes and no requirements
   #no_reqd_cols <- c("Have you ever had stage IV (metastatic) breast cancer?",
   #                  "Have you ever had a recurrence of your cancer (Except recurrence following ductal carcinoma in situ)? 
@@ -55,11 +57,18 @@ isEligible <- function(ef) {
   # Extract relevant columns and convert to logical
   #yes_reqd <- ef %>% select(all_of(yes_reqd_cols)) %>% map(as.logical) %>% bind_cols()
   #no_reqd <- ef %>% select(all_of(no_reqd_cols)) %>% map(as.logical) %>% bind_cols()
-  
+  # Check for email addresses containing "mailinatorcom" in the 4th column
+  i#nvalid_emails <- grepl("mailinatorcom", ef[, 4], ignore.case = TRUE)
   
   cc <- complete.cases(yes.reqd) & complete.cases(no.reqd)
   eli <- rowSums(!yes.reqd) == 0 & rowSums(no.reqd) == 0
   eli[is.na(eli)] <- F
+  
+  
+  # Filter out invalid emails
+  #eli[invalid_emails] <- F
+  
+  
   #view(eli)
   return(eli)
 }
@@ -79,12 +88,14 @@ getEligiblity <- function(elig_str) {
   ef <- ef[!duplicated(ef[, 4]),]
   ef <- ef[!duplicated(ef[, 5]),]
   
+  ef <- ef[!grepl("mailinatorcom", ef[, 4], ignore.case = TRUE), ]
+  
   ef$is.eligible <- isEligible(ef)
   #write.csv(ef, file = "post_dup.csv", row.names = FALSE)
   
   return(ef)
 }
-#eligible <- getEligiblity(eligible_str)
+eligible <- getEligiblity(eligible_str)
 
 getPieComb <- function(ss) {  # Removed 'rl' from the function parameters
   df <- ss |> 
