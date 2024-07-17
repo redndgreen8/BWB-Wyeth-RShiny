@@ -217,17 +217,29 @@ subtype
 
 getYrSinceDiagnosis <- function(dx_str, clind) {
   cd <- read.csv(paste0( dx_str))
-  
+  cd[cd == ""] <- NA
   # Process cd (file_df)
-  na_rows <- cd %>% filter(is.na(dateconsentsignedbypt) & is.na(dateconsentsignedbypt_v2) & is.na(dateconsentsignedbypt_v2_v3))
+  na_rows <- cd %>% filter(is.na(dateconsentsignedbypt) & 
+                             is.na(dateconsentsignedbypt_v2) & 
+                             is.na(dateconsentsignedbypt_v2_v3) & 
+                             is.na(dateconsentsignedbypt_v4) & 
+                             is.na(dateconsentsignedbypt_v2sp) & 
+                             is.na(dateconsentsignedbypt_ch_v1) & 
+                             is.na(dateconsentsignedbypt_ko_v1))
   df.DxDa <- cd %>%
     mutate(
       dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
       dateconsentsignedbypt_v2 = as.Date(dateconsentsignedbypt_v2),
       dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
-      EarliestConsentDate = pmin(dateconsentsignedbypt, 
-                                 dateconsentsignedbypt_v2, 
-                                 dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,dateconsentsignedbypt_v2sp,
+      dateconsentsignedbypt_v4 = as.Date(dateconsentsignedbypt_v4),
+      dateconsentsignedbypt_v2sp = as.Date(dateconsentsignedbypt_v2sp),
+      dateconsentsignedbypt_ch_v1 = as.Date(dateconsentsignedbypt_ch_v1),
+      dateconsentsignedbypt_ko_v1 = as.Date(dateconsentsignedbypt_ko_v1),
+
+      EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, 
+                                 dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,
+                                 dateconsentsignedbypt_v2sp,
+                                 dateconsentsignedbypt_ch_v1, dateconsentsignedbypt_ko_v1,
                                  na.rm = TRUE),
       breastcancerdiagdate = as.Date(breastcancerdiagdate)
     ) %>%

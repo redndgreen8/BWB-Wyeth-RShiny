@@ -23,7 +23,7 @@ library(leaflet)
 
 
 ui <- fluidPage(
-  titlePanel("BCSB Dashboard - May 3, 2024"),
+  titlePanel("BCSB Dashboard - June 25, 2024"),
   mainPanel(
     tabsetPanel(id = "mainTabset",
                 tabPanel("Web Eligibility",
@@ -55,6 +55,10 @@ ui <- fluidPage(
                          )      
                 ),
                 tabPanel("Enrollment",
+                         fluidRow(
+                           column(9, plotOutput("ER")),
+                           column(3, plotOutput("ERC"))
+                         ),                     
                          fluidRow(
                            column(9, plotOutput("ES")),
                            column(3, plotOutput("ESC"))
@@ -412,6 +416,17 @@ server <- function(input, output, session) {
     })
   })
   
+  output$ERC <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      ESC <- getERacepieComb(PC)
+      return(ESC)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting ER Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   output$ESC <- renderPlot({
     PC <- req(processedEnroll())
     tryCatch({
@@ -419,6 +434,17 @@ server <- function(input, output, session) {
       return(ESC)
     }, error = function(e) {
       shiny::showNotification(paste("Error plotting ES Comb data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+
+  output$ER <- renderPlot({
+    PC <- req(processedEnroll())
+    tryCatch({
+      PCO <- getERacepie(PC)
+      return(PCO)
+    }, error = function(e) {
+      shiny::showNotification(paste("Error plotting ER data:", e$message), type = "error")
       return(NULL)
     })
   })
