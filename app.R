@@ -37,18 +37,31 @@ ui <- fluidPage(
                                                   choices = c("Count", "Percentage"),
                                                   selected = "Count"))
                          ),
-                         plotlyOutput("pieChart2"),
-                         plotlyOutput("pieChart1")
-                ),
-                tabPanel("Screening",
                          fluidRow(
-                           column(9, plotOutput("PCO")),
-                           column(3, plotOutput("PCOC"))
+                         column(12,plotlyOutput("pieChart2"))
                          ),
                          fluidRow(
-                           column(9,plotOutput("PCR")),  
-                           column(3, plotOutput("PCRC"))
+                         column(12,plotlyOutput("pieChart1"))
                          )
+                ),
+                
+                
+                tabPanel("Screening",
+                         fluidRow(
+                           column(12, radioButtons("group_var", "Group by:",
+                                               choices = c("Race", "Dispositionflag"),
+                                               selected = "Race"),
+                                  checkboxGroupInput("selected_locations", "Select Locations:",
+                                                     choices = NULL) # Will be updated in server)
+                         
+                                  )
+                           ),
+                         fluidRow(
+                           column(12, plotlyOutput("individual_plots")),
+                         ),
+                         fluidRow(
+                           column(12, plotlyOutput("combined_plot"))
+                         )      
                 ),
                 tabPanel("Retention",
                          fluidRow(
@@ -535,6 +548,67 @@ server <- function(input, output, session) {
     })
   })
   
+  
+  observe({
+    req(processedPhoneConsult())
+    locations <- unique(processedPhoneConsult()$location)
+    updateCheckboxGroupInput(session, "selected_locations",
+                             choices = locations,
+                             selected = locations)
+  })
+  # Create color palette
+  color_palette <- reactive({
+    req(processedPhoneConsult())
+    
+    group_values <- unique(processedPhoneConsult()[[input$group_var]])
+    n <- length(group_values)
+    colors <- brewer.pal(max(3, n), "Set3")[1:n]
+    setNames(colors, group_values)
+  })
+  
+  create_pie_chart_screening <- function(data, title) {
+    plot_ly(data, labels = ~group, values = ~count, type = 'pie',
+            marker = list(colors = color_palette()[data$group],
+                          line = list(color = 'black', width = 1)),
+            textposition = 'inside',
+            textinfo = 'label+percent',
+            hoverinfo = 'text',
+            text = ~paste(group, ":", count, "(", sprintf("%.1f%%", count/sum(count)*100), ")"),
+            insidetextfont = list(color = '#FFFFFF')) %>%
+      layout(title = list(text = title, font = list(size = 16)),
+             showlegend = TRUE,
+             margin = list(t = 50, b = 50, l = 20, r = 20))
+  }
+  
+  # Individual plots
+  output$individual_plots <- renderPlotly({
+    req( processedPhoneConsult(), input$selected_locations)
+    
+    plots <- lapply(input$selected_locations, function(loc) {
+      data <- processedPhoneConsult() %>%
+        filter(location == loc) %>%
+        group_by(group = !!sym(input$group_var)) %>%
+        summarise(count = n())
+      
+      create_pie_chart_screening(data, paste("Distribution in", loc))
+    })
+    
+    subplot(plots, nrows = ceiling(sqrt(length(plots))))
+  })
+  
+  # Combined plot
+  output$combined_plot <- renderPlotly({
+    req(processedPhoneConsult(), input$group_var)
+    
+    data <- processedPhoneConsult() %>%
+      group_by(!!sym(input$group_var)) %>%
+      summarise(count = n()) %>%
+      rename(group = !!sym(input$group_var))
+    
+    create_pie_chart_screening(data, paste("Overall Distribution of", input$group_var, "Across All Selected Locations"))
+  })
+
+  
   output$PCOC <- renderPlot({
     PC <- req(processedPhoneConsult())
     tryCatch({
@@ -556,6 +630,9 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
+  
+  
+  
   
   output$PCRC <- renderPlot({
     PC <- req(processedPhoneConsult())
