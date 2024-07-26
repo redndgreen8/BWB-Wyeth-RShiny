@@ -632,7 +632,8 @@ server <- function(input, output, session) {
     }
     
     plot_ly(data, labels = ~Race, values = ~value, type = 'pie',
-            marker = list(colors = colors),
+            marker = list(colors = colors,
+                          line = list(color = 'black', width = 1)),
             textposition = 'inside',
             textinfo = 'label+percent',
             hoverinfo = 'text',
@@ -680,27 +681,36 @@ server <- function(input, output, session) {
       add_pie(data = subset(diagnosis_data, diagnosis == "BCSB ELIGIBLE"),
               labels = ~Race, values = ~value, name = "BCSB ELIGIBLE",
               domain = list(row = 0, column = 0),
-              marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB ELIGIBLE"]),
+              marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB ELIGIBLE"],
+                            line = list(color = 'black', width = 1)),
               textposition = 'inside',
               textinfo = 'label+percent',
               hoverinfo = 'text',
-              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value), ")"),
+              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value/sum(value)*100), ")"),
               insidetextfont = list(color = '#FFFFFF')) %>%
       add_pie(data = subset(diagnosis_data, diagnosis == "BCSB INELIGIBLE"),
               labels = ~Race, values = ~value, name = "BCSB INELIGIBLE",
               domain = list(row = 0, column = 1),
-              marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB INELIGIBLE"]),
+              marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB INELIGIBLE"],
+                            line = list(color = 'black', width = 1)),
               textposition = 'inside',
               textinfo = 'label+percent',
               hoverinfo = 'text',
-              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value), ")"),
+              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value/sum(value)*100), ")"),
               insidetextfont = list(color = '#FFFFFF')) %>%
       layout(title = list(text = "Race Breakdown by Eligibility", font = list(size = 16)),
              grid = list(rows = 1, columns = 2),
              showlegend = TRUE,
              legend = list(orientation = "h", y = -0.1),
-             margin = list(t = 50, b = 50))
+             margin = list(t = 50, b = 50),      
+             annotations = list(
+               list(x = 0.2, y = -0.1, text = "BCSB ELIGIBLE", showarrow = FALSE, xref = "paper", yref = "paper"),
+               list(x = 0.8, y = -0.1, text = "BCSB INELIGIBLE", showarrow = FALSE, xref = "paper", yref = "paper")
+             ))
   })
+  
+  
+  
   output$pieChartClin1 <- renderPlot({
     clin_dat <- req(processedClinData())
     tryCatch({
