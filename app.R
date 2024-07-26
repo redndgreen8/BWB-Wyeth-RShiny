@@ -20,6 +20,8 @@ library(knitr)
 library(stringdist)
 library(tidygeocoder)
 library(leaflet)
+library(plotly)
+library(RColorBrewer)
 
 
 ui <- fluidPage(
@@ -27,8 +29,16 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(id = "mainTabset",
                 tabPanel("Web Eligibility",
-                         plotOutput("pieChart2"),
-                         plotOutput("pieChart1")
+                         fluidRow(
+                           column(4, selectInput("highlight_race", "Highlight Race:", 
+                                                 choices = c("None", "Asian", "Black", "Hispanic", "White", "Unknown"),
+                                                 selected = "None")),
+                           column(4, radioButtons("view_type", "View Type:",
+                                                  choices = c("Count", "Percentage"),
+                                                  selected = "Count"))
+                         ),
+                         plotlyOutput("pieChart2"),
+                         plotlyOutput("pieChart1")
                 ),
                 tabPanel("Screening",
                          fluidRow(
@@ -91,8 +101,8 @@ ui <- fluidPage(
                            column(width = 12,
                                   selectInput("selectedColumnG", "Select Column:",
                                               choices = c("BloodDrawStatus", 
-                                                         # "ExternalRecordsRequestStatus",
-                                                        #  "ExternalRecordsDataEntryStatus",
+                                                          # "ExternalRecordsRequestStatus",
+                                                          #  "ExternalRecordsDataEntryStatus",
                                                           "Race", "RecruitmentSource", "edu"),
                                               selected = "Race")
                            )
@@ -104,32 +114,32 @@ ui <- fluidPage(
                          )
                 ),
                 tabPanel("Enrollment Assessment",
-                        fluidRow(
-                          column(width = 12,
-                                 selectInput("selectedColumnEA", "Select Column:",
-                                             choices = c("Race", "location", "edu"),
-                                             selected = "Race")
-                          )
-#                           column(width = 6,
-#                                  textInput("startDate1", "Start Date (YYYY-MM):", value = "2022-05")
-#                           ),
-#                           column(width = 6,
-#                                  textInput("endDate1", "End Date (YYYY-MM):", value = "2024-03")
-#                           )
-                        ),
+                         fluidRow(
+                           column(width = 12,
+                                  selectInput("selectedColumnEA", "Select Column:",
+                                              choices = c("Race", "location", "edu"),
+                                              selected = "Race")
+                           )
+                           #                           column(width = 6,
+                           #                                  textInput("startDate1", "Start Date (YYYY-MM):", value = "2022-05")
+                           #                           ),
+                           #                           column(width = 6,
+                           #                                  textInput("endDate1", "End Date (YYYY-MM):", value = "2024-03")
+                           #                           )
+                         ),
                          fluidRow(
                            column(width = 12,
                                   plotOutput("ENRAS")
                            )
                          ),
-#                         fluidRow(
-#                           column(width = 6,
-#                                  textInput("startDate2", "Start Date (YYYY-MM):", value = "2022-05")
-#                           ),
-#                           column(width = 6,
-#                                  textInput("endDate2", "End Date (YYYY-MM):", value = "2024-03")
-#                           )
-#                         ),
+                         #                         fluidRow(
+                         #                           column(width = 6,
+                         #                                  textInput("startDate2", "Start Date (YYYY-MM):", value = "2022-05")
+                         #                           ),
+                         #                           column(width = 6,
+                         #                                  textInput("endDate2", "End Date (YYYY-MM):", value = "2024-03")
+                         #                           )
+                         #                         ),
                          fluidRow(
                            column(width = 12,
                                   plotOutput("MENRAS")
@@ -238,7 +248,7 @@ server <- function(input, output, session) {
     })
   })
   
-
+  
   
   # Within server function
   
@@ -250,10 +260,10 @@ server <- function(input, output, session) {
     tryCatch({
       selectedColumn <- input$selectedColumnEA
       
-     # Diag <- getYrSinceDiagnosis(dx_str, clin)
+      # Diag <- getYrSinceDiagnosis(dx_str, clin)
       Diag <- getEarliestConsentDate(dx_strFull)
       chart <- getLineChartEveryone(PC, Diag, selectedColumn)
-#      chart <- getLineChartEveryone(PC, Diag$df.DxDate, "Race", startDate, endDate)
+      #      chart <- getLineChartEveryone(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)
     }, error = function(e) {
       shiny::showNotification(paste("Error plotting Assess 1 data:", e$message), type = "error")
@@ -270,7 +280,7 @@ server <- function(input, output, session) {
       #Diag <- getYrSinceDiagnosis(dx_str, clin)
       Diag <- getEarliestConsentDate(dx_strFull)
       chart <- getLineChart(PC, Diag, "Race")
-#      chart <- getLineChart(PC, Diag$df.DxDate, "Race", startDate, endDate)
+      #      chart <- getLineChart(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)
     }, error = function(e) {
       shiny::showNotification(paste("Error plotting Assess 2 data:", e$message), type = "error")
@@ -436,7 +446,7 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
-
+  
   output$ER <- renderPlot({
     PC <- req(processedEnroll())
     tryCatch({
@@ -590,29 +600,107 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
-  
-  output$pieChart1 <- renderPlot({
-    ef_data <- req(processedData())
-    tryCatch({
-      res <- getPie(ef_data)
-      return(res$gp)
-    }, error = function(e) {
-      shiny::showNotification(paste("Error plotting Elig 1 data:", e$message), type = "error")
-      return(NULL)
-    })
+  # Update race choices based on available data
+  observe({
+    req(processedData())
+    race_choices <- c("None", unique(processedData()$Race))
+    updateSelectInput(session, "highlight_race", choices = race_choices)
   })
   
-  output$pieChart2 <- renderPlot({
-    ef_data <- req(processedData())
-    tryCatch({
-      res <- getPieComb(ef_data)
-      return(res$gp)
-    }, error = function(e) {
-      shiny::showNotification(paste("Error plotting Elig 2 data:", e$message), type = "error")
-      return(NULL)
-    })
+  # Create a color palette
+  color_palette <- reactive({
+    req(processedData())
+    races <- unique(processedData()$Race)
+    n <- length(races)
+    colors <- brewer.pal(max(3, n), "Set3")[1:n]
+    setNames(colors, races)
   })
   
+  # Function to create pie chart
+  create_pie_chart <- function(data, title) {
+    if (input$view_type == "Percentage") {
+      data <- data %>% mutate(value = count / sum(count) * 100)
+      text_template <- "%{label}: %{value:.1f}%"
+    } else {
+      data <- data %>% mutate(value = count)
+      text_template <- "%{label}: %{value}"
+    }
+    
+    colors <- color_palette()[data$Race]
+    if(input$highlight_race != "None") {
+      colors[data$Race == input$highlight_race] <- "red"
+    }
+    
+    plot_ly(data, labels = ~Race, values = ~value, type = 'pie',
+            marker = list(colors = colors),
+            textposition = 'inside',
+            textinfo = 'label+percent',
+            hoverinfo = 'text',
+            text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value/sum(value)*100), ")"),
+            insidetextfont = list(color = '#FFFFFF')) %>%
+      layout(title = list(text = title, font = list(size = 16)),
+             showlegend = TRUE,
+             legend = list(orientation = "h", y = -0.1),
+             margin = list(t = 50, b = 50))
+  }
+  
+  # Pie Chart 1: Overall Race Breakdown
+  output$pieChart1 <- renderPlotly({
+    req(processedData())
+    
+    race_data <- processedData() %>%
+      group_by(Race) %>%
+      summarise(count = n())
+    
+    create_pie_chart(race_data, "Overall Race Breakdown")
+  })
+  
+  # Pie Chart 2: Race Breakdown by Diagnosis/Eligibility
+  output$pieChart2 <- renderPlotly({
+    req(processedData())
+    
+    diagnosis_data <- processedData() %>%
+      group_by(diagnosis, Race) %>%
+      summarise(count = n(), .groups = 'drop')
+    
+    if (input$view_type == "Percentage") {
+      diagnosis_data <- diagnosis_data %>%
+        group_by(diagnosis) %>%
+        mutate(value = count / sum(count) * 100)
+    } else {
+      diagnosis_data <- diagnosis_data %>% mutate(value = count)
+    }
+    
+    colors <- color_palette()[diagnosis_data$Race]
+    if(input$highlight_race != "None") {
+      colors[diagnosis_data$Race == input$highlight_race] <- "red"
+    }
+    
+    plot_ly() %>%
+      add_pie(data = subset(diagnosis_data, diagnosis == "BCSB ELIGIBLE"),
+              labels = ~Race, values = ~value, name = "BCSB ELIGIBLE",
+              domain = list(row = 0, column = 0),
+              marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB ELIGIBLE"]),
+              textposition = 'inside',
+              textinfo = 'label+percent',
+              hoverinfo = 'text',
+              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value), ")"),
+              insidetextfont = list(color = '#FFFFFF')) %>%
+      add_pie(data = subset(diagnosis_data, diagnosis == "BCSB INELIGIBLE"),
+              labels = ~Race, values = ~value, name = "BCSB INELIGIBLE",
+              domain = list(row = 0, column = 1),
+              marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB INELIGIBLE"]),
+              textposition = 'inside',
+              textinfo = 'label+percent',
+              hoverinfo = 'text',
+              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value), ")"),
+              insidetextfont = list(color = '#FFFFFF')) %>%
+      layout(title = list(text = "Race Breakdown by Eligibility", font = list(size = 16)),
+             grid = list(rows = 1, columns = 2),
+             showlegend = TRUE,
+             legend = list(orientation = "h", y = -0.1),
+             margin = list(t = 50, b = 50))
+  })
   output$pieChartClin1 <- renderPlot({
     clin_dat <- req(processedClinData())
     tryCatch({
