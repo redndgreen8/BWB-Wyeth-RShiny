@@ -44,8 +44,6 @@ ui <- fluidPage(
                          column(12,plotlyOutput("pieChart1"))
                          )
                 ),
-                
-                
                 tabPanel("Screening",
                          fluidRow(
                            column(12, radioButtons("group_var", "Group by:",
@@ -554,7 +552,7 @@ server <- function(input, output, session) {
     locations <- unique(processedPhoneConsult()$location)
     updateCheckboxGroupInput(session, "selected_locations",
                              choices = locations,
-                             selected = locations)
+                             selected = locations[1])
   })
   # Create color palette
   color_palette <- reactive({
@@ -584,17 +582,16 @@ server <- function(input, output, session) {
   output$individual_plots <- renderPlotly({
     req( processedPhoneConsult(), input$selected_locations)
     
-    plots <- lapply(input$selected_locations, function(loc) {
-      data <- processedPhoneConsult() %>%
-        filter(location == loc) %>%
-        group_by(group = !!sym(input$group_var)) %>%
-        summarise(count = n())
-      
-      create_pie_chart_screening(data, paste("Distribution in", loc))
-    })
+    # Filter data for selected locations and aggregate
+    data <- processedPhoneConsult() %>%
+      filter(location %in% input$selected_locations) %>%
+      group_by(group = !!sym(input$group_var)) %>%
+      summarise(count = n())
     
-    subplot(plots, nrows = ceiling(sqrt(length(plots))))
-  })
+    # Create a single pie chart for the aggregated data
+    create_pie_chart_screening(data, paste("Distribution in", paste(input$selected_locations, collapse = ", ")))
+})
+    
   
   # Combined plot
   output$combined_plot <- renderPlotly({

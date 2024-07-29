@@ -58,7 +58,7 @@ isEligible <- function(ef) {
   #yes_reqd <- ef %>% select(all_of(yes_reqd_cols)) %>% map(as.logical) %>% bind_cols()
   #no_reqd <- ef %>% select(all_of(no_reqd_cols)) %>% map(as.logical) %>% bind_cols()
   # Check for email addresses containing "mailinatorcom" in the 4th column
-  i#nvalid_emails <- grepl("mailinatorcom", ef[, 4], ignore.case = TRUE)
+  #nvalid_emails <- grepl("mailinatorcom", ef[, 4], ignore.case = TRUE)
   
   cc <- complete.cases(yes.reqd) & complete.cases(no.reqd)
   eli <- rowSums(!yes.reqd) == 0 & rowSums(no.reqd) == 0
