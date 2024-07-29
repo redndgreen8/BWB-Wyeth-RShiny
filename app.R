@@ -552,7 +552,7 @@ server <- function(input, output, session) {
     locations <- unique(processedPhoneConsult()$location)
     updateCheckboxGroupInput(session, "selected_locations",
                              choices = locations,
-                             selected = locations[1])
+                             selected = locations)
   })
   # Create color palette
   color_palette <- reactive({
@@ -587,9 +587,9 @@ server <- function(input, output, session) {
       filter(location %in% input$selected_locations) %>%
       group_by(group = !!sym(input$group_var)) %>%
       summarise(count = n())
-    
+    total_n <- sum(data$count)
     # Create a single pie chart for the aggregated data
-    create_pie_chart_screening(data, paste("Distribution in", paste(input$selected_locations, collapse = ", ")))
+    create_pie_chart_screening(data, paste("Distribution of", input$group_var, "in", paste(input$selected_locations, collapse = ", "),  paste(" (N = ", total_n,")" )))
 })
     
   
@@ -601,8 +601,9 @@ server <- function(input, output, session) {
       group_by(!!sym(input$group_var)) %>%
       summarise(count = n()) %>%
       rename(group = !!sym(input$group_var))
+    total_n <- sum(data$count)
     
-    create_pie_chart_screening(data, paste("Overall Distribution of", input$group_var, "Across All Selected Locations"))
+    create_pie_chart_screening(data, paste("Overall Distribution of", input$group_var, "Across All Selected Locations (N = ", total_n,")") )
   })
 
   
@@ -695,9 +696,11 @@ server <- function(input, output, session) {
     if (input$view_type == "Percentage") {
       data <- data %>% mutate(value = count / sum(count) * 100)
       text_template <- "%{label}: %{value:.1f}%"
-    } else {
+      hovertext <- ~paste(Race, ":", count, "(", sprintf("%.1f%%", value), ")")
+    } else {  # Count view
       data <- data %>% mutate(value = count)
       text_template <- "%{label}: %{value}"
+      hovertext <- ~paste(Race, ":", count)
     }
     
     colors <- color_palette()[data$Race]
@@ -709,9 +712,9 @@ server <- function(input, output, session) {
             marker = list(colors = colors,
                           line = list(color = 'black', width = 1)),
             textposition = 'inside',
-            textinfo = 'label+percent',
+            texttemplate = text_template,
             hoverinfo = 'text',
-            text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value/sum(value)*100), ")"),
+            text = hovertext,
             insidetextfont = list(color = '#FFFFFF')) %>%
       layout(title = list(text = title, font = list(size = 16)),
              showlegend = TRUE,
@@ -719,7 +722,6 @@ server <- function(input, output, session) {
              margin = list(t = 50, b = 50))
   }
   
-  # Pie Chart 1: Overall Race Breakdown
   output$pieChart1 <- renderPlotly({
     req(processedData())
     
@@ -727,7 +729,10 @@ server <- function(input, output, session) {
       group_by(Race) %>%
       summarise(count = n())
     
-    create_pie_chart(race_data, "Overall Race Breakdown")
+    total_n <- sum(race_data$count)
+    
+    p <- create_pie_chart(race_data, paste("Overall Race Breakdown (N =", total_n, ")"))
+    p
   })
   
   # Pie Chart 2: Race Breakdown by Diagnosis/Eligibility
@@ -737,19 +742,25 @@ server <- function(input, output, session) {
     diagnosis_data <- processedData() %>%
       group_by(diagnosis, Race) %>%
       summarise(count = n(), .groups = 'drop')
+    total_n <- sum(diagnosis_data$count)
     
     if (input$view_type == "Percentage") {
       diagnosis_data <- diagnosis_data %>%
         group_by(diagnosis) %>%
         mutate(value = count / sum(count) * 100)
+      text_template <- "%{label}: %{value:.1f}%"
     } else {
       diagnosis_data <- diagnosis_data %>% mutate(value = count)
+      text_template <- "%{label}: %{value}"
     }
     
     colors <- color_palette()[diagnosis_data$Race]
     if(input$highlight_race != "None") {
       colors[diagnosis_data$Race == input$highlight_race] <- "red"
     }
+    
+    eligible_n <- sum(diagnosis_data$count[diagnosis_data$diagnosis == "BCSB ELIGIBLE"])
+    ineligible_n <- sum(diagnosis_data$count[diagnosis_data$diagnosis == "BCSB INELIGIBLE"])
     
     plot_ly() %>%
       add_pie(data = subset(diagnosis_data, diagnosis == "BCSB ELIGIBLE"),
@@ -758,9 +769,9 @@ server <- function(input, output, session) {
               marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB ELIGIBLE"],
                             line = list(color = 'black', width = 1)),
               textposition = 'inside',
-              textinfo = 'label+percent',
+              texttemplate = text_template,
               hoverinfo = 'text',
-              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value/sum(value)*100), ")"),
+              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value), ")"),
               insidetextfont = list(color = '#FFFFFF')) %>%
       add_pie(data = subset(diagnosis_data, diagnosis == "BCSB INELIGIBLE"),
               labels = ~Race, values = ~value, name = "BCSB INELIGIBLE",
@@ -768,18 +779,18 @@ server <- function(input, output, session) {
               marker = list(colors = colors[diagnosis_data$diagnosis == "BCSB INELIGIBLE"],
                             line = list(color = 'black', width = 1)),
               textposition = 'inside',
-              textinfo = 'label+percent',
+              texttemplate = text_template,
               hoverinfo = 'text',
-              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value/sum(value)*100), ")"),
+              text = ~paste(Race, ":", count, "(", sprintf("%.1f%%", value), ")"),
               insidetextfont = list(color = '#FFFFFF')) %>%
-      layout(title = list(text = "Race Breakdown by Eligibility", font = list(size = 16)),
+      layout(title = list(text = paste("Race Breakdown by Eligibility (N =", total_n, ")"), font = list(size = 16)),
              grid = list(rows = 1, columns = 2),
              showlegend = TRUE,
              legend = list(orientation = "h", y = -0.1),
              margin = list(t = 50, b = 50),      
              annotations = list(
-               list(x = 0.2, y = -0.1, text = "BCSB ELIGIBLE", showarrow = FALSE, xref = "paper", yref = "paper"),
-               list(x = 0.8, y = -0.1, text = "BCSB INELIGIBLE", showarrow = FALSE, xref = "paper", yref = "paper")
+               list(x = 0.2, y = -0.1, text = paste("BCSB ELIGIBLE (N =", eligible_n, ")"), showarrow = FALSE, xref = "paper", yref = "paper"),
+               list(x = 0.8, y = -0.1, text = paste("BCSB INELIGIBLE (N =", ineligible_n, ")"), showarrow = FALSE, xref = "paper", yref = "paper")
              ))
   })
   
