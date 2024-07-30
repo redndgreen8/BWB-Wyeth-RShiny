@@ -46,14 +46,16 @@ ui <- fluidPage(
                 ),
                 tabPanel("Screening",
                          fluidRow(
-                           column(12, radioButtons("group_var", "Group by:",
+                           column(2, radioButtons("group_var", "Group by:",
                                                choices = c("Race", "Dispositionflag"),
-                                               selected = "Race"),
-                                  checkboxGroupInput("selected_locations", "Select Locations:",
-                                                     choices = NULL) # Will be updated in server)
-                         
-                                  )
-                           ),
+                                               selected = "Race")),
+                                  column(2, checkboxGroupInput("selected_locations", "Select Locations:",
+                                                     choices = NULL)), # Will be updated in server)
+                           column(4, checkboxGroupInput("selected_race", "Select Race:",
+                                                        choices = NULL)),
+                           column(4, checkboxGroupInput("selected_flag", "Select flag:",
+                                                        choices = NULL)),
+                          ),
                          fluidRow(
                            column(12, plotlyOutput("individual_plots")),
                          ),
@@ -61,20 +63,20 @@ ui <- fluidPage(
                            column(12, plotlyOutput("combined_plot"))
                          )      
                 ),
-                tabPanel("Retention",
-                         fluidRow(
-                           column(9, plotOutput("RETr")),
-                           column(3, plotOutput("RETCr"))
-                         ),
-                         fluidRow(
-                           column(9,plotOutput("RETc")),  
-                           column(3, plotOutput("RETCc"))
-                         ),
-                         fluidRow(
-                           column(9,plotOutput("RETu")),  
-                           column(3, plotOutput("RETCu"))
-                         )      
-                ),
+              #  tabPanel("Retention",
+              #           fluidRow(
+              #             column(9, plotOutput("RETr")),
+              #             column(3, plotOutput("RETCr"))
+              #           ),
+              #           fluidRow(
+              #             column(9,plotOutput("RETc")),  
+              #             column(3, plotOutput("RETCc"))
+              #           ),
+              #           fluidRow(
+              #             column(9,plotOutput("RETu")),  
+              #             column(3, plotOutput("RETCu"))
+              #           )      
+              #  ),
                 tabPanel("Enrollment",
                          fluidRow(
                            column(9, plotOutput("ER")),
@@ -547,12 +549,26 @@ server <- function(input, output, session) {
   })
   
   
+  # Observers to update input choices
   observe({
     req(processedPhoneConsult())
-    locations <- unique(processedPhoneConsult()$location)
     updateCheckboxGroupInput(session, "selected_locations",
-                             choices = locations,
-                             selected = locations)
+                             choices = unique(processedPhoneConsult()$location),
+                             selected = unique(processedPhoneConsult()$location)[1])
+  })
+  
+  observe({
+    req(processedPhoneConsult())
+    updateCheckboxGroupInput(session, "selected_race",
+                             choices = unique(processedPhoneConsult()$Race),
+                             selected = unique(processedPhoneConsult()$Race))
+  })
+  
+  observe({
+    req(processedPhoneConsult())
+    updateCheckboxGroupInput(session, "selected_flag",
+                             choices = unique(processedPhoneConsult()$Dispositionflag),
+                             selected = unique(processedPhoneConsult()$Dispositionflag))
   })
   # Create color palette
   color_palette <- reactive({
@@ -578,34 +594,40 @@ server <- function(input, output, session) {
              margin = list(t = 50, b = 50, l = 20, r = 20))
   }
   
-  # Individual plots
+  # Server-side logic
   output$individual_plots <- renderPlotly({
-    req( processedPhoneConsult(), input$selected_locations)
+    req(processedPhoneConsult(), input$selected_locations, input$selected_race, input$selected_flag)
     
-    # Filter data for selected locations and aggregate
-    data <- processedPhoneConsult() %>%
-      filter(location %in% input$selected_locations) %>%
+    filtered_data <- processedPhoneConsult() %>%
+      filter(location %in% input$selected_locations,
+             Race %in% input$selected_race,
+             Dispositionflag %in% input$selected_flag)
+
+      data <- filtered_data %>%
+        group_by(group = !!sym(input$group_var)) %>%
+        summarise(count = n())
+    total_n <- sum(data$count)
+      
+      create_pie_chart_screening(data, paste("Distribution of `", input$group_var, "` in", paste(input$selected_locations, collapse = ", "), "who are `",paste(input$selected_flag, collapse = ", "),  paste("` (N = ", total_n,")" )))
+    })
+    
+
+  output$combined_plot <- renderPlotly({
+    req(processedPhoneConsult(), input$selected_locations, input$selected_race, input$selected_flag)
+    
+    filtered_data <- processedPhoneConsult() %>%
+      filter(Race %in% input$selected_race,
+             Dispositionflag %in% input$selected_flag)
+
+    data <- filtered_data %>%
       group_by(group = !!sym(input$group_var)) %>%
       summarise(count = n())
-    total_n <- sum(data$count)
-    # Create a single pie chart for the aggregated data
-    create_pie_chart_screening(data, paste("Distribution of", input$group_var, "in", paste(input$selected_locations, collapse = ", "),  paste(" (N = ", total_n,")" )))
-})
     
-  
-  # Combined plot
-  output$combined_plot <- renderPlotly({
-    req(processedPhoneConsult(), input$group_var)
-    
-    data <- processedPhoneConsult() %>%
-      group_by(!!sym(input$group_var)) %>%
-      summarise(count = n()) %>%
-      rename(group = !!sym(input$group_var))
     total_n <- sum(data$count)
     
-    create_pie_chart_screening(data, paste("Overall Distribution of", input$group_var, "Across All Selected Locations (N = ", total_n,")") )
+    
+    create_pie_chart_screening(data, paste("Combined Distribution for", input$group_var, " (N=",total_n,")" ) )
   })
-
   
   output$PCOC <- renderPlot({
     PC <- req(processedPhoneConsult())
