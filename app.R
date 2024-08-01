@@ -24,7 +24,7 @@ library(plotly)
 library(RColorBrewer)
 library(ggiraph)
 library(lubridate)
-
+library(highcharter)
 
 ui <- fluidPage(
   titlePanel("BCSB Dashboard - June 25, 2024"),
@@ -73,7 +73,7 @@ ui <- fluidPage(
                            column(4, checkboxInput("show_delta", "Show Change", value = TRUE))
                          ),
                          fluidRow(
-                           column(12, girafeOutput("time_series_plot", height = "600px"))
+                           column(12,       highchartOutput("time_series_plot", height = "600px"))
                          )
                 ),
               #  tabPanel("Retention",
@@ -681,7 +681,8 @@ server <- function(input, output, session) {
                              choices = unique(processedPhoneConsult()$Dispositionflag),
                              selected = unique(processedPhoneConsult()$Dispositionflag))
   })
-  output$time_series_plot <- renderGirafe({
+  
+  output$time_series_plot <- renderHighchart({
     req(processedPhoneConsult(), input$time_series_var, input$selected_locations, input$selected_race, input$selected_flag)
     
     # Process and filter data
@@ -703,34 +704,96 @@ server <- function(input, output, session) {
              delta_percent = (delta / lag(count, default = first(count))) * 100) %>%
       ungroup()
     
-    # Create the plot
-    p <- ggplot(time_series_data, aes(x = DateofWebsiteEligibilitySurvey, y = count, color = !!sym(input$time_series_var))) +
-      geom_line_interactive(aes(tooltip = paste0("Date: ", DateofWebsiteEligibilitySurvey, 
-                                                 "\n", input$time_series_var, ": ", !!sym(input$time_series_var),
-                                                 "\nCount: ", count,
-                                                 "\nChange: ", sprintf("%+d", delta),
-                                                 "\nPercent Change: ", sprintf("%+.1f%%", delta_percent)))) +
-      geom_point_interactive(aes(tooltip = paste0("Date: ", DateofWebsiteEligibilitySurvey, 
-                                                  "\n", input$time_series_var, ": ", !!sym(input$time_series_var),
-                                                  "\nCount: ", count,
-                                                  "\nChange: ", sprintf("%+d", delta),
-                                                  "\nPercent Change: ", sprintf("%+.1f%%", delta_percent)))) +
-      labs(title = paste("Time Series of", input$time_series_var),
-           x = "Date",
-           y = "Count") +
-      theme_minimal() +
-      theme(legend.position = "bottom")
+    # Create the highchart
+    # Create the highchart
+    hc <- highchart() %>%
+      hc_chart(zoomType = "xy") %>%
+      hc_title(text = paste("Time Series of", input$time_series_var)) %>%
+      hc_xAxis(
+        title = list(text = "Date"),
+        type = "datetime",
+        dateTimeLabelFormats = list(day = "%Y-%m-%d")
+      ) %>%
+      hc_yAxis_multiples(
+        list(
+          title = list(text = "Count"),
+          opposite = FALSE
+        ),
+        if(input$show_delta) list(
+          title = list(text = "Change"),
+          opposite = TRUE
+        ) else NULL
+      ) %>%
+      hc_legend(enabled = TRUE) %>%
+      hc_tooltip(
+        shared = TRUE,
+        headerFormat = "<b>Date: {point.x:%Y-%m-%d}</b><br>"
+      ) %>%
+      hc_plotOptions(
+        series = list(
+          marker = list(enabled = TRUE, radius = 4),
+          states = list(hover = list(enabled = TRUE))
+        )
+      )
     
-    if(input$show_delta) {
-      p <- p + geom_col_interactive(aes(y = delta, fill = delta >= 0, 
-                                        tooltip = paste0("Change: ", sprintf("%+d", delta))),
-                                    alpha = 0.5) +
-        scale_fill_manual(values = c("TRUE" = "green", "FALSE" = "red"), guide = "none") +
-        scale_y_continuous(sec.axis = sec_axis(~., name = "Change"))
+    # Add series for each unique value in time_series_var
+    for (var_value in unique(time_series_data[[input$time_series_var]])) {
+      data_subset <- time_series_data %>%
+        filter(!!sym(input$time_series_var) == var_value)
+      
+      hc <- hc %>%
+        hc_add_series(
+          name = var_value,
+          type = "line",
+          data = data_subset %>%
+            transmute(
+              x = as.numeric(DateofWebsiteEligibilitySurvey) * 86400000, # Convert to milliseconds
+              y = count,
+              name = !!sym(input$time_series_var),
+              delta = delta,
+              delta_percent = delta_percent
+            ),
+          tooltip = list(
+            pointFormat = paste(
+              "{series.name}: <b>{point.y}</b><br>",
+              "Change: <b>{point.delta:+.0f}</b><br>",
+              "Percent Change: <b>{point.delta_percent:+.1f}%</b>"
+            )
+          )
+        )
+      
+      if(input$show_delta) {
+        hc <- hc %>%
+          hc_add_series(
+            name = paste("Delta -", var_value),
+            type = "column",
+            data = data_subset %>%
+              transmute(
+                x = as.numeric(DateofWebsiteEligibilitySurvey) * 86400000,
+                y = delta,
+                color = ifelse(delta >= 0, "green", "red")
+              ),
+            yAxis = 1,
+            tooltip = list(
+              pointFormat = "Change: <b>{point.y:+.0f}</b>"
+            )
+          )
+      }
     }
     
-    girafe(ggobj = p, width_svg = 10, height_svg = 6) %>%
-      girafe_options(opts_hover(css = "fill:cyan;"))
+    # Add range selector
+    hc <- hc %>%
+      hc_rangeSelector(
+        buttons = list(
+          list(type = "month", count = 1, text = "1m"),
+          list(type = "month", count = 6, text = "6m"),
+          list(type = "year", count = 1, text = "1y"),
+          list(type = "all", text = "All")
+        ),
+        selected = 3
+      )
+    
+    hc
   })
   
 
