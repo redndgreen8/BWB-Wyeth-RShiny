@@ -22,6 +22,8 @@ library(tidygeocoder)
 library(leaflet)
 library(plotly)
 library(RColorBrewer)
+library(ggiraph)
+library(lubridate)
 
 
 ui <- fluidPage(
@@ -50,18 +52,29 @@ ui <- fluidPage(
                                                choices = c("Race", "Dispositionflag"),
                                                selected = "Race")),
                                   column(2, checkboxGroupInput("selected_locations", "Select Locations:",
-                                                     choices = NULL)), # Will be updated in server)
+                                                     choices = c("Web", "Norris"))), # Will be updated in server)
                            column(4, checkboxGroupInput("selected_race", "Select Race:",
-                                                        choices = NULL)),
+                                                        choices = c("None", "Asian", "Black", "Hispanic", "White", "Unknown"))),
                            column(4, checkboxGroupInput("selected_flag", "Select flag:",
-                                                        choices = NULL)),
+                                                        choices = c("Enrolled"))),
                           ),
                          fluidRow(
                            column(12, plotlyOutput("individual_plots")),
                          ),
                          fluidRow(
                            column(12, plotlyOutput("combined_plot"))
-                         )      
+                         ),
+                         fluidRow(
+                      #     column(3, selectInput("date_range", "Select Date Range:",
+                      #                           choices = c("Week" = 7, "Two Weeks" = 14, "Month" = 30))),
+                           column(3, selectInput("time_series_var", "Select Variable to Track:",
+                                                 choices = c("location", "Race", "Dispositionflag"),
+                                                 selected = "Race")),
+                           column(4, checkboxInput("show_delta", "Show Change", value = TRUE))
+                         ),
+                         fluidRow(
+                           column(12, girafeOutput("time_series_plot", height = "600px"))
+                         )
                 ),
               #  tabPanel("Retention",
               #           fluidRow(
@@ -628,6 +641,100 @@ server <- function(input, output, session) {
     
     create_pie_chart_screening(data, paste("Combined Distribution for", input$group_var, " (N=",total_n,")" ) )
   })
+  
+  # Update date range input based on available data
+ # observe({
+  #  req(processedPhoneConsult())
+    #date_range <- range(as.Date(processedPhoneConsult()$DateofWebsiteEligibilitySurvey), na.rm = TRUE)
+    
+    # Set default start date to the earliest date in the data
+   # default_start <- as.Date("2022-05-16")
+    
+    # Set default end date to today or the latest date in the data, whichever is earlier
+    #default_end <- min(Sys.Date(), date_range[2])
+    
+   # updateDateRangeInput(session, "date_input",
+    #                     start = default_start,
+    #                     end = default_end,
+    #                     min = default_start,
+    #                     max = date_range[2])
+  #})
+  
+  # Observers to update input choices
+  observe({
+    req(processedPhoneConsult())
+    updateCheckboxGroupInput(session, "selected_locations",
+                             choices = unique(processedPhoneConsult()$location),
+                             selected = unique(processedPhoneConsult()$location)[1])
+  })
+  
+  observe({
+    req(processedPhoneConsult())
+    updateCheckboxGroupInput(session, "selected_race",
+                             choices = unique(processedPhoneConsult()$Race),
+                             selected = unique(processedPhoneConsult()$Race))
+  })
+  
+  observe({
+    req(processedPhoneConsult())
+    updateCheckboxGroupInput(session, "selected_flag",
+                             choices = unique(processedPhoneConsult()$Dispositionflag),
+                             selected = unique(processedPhoneConsult()$Dispositionflag))
+  })
+  output$time_series_plot <- renderGirafe({
+    req(processedPhoneConsult(), input$time_series_var, input$selected_locations, input$selected_race, input$selected_flag)
+    
+    # Process and filter data
+    processed_data <- processedPhoneConsult() %>%
+      mutate(DateofWebsiteEligibilitySurvey = as.Date(DateofWebsiteEligibilitySurvey)) %>%
+      filter(!is.na(DateofWebsiteEligibilitySurvey),
+             DateofWebsiteEligibilitySurvey >= "2022-05-01",
+             location %in% input$selected_locations,
+             Race %in% input$selected_race,
+             Dispositionflag %in% input$selected_flag)
+    
+    # Aggregate data
+    time_series_data <- processed_data %>%
+      group_by(DateofWebsiteEligibilitySurvey, !!sym(input$time_series_var)) %>%
+      summarise(count = n(), .groups = 'drop') %>%
+      arrange(DateofWebsiteEligibilitySurvey, !!sym(input$time_series_var)) %>%
+      group_by(!!sym(input$time_series_var)) %>%
+      mutate(delta = count - lag(count, default = first(count)),
+             delta_percent = (delta / lag(count, default = first(count))) * 100) %>%
+      ungroup()
+    
+    # Create the plot
+    p <- ggplot(time_series_data, aes(x = DateofWebsiteEligibilitySurvey, y = count, color = !!sym(input$time_series_var))) +
+      geom_line_interactive(aes(tooltip = paste0("Date: ", DateofWebsiteEligibilitySurvey, 
+                                                 "\n", input$time_series_var, ": ", !!sym(input$time_series_var),
+                                                 "\nCount: ", count,
+                                                 "\nChange: ", sprintf("%+d", delta),
+                                                 "\nPercent Change: ", sprintf("%+.1f%%", delta_percent)))) +
+      geom_point_interactive(aes(tooltip = paste0("Date: ", DateofWebsiteEligibilitySurvey, 
+                                                  "\n", input$time_series_var, ": ", !!sym(input$time_series_var),
+                                                  "\nCount: ", count,
+                                                  "\nChange: ", sprintf("%+d", delta),
+                                                  "\nPercent Change: ", sprintf("%+.1f%%", delta_percent)))) +
+      labs(title = paste("Time Series of", input$time_series_var),
+           x = "Date",
+           y = "Count") +
+      theme_minimal() +
+      theme(legend.position = "bottom")
+    
+    if(input$show_delta) {
+      p <- p + geom_col_interactive(aes(y = delta, fill = delta >= 0, 
+                                        tooltip = paste0("Change: ", sprintf("%+d", delta))),
+                                    alpha = 0.5) +
+        scale_fill_manual(values = c("TRUE" = "green", "FALSE" = "red"), guide = "none") +
+        scale_y_continuous(sec.axis = sec_axis(~., name = "Change"))
+    }
+    
+    girafe(ggobj = p, width_svg = 10, height_svg = 6) %>%
+      girafe_options(opts_hover(css = "fill:cyan;"))
+  })
+  
+
+  
   
   output$PCOC <- renderPlot({
     PC <- req(processedPhoneConsult())
