@@ -52,7 +52,9 @@ ui <- fluidPage(
                                                choices = c("Race", "Dispositionflag"),
                                                selected = "Race")),
                                   column(2, checkboxGroupInput("selected_locations", "Select Locations:",
-                                                     choices = c("Web", "Norris"))), # Will be updated in server)
+                                                     choices = NULL)
+                                                       #c("Web", "Norris"))
+                                         ), # Will be updated in server)
                            column(4, checkboxGroupInput("selected_race", "Select Race:",
                                                         choices = c("None", "Asian", "Black", "Hispanic", "White", "Unknown"))),
                            column(4, checkboxGroupInput("selected_flag", "Select flag:",
@@ -65,8 +67,13 @@ ui <- fluidPage(
                            column(12, plotlyOutput("combined_plot"))
                          ),
                          fluidRow(
-                      #     column(3, selectInput("date_range", "Select Date Range:",
-                      #                           choices = c("Week" = 7, "Two Weeks" = 14, "Month" = 30))),
+                           column(3,
+                                  dateRangeInput("date_range", "Select Date Range:",
+                                                 start = NULL, end = NULL)
+                                 # selectInput("date_range", "Select Date Range:",
+                                #                 choices = c("Week" = 7, "Two Weeks" = 14, "Month" = 30))
+                                ),
+                           
                            column(3, selectInput("time_series_var", "Select Variable to Track:",
                                                  choices = c("location", "Race", "Dispositionflag"),
                                                  selected = "Race")),
@@ -682,14 +689,35 @@ server <- function(input, output, session) {
                              selected = unique(processedPhoneConsult()$Dispositionflag))
   })
   
+  observe({
+    req(processedPhoneConsult())
+    
+    data <- processedPhoneConsult()
+    if (nrow(data) > 0) {
+      #min_date <- min(data$DateofWebsiteEligibilitySurvey, na.rm = TRUE)
+      max_date <- max(data$DateofWebsiteEligibilitySurvey, na.rm = TRUE)
+      max_date <- min(Sys.Date(), max_date)
+      min_date <- "2022-05-01"
+      
+      updateDateRangeInput(session, "date_range",
+                           start = min_date,
+                           end = max_date,
+                           min = min_date,
+                           max = max_date)
+    }
+  })
+  
   output$time_series_plot <- renderHighchart({
-    req(processedPhoneConsult(), input$time_series_var, input$selected_locations, input$selected_race, input$selected_flag)
+    req(processedPhoneConsult(), input$time_series_var, 
+        input$selected_locations, input$selected_race, 
+        input$show_delta, input$selected_flag)
     
     # Process and filter data
     processed_data <- processedPhoneConsult() %>%
       mutate(DateofWebsiteEligibilitySurvey = as.Date(DateofWebsiteEligibilitySurvey)) %>%
       filter(!is.na(DateofWebsiteEligibilitySurvey),
              DateofWebsiteEligibilitySurvey >= "2022-05-01",
+             DateofWebsiteEligibilitySurvey <= input$date_range[2],
              location %in% input$selected_locations,
              Race %in% input$selected_race,
              Dispositionflag %in% input$selected_flag)
@@ -712,7 +740,9 @@ server <- function(input, output, session) {
       hc_xAxis(
         title = list(text = "Date"),
         type = "datetime",
-        dateTimeLabelFormats = list(day = "%Y-%m-%d")
+        dateTimeLabelFormats = list(day = "%Y-%m-%d"),
+        min = as.numeric(input$date_range[1]) * 86400000,
+        max = as.numeric(input$date_range[2]) * 86400000
       ) %>%
       hc_yAxis_multiples(
         list(
