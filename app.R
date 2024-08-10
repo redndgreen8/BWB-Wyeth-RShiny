@@ -80,7 +80,7 @@ ui <- fluidPage(
                            column(4, checkboxInput("show_delta", "Show Change", value = TRUE))
                          ),
                          fluidRow(
-                           column(12,       highchartOutput("time_series_plot", height = "600px"))
+                           column(12, highchartOutput("time_series_plot", height = "600px"))
                          )
                 ),
               #  tabPanel("Retention",
@@ -722,6 +722,11 @@ server <- function(input, output, session) {
              Race %in% input$selected_race,
              Dispositionflag %in% input$selected_flag)
     
+    
+    # Add color Palette
+    color_palette <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf")
+    
+    
     # Aggregate data
     time_series_data <- processed_data %>%
       group_by(DateofWebsiteEligibilitySurvey, !!sym(input$time_series_var)) %>%
@@ -766,15 +771,21 @@ server <- function(input, output, session) {
         )
       )
     
+    var_colors <- as.list(setNames(color_palette[1:length(unique(time_series_data[[input$time_series_var]]))], 
+                                   unique(time_series_data[[input$time_series_var]])))
+    
     # Add series for each unique value in time_series_var
     for (var_value in unique(time_series_data[[input$time_series_var]])) {
       data_subset <- time_series_data %>%
         filter(!!sym(input$time_series_var) == var_value)
       
+      color <- var_colors[[var_value]]
+      
       hc <- hc %>%
         hc_add_series(
           name = var_value,
           type = "line",
+          color = color,
           data = data_subset %>%
             transmute(
               x = as.numeric(DateofWebsiteEligibilitySurvey) * 86400000, # Convert to milliseconds
@@ -797,11 +808,11 @@ server <- function(input, output, session) {
           hc_add_series(
             name = paste("Delta -", var_value),
             type = "column",
+            color = adjustcolor(color, alpha.f = 0.5),  # Use a lighter version of the same color
             data = data_subset %>%
               transmute(
                 x = as.numeric(DateofWebsiteEligibilitySurvey) * 86400000,
-                y = delta,
-                color = ifelse(delta >= 0, "green", "red")
+                y = delta
               ),
             yAxis = 1,
             tooltip = list(
