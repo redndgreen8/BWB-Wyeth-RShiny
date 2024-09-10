@@ -90,12 +90,36 @@ get_LatLong <- function(residence_str) {
 
 
 ll <- get_LatLong(dx_str)
-#qmplot(longitude, latitude, data = ll, colour = I("red"), maptype = "toner-lite", zoom = 5)
-#qmplot(longitude, latitude, data = ll, colour = I("red"), source = "osm", zoom = 5)
-#m_full <- leaflet(data = ll) %>%
-#  addTiles() %>%  # This uses OpenStreetMap by default
-#  addCircleMarkers(~longitude, ~latitude, color = "red", radius = 3) %>%
-#  setView(lng = mean(ll$longitude, na.rm = TRUE), 
-#          lat = mean(ll$latitude, na.rm = TRUE), zoom = 5)
-#m_full
+
+
+# Function to check if a coordinate is in Southern California
+is_in_socal <- function(lat, lon) {
+  # Define the bounding box for Southern California
+  # These are approximate values and can be adjusted as needed
+  socal_north <- 35.5  # Approximate northern border
+  socal_south <- 32  # Approximate southern border (US-Mexico border)
+  socal_east <- -114.1 # Approximate eastern border
+  socal_west <- -120 # Pacific Ocean
+  
+  return(lat >= socal_south && lat <= socal_north &&
+           lon <= socal_east && lon >= socal_west)
+}
+
+# Function to count coordinates in Southern California
+count_socal_coordinates <- function(latitudes, longitudes) {
+  if (length(latitudes) != length(longitudes)) {
+    stop("The number of latitudes and longitudes must be the same.")
+  }
+  
+  socal_count <- sum(mapply(is_in_socal, latitudes, longitudes))
+  
+  return(socal_count)
+}
+
+# Example usage:
+#latitudes <- c(34.0522, 37.7749, 32.7157, 36.1699, 33.8121)
+#longitudes <- c(-118.2437, -122.4194, -117.1611, -115.1398, -117.9190)
+
+result <- count_socal_coordinates(ll$latitude, ll$longitude)
+print(paste("Number of coordinates in Southern California:", result))
 
