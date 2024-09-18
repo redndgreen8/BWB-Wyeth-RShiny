@@ -92,34 +92,61 @@ get_LatLong <- function(residence_str) {
 ll <- get_LatLong(dx_str)
 
 
-# Function to check if a coordinate is in Southern California
-is_in_socal <- function(lat, lon) {
-  # Define the bounding box for Southern California
-  # These are approximate values and can be adjusted as needed
-  socal_north <- 35.5  # Approximate northern border
-  socal_south <- 32  # Approximate southern border (US-Mexico border)
-  socal_east <- -114.1 # Approximate eastern border
-  socal_west <- -120 # Pacific Ocean
-  
-  return(lat >= socal_south && lat <= socal_north &&
-           lon <= socal_east && lon >= socal_west)
+# Function to check if a coordinate is within a specified region
+is_in_region <- function(lat, lon, north, south, east, west) {
+  return(lat >= south && lat <= north &&
+           lon >= west && lon <= east)
 }
 
-# Function to count coordinates in Southern California
-count_socal_coordinates <- function(latitudes, longitudes) {
+# Function to count coordinates in a specified region
+count_coordinates <- function(latitudes, longitudes, region) {
   if (length(latitudes) != length(longitudes)) {
     stop("The number of latitudes and longitudes must be the same.")
   }
   
-  socal_count <- sum(mapply(is_in_socal, latitudes, longitudes))
+  count <- sum(mapply(is_in_region, latitudes, longitudes,
+                      MoreArgs = list(north = region$north,
+                                      south = region$south,
+                                      east = region$east,
+                                      west = region$west)))
   
-  return(socal_count)
+  return(count)
+}
+
+# Define regions
+regions <- list(
+  "Southern California" = list(north = 35.5, south = 32, east = -114.1, west = -120),
+  "Los Angeles" = list(north = 34.3373, south = 33.7036, east = -118.1553, west = -118.6682)#,
+#  "Northern California" = list(north = 42, south = 35.5, east = -114.1, west = -124.4),
+#  "Whole California" = list(north = 42, south = 32.5, east = -114.1, west = -124.4),
+#  "Outside California (US)" = list(north = 49, south = 24.5, east = -66.9, west = -124.4),
+#  "Canada" = list(north = 83, south = 41.7, east = -52.6, west = -141)
+)
+
+# Function to count coordinates for all defined regions
+count_all_regions <- function(latitudes, longitudes) {
+  results <- sapply(names(regions), function(region_name) {
+    count_coordinates(latitudes, longitudes, regions[[region_name]])
+  })
+  
+  data.frame(Region = names(regions), Count = results)
 }
 
 # Example usage:
-#latitudes <- c(34.0522, 37.7749, 32.7157, 36.1699, 33.8121)
-#longitudes <- c(-118.2437, -122.4194, -117.1611, -115.1398, -117.9190)
+# Assuming ll is your dataframe with latitude and longitude columns
+# ll <- data.frame(latitude = c(34.0522, 37.7749, 32.7157, 36.1699, 33.8121),
+#                  longitude = c(-118.2437, -122.4194, -117.1611, -115.1398, -117.9190))
 
-result <- count_socal_coordinates(ll$latitude, ll$longitude)
-print(paste("Number of coordinates in Southern California:", result))
+results_table <- count_all_regions(ll$latitude, ll$longitude)
+
+# Print the results table
+print(results_table)
+
+#If you want a more formatted output, you can use knitr::kable
+ if (require(knitr)) {
+   print(kable(results_table, format = "pipe", caption = "Coordinate Counts by Region"))
+ }
+
+count_la_zips <- sum(grepl("^9(00[0-9]{2}|01[0-9]{2}|02[0-9]{2}|03[0-5]{2}|04[0-9]{2}|05[0-9]{2}|06[0-6]{2}|07[0-3]{2}|08[0-8]{2}|10[0-9]{2}|11[0-9]{2}|12[0-9]{2}|13[0-9]{2}|14[0-9]{2}|15[0-9]{2}|16[0-9]{2})$", ll$currentzip))
+count_la_zips
 
