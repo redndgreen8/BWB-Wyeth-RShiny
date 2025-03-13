@@ -47,10 +47,15 @@ df_grouped <- dfY %>%
     })
   ) %>%
   mutate(
-    EarliestDateY = str_extract(EarliestConsentYear, "^[0-9]{4}")
+    ConsentYear = str_extract(EarliestConsentYear, "^[0-9]{4}"),  # Extracts first 4-digit year
+    across(15, ~ ifelse(grepl(",", .), "Multiple", .))  # Applies transformation to column index 3
   ) %>%
   ungroup()
 
+
+df_groupedNA <- df_grouped[is.na(df_grouped$ConsentYear) ,]
+
+write_csv(df_groupedNA, "missing_consent_info.csv")
 # Print or save the output
 print(df_grouped)
 write_csv(df_grouped, "yearly_retention_Grouped_Summary.csv")  # Save output as CSV
@@ -70,10 +75,12 @@ plot_pie_chart <- function(data, column_name, title) {
 
 plot_pie_charts_by_COL <- function(data, COL, column_name, title) {
   # First, group the data by Count column
-  count_groups <- unique(data[[COL]])
+  data[is.na(data)] <- "Missing"
   
+  
+  count_groups <- unique(data[[COL]])
   # Make sure we have at most 3 count groups
-  count_groups <- count_groups[1:min(3, length(count_groups))]
+  #count_groups <- count_groups[1:min(4, length(count_groups))]
   
   # Create a list to store the plots
   plot_list <- list()
@@ -129,8 +136,9 @@ plot_histogram <- function(data, column_name, title) {
 pie_survey_count <- plot_pie_charts_by_COL(df_grouped, "Count","Survey Status", "Survey Status Distribution")
 pie_survey_count
 
-(pie_survey_year <- plot_pie_charts_by_COL(df_grouped, "EarliestDateY","Survey Status", "Survey Status Distribution"))
+(pie_survey_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear","Survey Status", "Survey Status Distribution"))
 
+(pie_blood_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear",colnames(df_grouped)[9], "Blood Draw Status Distribution"))
 
 
 pie_blood <- plot_pie_charts_by_count(df_grouped, colnames(df_grouped)[9], "Blood Draw Status Distribution")
@@ -146,11 +154,18 @@ hist_blood <- plot_histogram(df_grouped, colnames(df_grouped)[9], "Blood Draw St
 
 pdf("plots/retention_survey_blood_plots.pdf", width = 10, height = 6)  # Open PDF file
 
-print(pie_survey_c)   # Survey Status Pie Chart
-print(pie_blood)    # Blood Draw Status Pie Chart
-print(pie_consent) 
-print(pie_clinic) 
-print(hist_survey)  # Survey Status Histogram
-print(hist_blood)   # Blood Draw Status Histogram
+(pie_survey_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear","Survey Status", "Survey Status Distribution"))
+
+(pie_blood_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear",colnames(df_grouped)[9], "Blood Draw Status Distribution"))
+
+
+(pie_race_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear",colnames(df_grouped)[15], "Race Distribution"))
+
+(pie_edu_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear",colnames(df_grouped)[16], "Edu Distribution"))
+
+(pie_clinic_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear",colnames(df_grouped)[6], "Clinic Distribution"))
+
+
+
 
 dev.off()
