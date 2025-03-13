@@ -38,41 +38,57 @@ isEligible <- function(ef) {
   
   
   
-  # Define column names for yes and no requirements
-  #no_reqd_cols <- c("Have you ever had stage IV (metastatic) breast cancer?",
-  #                  "Have you ever had a recurrence of your cancer (Except recurrence following ductal carcinoma in situ)? 
-  #                  A recurrence is when your cancer goes away for a while but then comes back later.",
-  #                  "Excluding endocrine therapy or maintenance therapy, are you on active chemotherapy treatment?")
-  
-  #yes_reqd_cols <- c("Are you willing to donate blood and complete surveys  for this breast cancer research?",
-  #                   "Have you ever had invasive breast cancer (stage I-III)? Most breast cancers are invasive,
-  #                   the two most common are invasive ductal carcinoma and invasive lobular carcinoma.",
-  #                   "Are you 18 years or older?",
-  #                   "Were you diagnosed within the last 7 years?")
-
-  # Check if columns exist in the dataframe
-  #missing_yes_cols <- setdiff(yes_reqd_cols, colnames(ef))
-  #missing_no_cols <- setdiff(no_reqd_cols, colnames(ef))
-  
-  # Extract relevant columns and convert to logical
-  #yes_reqd <- ef %>% select(all_of(yes_reqd_cols)) %>% map(as.logical) %>% bind_cols()
-  #no_reqd <- ef %>% select(all_of(no_reqd_cols)) %>% map(as.logical) %>% bind_cols()
-  # Check for email addresses containing "mailinatorcom" in the 4th column
-  #invalid_emails <- grepl("mailinatorcom", ef[, 4], ignore.case = TRUE)
-  
   cc <- complete.cases(yes.reqd) & complete.cases(no.reqd)
   eli <- rowSums(!yes.reqd) == 0 & rowSums(no.reqd) == 0
   eli[is.na(eli)] <- F
   
-  
-  # Filter out invalid emails
-  #eli[invalid_emails] <- F
-  
-  
+
   #view(eli)
   return(eli)
 }
 
+
+
+
+isStage4 <- function(ef) {
+  #ef <- tolower(ef)
+  ef[ef == ""] <- NA
+  ef[ef == "Yes"] <- T
+  ef[ef == "No"] <- F
+  #view(ef)
+  #yes.reqd <- ef[, 7:10] |> purrr::map(as.logical) |> bind_cols()
+  #no.reqd <- ef[, 11:13] |> purrr::map(as.logical) |> bind_cols()
+  
+  yes.reqd <- ef[, c(7,9,12)] |> purrr::map(as.logical) |> bind_cols()
+ # no.reqd <- ef[, c(8,12)] |> purrr::map(as.logical) |> bind_cols()
+  
+  cc <- complete.cases(yes.reqd)# & complete.cases(no.reqd)
+  eli <- rowSums(!yes.reqd) == 0 #& rowSums(no.reqd) == 0
+  eli[is.na(eli)] <- F
+  
+  
+  return(eli)
+}
+
+isRecur <- function(ef) {
+  #ef <- tolower(ef)
+  ef[ef == ""] <- NA
+  ef[ef == "Yes"] <- T
+  ef[ef == "No"] <- F
+  #view(ef)
+  #yes.reqd <- ef[, 7:10] |> purrr::map(as.logical) |> bind_cols()
+  #no.reqd <- ef[, 11:13] |> purrr::map(as.logical) |> bind_cols()
+  
+  yes.reqd <- ef[, c(7,9,13)] |> purrr::map(as.logical) |> bind_cols()
+  # no.reqd <- ef[, c(8,12)] |> purrr::map(as.logical) |> bind_cols()
+  
+  cc <- complete.cases(yes.reqd)# & complete.cases(no.reqd)
+  eli <- rowSums(!yes.reqd) == 0 #& rowSums(no.reqd) == 0
+  eli[is.na(eli)] <- F
+  
+  
+  return(eli)
+}
 #elig_str <- "BCSB Web eligibility survey_3.15.24.csv"
 getEligiblity <- function(elig_str) {
   ef <- read.csv(paste0( elig_str))
@@ -91,11 +107,78 @@ getEligiblity <- function(elig_str) {
   ef <- ef[!grepl("mailinatorcom", ef[, 4], ignore.case = TRUE), ]
   
   ef$is.eligible <- isEligible(ef)
+  
+  ef$is.stage4 <- isStage4(ef)
+  
+  ef$is.recur <- isRecur(ef)
   #write.csv(ef, file = "post_dup.csv", row.names = FALSE)
   
   return(ef)
 }
-eligible <- getEligiblity(eligible_str)
+
+
+isNormal <- function(ef) {
+  # Create a logical vector of the same length as the number of rows in ef
+  result <- rep(FALSE, nrow(ef))
+  
+  # Check which rows have column 7 as "Yes" and column 8 as "No"
+  result <- ef[, 7] == "Yes" & ef[, 8] == "No"
+  
+  # Replace NA values with FALSE
+  result[is.na(result)] <- FALSE
+  
+  return(result)
+}
+
+getNormalEligiblity <- function(elig_str) {
+  ef <- read.csv(paste0( elig_str))
+  
+  interested_cols <- c( 1,2,4,5)
+  
+  char_cols <- which(sapply(ef[interested_cols], is.character))
+  for (col in interested_cols) {
+    ef[[col]] <- sapply(ef[[col]], clean_text)
+  }
+  #write.csv(ef, file = "pre_dup.csv", row.names = FALSE)
+  ef <- ef[!duplicated(ef[, 1:5]),]
+  ef <- ef[!duplicated(ef[, 4]),]
+  ef <- ef[!duplicated(ef[, 5]),]
+  
+  ef <- ef[!grepl("mailinatorcom", ef[, 4], ignore.case = TRUE), ]
+  
+  ef$is.normal <- isNormal(ef)
+    #write.csv(ef, file = "post_dup.csv", row.names = FALSE)
+  
+  return(ef)
+}
+
+
+NormalCohort <- getNormalEligiblity(eligible_str)
+
+df.eligTest <- getEligiblity(eligible_str) 
+df.elig <- getEligiblity(eligible_str) |> 
+  dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
+  dplyr::rename(Fname = What.is.your.name...First) |> 
+  dplyr::rename(Lname = What.is.your.name...Last) |> 
+  dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race)) |>
+  dplyr::mutate(Minority = ifelse( Race == "White", "FALSE", "TRUE")) |>
+  dplyr::select(Fname, Lname, Email, Phone.Number, Race, is.eligible, Minority,  is.stage4, is.recur)
+
+Normal.elig <- getNormalEligiblity(eligible_str) |> 
+  dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
+  dplyr::rename(Fname = What.is.your.name...First) |> 
+  dplyr::rename(Lname = What.is.your.name...Last) |> 
+  dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race)) |>
+  dplyr::mutate(Minority = ifelse( Race == "White", "FALSE", "TRUE")) |>
+  dplyr::select(Fname, Lname, Email, Phone.Number, Race, Minority,  is.normal)
+
+df.cohort.merged <- df.elig %>%
+  dplyr::full_join(Normal.elig, 
+                   by = c("Fname", "Lname", "Email", "Phone.Number", "Race", "Minority"))
+
+write_csv(df.cohort.merged, "BCSB_cohorts.csv")  # Save output as CSV
+
+
 
 getPieComb <- function(ss) {  # Removed 'rl' from the function parameters
   df <- ss |> 
@@ -232,15 +315,6 @@ getPie <- function(ss) {
   
   return(list(gp = gp, df = df))
 }
-
-
-df.elig <- getEligiblity(eligible_str) |> 
-  dplyr::rename(Race = What.is.your.race.ethnicity.) |> 
-  dplyr::rename(Fname = What.is.your.name...First) |> 
-  dplyr::rename(Lname = What.is.your.name...Last) |> 
-  dplyr::mutate(Race = ifelse(is.na(Race) | Race %in% "Prefer not to answer", "Unknown", Race)) |>
-  dplyr::mutate(Minority = ifelse( Race == "White", "FALSE", "TRUE")) |>
-  dplyr::select(Fname, Lname, Email, Phone.Number, Race, is.eligible, Minority)
 
 
 cleanCalend <- function(calend_str) {
