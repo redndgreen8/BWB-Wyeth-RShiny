@@ -166,7 +166,8 @@ hist_blood <- plot_histogram(df_grouped, colnames(df_grouped)[9], "Blood Draw St
 plot_pie_charts_by_double_group <- function(data, primary_col, secondary_col, value_col, main_title = "Distribution by Group") {
   # Replace NAs with "Missing"
   data[is.na(data)] <- "Missing"
-  
+  # Define all_levels here
+  all_levels <- unique(data[[value_col]])
   # Get unique values for the primary grouping column
   primary_groups <- unique(data[[primary_col]])
   
@@ -181,7 +182,7 @@ plot_pie_charts_by_double_group <- function(data, primary_col, secondary_col, va
     primary_subset <- data %>% filter(.data[[primary_col]] == primary_value)
     
     # Get unique values for the secondary grouping within this primary group
-    secondary_groups <- unique(primary_subset[[secondary_col]])
+    secondary_groups <- sort(unique(primary_subset[[secondary_col]]))
     secondary_plots <- list()
     
     # For each secondary group
@@ -210,8 +211,10 @@ plot_pie_charts_by_double_group <- function(data, primary_col, secondary_col, va
                               secondary_col, ": ", secondary_value, 
                               "\nTotal: ", total_count), 
                fill = value_col) +
-          theme_void()
-        
+          theme_void() +
+          theme(legend.position = "none") +
+          # Use scale_fill_discrete with all possible levels to ensure consistent colors
+          scale_fill_discrete(drop = FALSE, limits = all_levels)
         secondary_plots[[s_idx]] <- plot
       }
     }
@@ -238,7 +241,27 @@ plots <- plot_pie_charts_by_double_group(
 
 # To display all plots in a grid
 library(gridExtra)
-do.call(grid.arrange, c(plots, ncol = 2))  # Adjust ncol as needed
+total_plots <- length(plots)
+
+everyN <- 9
+num_pages <- ceiling(total_plots / everyN)
+
+# For each page, display 2 plots
+for (i in 1:num_pages) {
+  start_idx <- (i-1) * everyN + 1
+  end_idx <- min(i * everyN, total_plots)
+  
+  # Create a subset of plots for this page
+  page_plots <- plots[start_idx:end_idx]
+  
+  # Display this page
+  do.call(grid.arrange, c(page_plots, ncol = 3))
+  
+  # Optional: add a pause between pages if viewing interactively
+  if (i < num_pages) {
+    readline(prompt = "Press Enter for next page...")
+  }
+}
 
 (pie_clinic_event <- plot_pie_charts_by_COL(df_grouped, "Event Name","Clinic", "Clinic per year Distribution"))
 
@@ -259,3 +282,161 @@ pdf("plots/retention_survey_blood_plots.pdf", width = 10, height = 6)  # Open PD
 
 
 dev.off()
+
+
+
+plots_stack <- plot_stacked_bars(
+  data = df_grouped,
+  primary_col = "ConsentYear",
+  secondary_col = "Event Name", 
+  value_col = "Clinic"
+)
+
+pdf("plots/plot_stacks.pdf", width = 10, height = 6)  # Open PDF file
+
+plots_stack
+dev.off()
+
+
+
+
+
+# Display in pages of 4 plots
+total_plots <- length(plots_stack)
+num_pages <- ceiling(total_plots / everyN)
+everyN <- 1
+# For each page, display 2 plots
+for (i in 1:num_pages) {
+  start_idx <- (i-1) * everyN + 1
+  end_idx <- min(i * everyN, total_plots)
+  
+  # Create a subset of plots for this page
+  page_plots <- plots_stack[start_idx:end_idx]
+  
+  # Display this page
+  do.call(grid.arrange, c(page_plots, ncol = 1))
+  
+  # Optional: add a pause between pages if viewing interactively
+  if (i < num_pages) {
+    readline(prompt = "Press Enter for next page...")
+  }
+}
+
+plot_stacked_bars <- function(data, primary_col, secondary_col, value_col) {
+  # Replace NAs with "Missing"
+  data[is.na(data)] <- "Missing"
+  
+  # Count observations for each combination
+  plot_data <- data %>%
+    count(!!sym(primary_col), !!sym(secondary_col), !!sym(value_col)) %>%
+    group_by(!!sym(primary_col), !!sym(secondary_col)) %>%
+    mutate(percentage = n / sum(n) * 100)
+  
+  # Create a function to generate one plot per primary group
+  create_plot <- function(group_value) {
+    filtered_data <- plot_data %>% 
+      filter(!!sym(primary_col) == group_value)
+    
+    ggplot(filtered_data, 
+           aes(x = !!sym(secondary_col), y = n, fill = !!sym(value_col))) +
+      geom_bar(stat = "identity", position = "stack") +
+      geom_text(aes(label = paste0(n, "\ (",round(percentage, 1), ")%")), 
+                position = position_stack(vjust = 0.5), size = 3) +
+      labs(title = paste(primary_col, ":", group_value),
+           x = secondary_col,
+           y = "Count") +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  }
+  
+  # Get all primary groups
+  primary_groups <- unique(data[[primary_col]])
+  
+  # Create a plot for each primary group
+  plots <- lapply(primary_groups, create_plot)
+  
+  return(plots)
+}
+
+
+
+
+
+
+
+
+plots_heat <- plot_heatmap(
+  data = df_grouped,
+  primary_col = "ConsentYear",
+  secondary_col = "Event Name", 
+  value_col = "Clinic"
+)
+plots_heat
+
+plot_heatmap <- function(data, primary_col, secondary_col, value_col) {
+  # Replace NAs with "Missing"
+  data[is.na(data)] <- "Missing"
+  
+  # Count and calculate percentages
+  heatmap_data <- data %>%
+    count(!!sym(primary_col), !!sym(secondary_col), !!sym(value_col)) %>%
+    group_by(!!sym(primary_col), !!sym(secondary_col)) %>%
+    mutate(percentage = n / sum(n) * 100)
+  
+  # Create heatmap
+  ggplot(heatmap_data, 
+         aes(x = !!sym(secondary_col), y = !!sym(value_col), fill = percentage)) +
+    geom_tile() +
+    geom_text(aes(label = paste0(round(percentage, 1), "%")), 
+              size = 3) +
+    facet_wrap(vars(!!sym(primary_col)), scales = "free") +
+    scale_fill_gradient(low = "white", high = "steelblue") +
+    labs(title = "Distribution Heatmap",
+         fill = "Percentage") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
+}
+
+
+
+
+plot_treemap <- function(data, primary_col, secondary_col, value_col) {
+  # Make sure required packages are loaded
+  if (!requireNamespace("treemapify", quietly = TRUE) ||
+      !requireNamespace("ggfittext", quietly = TRUE)) {
+    stop("Packages 'treemapify' and 'ggfittext' are needed for this function")
+  }
+  
+  # Replace NAs with "Missing"
+  data[is.na(data)] <- "Missing"
+  
+  # Function to create treemap for one primary group
+  create_treemap <- function(group_value) {
+    filtered_data <- data %>% 
+      filter(!!sym(primary_col) == group_value) %>%
+      count(!!sym(secondary_col), !!sym(value_col)) %>%
+      arrange(desc(n))
+    
+    ggplot(filtered_data, 
+           aes(area = n, fill = !!sym(value_col), 
+               subgroup = !!sym(secondary_col),
+               label = paste0(!!sym(value_col), "\n", n))) +
+      treemapify::geom_treemap() +
+      treemapify::geom_treemap_subgroup_border() +
+      ggfittext::geom_treemap_text(colour = "white", place = "centre",
+                                   grow = TRUE, min.size = 8) +
+      labs(title = paste(primary_col, ":", group_value)) +
+      theme(legend.position = "none")
+  }
+  
+  # Get all primary groups
+  primary_groups <- sort(unique(data[[primary_col]]))
+  
+  # Create a treemap for each primary group
+  plots <- lapply(primary_groups, create_treemap)
+  
+  return(plots)
+}
+
+
+
