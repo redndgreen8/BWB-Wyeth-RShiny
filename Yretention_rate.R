@@ -138,8 +138,8 @@ pie_survey_count
 
 (pie_survey_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear","Survey Status", "Survey Status Distribution"))
 
-(pie_blood_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear",colnames(df_grouped)[9], "Blood Draw Status Distribution"))
 
+(pie_blood_year <- plot_pie_charts_by_COL(df_grouped, "ConsentYear",colnames(df_grouped)[9], "Blood Draw Status Distribution"))
 
 pie_blood <- plot_pie_charts_by_count(df_grouped, colnames(df_grouped)[9], "Blood Draw Status Distribution")
 pie_blood
@@ -151,6 +151,96 @@ pie_clinic <- plot_pie_charts_by_count(df_grouped, "Clinic", "Consent Status Dis
 
 
 hist_blood <- plot_histogram(df_grouped, colnames(df_grouped)[9], "Blood Draw Status Histogram")
+
+
+
+
+
+
+
+
+
+
+
+
+plot_pie_charts_by_double_group <- function(data, primary_col, secondary_col, value_col, main_title = "Distribution by Group") {
+  # Replace NAs with "Missing"
+  data[is.na(data)] <- "Missing"
+  
+  # Get unique values for the primary grouping column
+  primary_groups <- unique(data[[primary_col]])
+  
+  # Create a nested list to store plots by primary and secondary grouping
+  all_plots <- list()
+  
+  # For each primary group
+  for (p_idx in seq_along(primary_groups)) {
+    primary_value <- primary_groups[p_idx]
+    
+    # Filter data for this primary group
+    primary_subset <- data %>% filter(.data[[primary_col]] == primary_value)
+    
+    # Get unique values for the secondary grouping within this primary group
+    secondary_groups <- unique(primary_subset[[secondary_col]])
+    secondary_plots <- list()
+    
+    # For each secondary group
+    for (s_idx in seq_along(secondary_groups)) {
+      secondary_value <- secondary_groups[s_idx]
+      
+      # Filter data for this secondary group
+      subset_data <- primary_subset %>% filter(.data[[secondary_col]] == secondary_value)
+      
+      # Calculate total count for this subset
+      total_count <- nrow(subset_data)
+      
+      # Only create plot if there's data
+      if (total_count > 0) {
+        # Create the pie chart
+        plot <- subset_data %>%
+          count(!!sym(value_col)) %>%
+          mutate(Percentage = n / sum(n) * 100) %>%
+          ggplot(aes(x = "", y = n, fill = !!sym(value_col))) +
+          geom_bar(stat = "identity", width = 1) +
+          coord_polar("y", start = 0) +
+          geom_label_repel(aes(label = paste0(!!sym(value_col), "\n", 
+                                              n, " (", round(Percentage, 1), "%)")),
+                           position = position_stack(vjust = 0.5), size = 3, show.legend = FALSE) +
+          labs(title = paste0(primary_col, ": ", primary_value, "\n", 
+                              secondary_col, ": ", secondary_value, 
+                              "\nTotal: ", total_count), 
+               fill = value_col) +
+          theme_void()
+        
+        secondary_plots[[s_idx]] <- plot
+      }
+    }
+    
+    all_plots[[p_idx]] <- secondary_plots
+  }
+  
+  # Flatten the list to return all plots
+  flat_plots <- unlist(all_plots, recursive = FALSE)
+  
+  # Return the list of plots to be arranged or printed separately
+  return(flat_plots)
+}
+
+
+
+# Example usage
+plots <- plot_pie_charts_by_double_group(
+  data = df_grouped,
+  primary_col = "Event Name",
+  secondary_col = "ConsentYear", 
+  value_col = "Clinic"
+)
+
+# To display all plots in a grid
+library(gridExtra)
+do.call(grid.arrange, c(plots, ncol = 2))  # Adjust ncol as needed
+
+(pie_clinic_event <- plot_pie_charts_by_COL(df_grouped, "Event Name","Clinic", "Clinic per year Distribution"))
 
 pdf("plots/retention_survey_blood_plots.pdf", width = 10, height = 6)  # Open PDF file
 
