@@ -379,9 +379,9 @@ write.csv(final_data[which(final_data$Minority == TRUE), ], file = "calendly_min
 
 # Reorder to place Index as the first column (optional)
 #eligible_subset <- eligible_subset[, c("Index", names(eligible_subset)[-length(names(eligible_subset))])]
-write.csv(eligible_subset, file = "eligibility_entries.csv", row.names = FALSE)
+#write.csv(eligible_subset, file = "eligibility_entries.csv", row.names = FALSE)
 
-write.csv(eligible[, c(6,15,16,17,18,20,21)], file = "eligibility_entries.1.csv")
+write.csv(df.eligTest[, c(6,15,16,17,18,20,21)], file = "eligibility_entries.1.csv")
 
 
 

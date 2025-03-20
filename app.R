@@ -23,7 +23,7 @@ library(leaflet)
 
 
 ui <- fluidPage(
-  titlePanel("BCSB Dashboard - June 25, 2024"),
+  titlePanel(paste("BCSB Dashboard -", Sys.Date())),
   mainPanel(
     tabsetPanel(id = "mainTabset",
                 tabPanel("Web Eligibility",
