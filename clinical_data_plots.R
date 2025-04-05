@@ -225,7 +225,8 @@ getEarliestConsentDate <- function(dx_str){
                              is.na(dateconsentsignedbypt_v4) & 
                              is.na(dateconsentsignedbypt_v2sp) & 
                              is.na(dateconsentsignedbypt_ch_v1) & 
-                             is.na(dateconsentsignedbypt_ko_v1))
+                             is.na(dateconsentsignedbypt_ko_v1) &
+                             is.na(dtconsentsignedbypt_sp_v2))
   df.DxDa <- cd %>%
     mutate(
       dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
@@ -235,10 +236,10 @@ getEarliestConsentDate <- function(dx_str){
       dateconsentsignedbypt_v2sp = as.Date(dateconsentsignedbypt_v2sp),
       dateconsentsignedbypt_ch_v1 = as.Date(dateconsentsignedbypt_ch_v1),
       dateconsentsignedbypt_ko_v1 = as.Date(dateconsentsignedbypt_ko_v1),
-      
+      dtconsentsignedbypt_sp_v2 = as.Date(dtconsentsignedbypt_sp_v2),
       EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, 
                                  dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,
-                                 dateconsentsignedbypt_v2sp,
+                                 dateconsentsignedbypt_v2sp,dtconsentsignedbypt_sp_v2,
                                  dateconsentsignedbypt_ch_v1, dateconsentsignedbypt_ko_v1,
                                  na.rm = TRUE),
       breastcancerdiagdate = as.Date(breastcancerdiagdate)
@@ -260,7 +261,8 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
                              is.na(dateconsentsignedbypt_v4) & 
                              is.na(dateconsentsignedbypt_v2sp) & 
                              is.na(dateconsentsignedbypt_ch_v1) & 
-                             is.na(dateconsentsignedbypt_ko_v1))
+                             is.na(dateconsentsignedbypt_ko_v1) &
+                             is.na(dtconsentsignedbypt_sp_v2))
   df.DxDa <- cd %>%
     mutate(
       dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
@@ -270,10 +272,10 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
       dateconsentsignedbypt_v2sp = as.Date(dateconsentsignedbypt_v2sp),
       dateconsentsignedbypt_ch_v1 = as.Date(dateconsentsignedbypt_ch_v1),
       dateconsentsignedbypt_ko_v1 = as.Date(dateconsentsignedbypt_ko_v1),
-
+      dtconsentsignedbypt_sp_v2 = as.Date(dtconsentsignedbypt_sp_v2),
       EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, 
                                  dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,
-                                 dateconsentsignedbypt_v2sp,
+                                 dateconsentsignedbypt_v2sp,dtconsentsignedbypt_sp_v2,
                                  dateconsentsignedbypt_ch_v1, dateconsentsignedbypt_ko_v1,
                                  na.rm = TRUE),
       breastcancerdiagdate = as.Date(breastcancerdiagdate)

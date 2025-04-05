@@ -1,24 +1,66 @@
 
-eligible_str <- "Web Eligibility Survey_10.24.24.csv"
+#eligible_str <- "web eligibility suvey_3.19.25.csv"
 
-calend_str <- "Calendly_phone consult_events-export_6.4.24.csv"
+#calend_str <- "Calendly_phone consult_events-export_6.4.24.csv"
 
-screen_str <- "HS2100716BodourSalhi-ScreeningSummary_DATA_LABELS_2024-10-25_1324.csv"
+#screen_str <- "HS2100716BodourSalhi-ScreeningSummary_DATA_LABELS_2025-03-19_1804.csv"
 
-enroll_str <- "HS2100716BodourSalhi-EnrollmentSummary_DATA_LABELS_2024-10-25_1324.csv"
+#enroll_str <- "HS2100716BodourSalhi-EnrollmentSummary_DATA_LABELS_2025-03-19_1804.csv"
 
-enroll_str1 <- "HS2100716BodourSalhi-EnrollmentSummaryY1_DATA_LABELS_2024-10-25_1456.csv"
-
-enroll_str2 <- "HS2100716BodourSalhi-EnrollmentSummaryY2_DATA_LABELS_2024-10-25_1459.csv"
+#enroll_str1 <- "HS2100716BodourSalhi-EnrollmentSummaryFol_DATA_LABELS_2025-03-19_1805.csv"
 
 
-master_str <- "MasterList copy.csv"
+#master_str <- "MasterList.csv"
 
-dx_str <- "HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-10-25_1329.csv"
+#dx_str <- "HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2025-03-19_1803.csv"
 
-dx_strFull <- "HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2024-10-25_1329 (1).csv"
+#dx_strFull <- "HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_2025-03-19_1803 (1).csv"
 
 
 demographics_str <- "DemographicsRaceEduc_variable labels_3.19.24.csv"
 
-#matched_file <- grep("HS2100716BodourSalhi-BaselineTimeFromDxTo_DATA_202.*\\.csv", list.files("your_directory_path"), value = TRUE)[1]
+
+
+find_latest_file <- function(base_pattern) {
+  # Get all CSV files in the current directory
+  all_files <- list.files(path = "input", pattern = "\\.csv$", full.names = TRUE)
+  
+  # Filter files based on the base pattern
+  matching_files <- grep(base_pattern, all_files, value = TRUE)
+  
+  # If no matching files, return NULL
+  if (length(matching_files) == 0) {
+    return(NULL)
+  }
+  
+  # If only one file, return it
+  if (length(matching_files) == 1) {
+    return(matching_files)
+  }
+  
+  # Get file info for matching files
+  file_info <- file.info(matching_files)
+  
+  # Return the most recently modified file
+  return(rownames(file_info)[which.max(file_info$mtime)])
+}
+
+# Apply to your specific files
+eligible_str <- find_latest_file("web eligibility suvey")
+calend_str <- find_latest_file("Calendly_phone consult_events-export")
+screen_str <- find_latest_file("ScreeningSummary")
+enroll_str <- find_latest_file("EnrollmentSummary_DATA")
+enroll_str1 <- find_latest_file("EnrollmentSummaryFol")
+master_str <- find_latest_file("MasterList")
+dx_str <- find_latest_file("BaselineTimeFromDx")
+dx_strFull <- find_latest_file("BaselineFTimeFromDx")
+
+# Show results
+cat("Eligible file:", eligible_str, "\n")
+cat("Calendar file:", calend_str, "\n")
+cat("Screening file:", screen_str, "\n")
+cat("Enrollment file:", enroll_str, "\n")
+cat("Enrollment follow-up file:", enroll_str1, "\n")
+cat("Master file:", master_str, "\n")
+cat("Dx file:", dx_str, "\n")
+cat("DxF file:", dx_strFull, "\n")
