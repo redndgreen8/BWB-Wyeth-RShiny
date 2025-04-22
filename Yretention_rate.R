@@ -76,10 +76,10 @@ dfungrouped <- df_grouped %>%
 
 df_groupedNA <- df_grouped[is.na(df_grouped$ConsentYear) ,]
 
-write_csv(df_groupedNA, "missing_consent_info.csv")
+write_csv(df_groupedNA, "out/missing_consent_info.csv")
 # Print or save the output
 view(df_grouped)
-write_csv(df_grouped, "yearly_retention_Grouped_Summary.csv")  # Save output as CSV
+write_csv(df_grouped, "out/yearly_retention_Grouped_Summary.csv")  # Save output as CSV
 
 
 

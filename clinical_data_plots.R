@@ -287,7 +287,7 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
     select(StudyID, BreastCancerDiagnosisDate) %>%
     mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
     filter(sapply(SplitDates, length) > 1)
-  write.csv(multiple_dates_df$StudyID, file = "multiple_dx.txt", row.names = FALSE)
+  write.csv(multiple_dates_df$StudyID, file = "out/multiple_dx.txt", row.names = FALSE)
   
   clind <- clind %>%
     select(StudyID, BreastCancerDiagnosisDate) %>%
@@ -315,11 +315,11 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
   
   outlier_days_since_dx <- joined_df %>%
     filter(Days.since.Dx < 0 | Days.since.Dx >= 3652.5)
-  write.csv(outlier_days_since_dx$bcsbusername, file = "outlierCase_dx.txt", row.names = FALSE)
+  write.csv(outlier_days_since_dx$bcsbusername, file = "out/outlierCase_dx.txt", row.names = FALSE)
   
   edgeCase_days_since_dx <- joined_df %>%
     filter(Days.since.Dx > 2555 & Days.since.Dx <= 3652.5)
-  write.csv(edgeCase_days_since_dx$bcsbusername, file = "edgeCase_dx.txt", row.names = FALSE)
+  write.csv(edgeCase_days_since_dx$bcsbusername, file = "out/edgeCase_dx.txt", row.names = FALSE)
   
   
   joined_df <- joined_df %>%

@@ -176,7 +176,7 @@ df.cohort.merged <- df.elig %>%
   dplyr::full_join(Normal.elig, 
                    by = c("Fname", "Lname", "Email", "Phone.Number", "Race", "Minority"))
 
-write_csv(df.cohort.merged, "BCSB_cohorts.csv")  # Save output as CSV
+write_csv(df.cohort.merged, "out/BCSB_cohorts.csv")  # Save output as CSV
 
 
 
