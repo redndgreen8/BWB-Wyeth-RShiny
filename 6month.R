@@ -58,10 +58,22 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
     labs(color = enrollField) +
     theme_minimal() +
     theme(
-      legend.title = element_text(face = "bold"),
+      # Axis labels (x and y labels)
+      axis.title.x = element_text(size = 22, face = "bold", margin = margin(t = 20)),
+      axis.title.y = element_text(size = 22, face = "bold", margin = margin(r = 20)),
+      
+      # Axis text (the values on the axes)
+      axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+      axis.text.y = element_text(size = 18),
+      
+      # Legend elements (you've already set these, but adjusted for consistency)
+      legend.title = element_text(face = "bold", size = 20),
+      legend.text = element_text(size = 19),
       legend.position = "top",
-      axis.text.x = element_text(angle = 45, hjust = 1),
-      plot.title = element_text(face = "bold", size = 14, hjust = 0.5),
+      
+      # Plot title
+      plot.title = element_text(face = "bold", size = 24, hjust = 0.5, margin = margin(b = 20)),
+      
       panel.grid.major = element_line(color = "gray90"),
       panel.grid.minor = element_blank(),
       panel.border = element_blank(),
@@ -72,6 +84,7 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
   
   return(lineChart)
 }
+chartStartE(df.enroll, df.DxDate, "location")
 
 getLineChartEveryoneQ <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = format(Sys.Date(), "%Y-%m")) {
   # Merge the dataframes
@@ -142,7 +155,6 @@ getLineChartEveryoneQ <- function(df.enroll, df.DxDate, enrollField, startDate =
   
   return(lineChart)
 }
-chartStartE(df.enroll, df.DxDate, "location")
 
 startDate <- "2022-05"
 endDate <- format(Sys.Date(), "%Y-%m")
@@ -284,6 +296,22 @@ chartStart
 chartStartE <- function(df.enroll, df.DxDate, fields){
   df.enroll <- df.enroll %>%
     mutate(location = ifelse( location == "Web", location, "Clinic"))
-  return(getLineChartEveryone(df.enroll, df.DxDate, fields))
+  
+lineC <- getLineChartPublicationReady(
+    df.enroll = df.enroll,
+    df.DxDate = df.DxDate,
+    enrollField = "location",
+    startDate = "2022-05",
+    endDate = "2025-05",
+    plot_title = "Monthly Enrollment by Location",
+    color_palette = "viridis",
+    x_interval = 2,                    # Show every 2nd month on x-axis
+    legend_position = "right",
+    output_file = "plots/enrollment_by_loc",
+    output_format = "pdf",
+    width = 10,
+    height = 6
+  )
+ return(lineC)
 }
-
+chartStartE

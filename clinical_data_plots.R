@@ -297,6 +297,10 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
   # Left join cd and clindat
   joined_df <- merge(df.DxDa, clind, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
   
+#  write.csv(joined_df, file = "out/Dx_joined_Consent.txt", row.names = FALSE)
+  
+  
+  
   # Address NA in diagnosisdate
   joined_df <- joined_df %>%
     mutate(BreastCancerDiagnosisDate = as.Date(BreastCancerDiagnosisDate, format = "%m/%d/%Y"),

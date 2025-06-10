@@ -2,7 +2,8 @@
 
 source("str_list.R")
 #source("BCSB_utils.R")
-
+library(ggplot2)
+library(ggrepel)
 getEnrollment <- function(enroll_str) {
   
   #df <- read.csv("HS2100716BodourSalhi-EnrollmentSummary_DATA_LABELS_2024-03-22_1440.csv")
@@ -171,13 +172,34 @@ getERacepieStacked <- function(df.enroll){
     xlab("") +
     theme(axis.text = element_blank(),
           axis.ticks = element_blank(),
+          # Axis labels (x and y labels)
+        #  axis.title.x = element_text(size = 22, face = "bold", margin = margin(t = 20)),
+        #  axis.title.y = element_text(size = 22, face = "bold", margin = margin(r = 20)),
+          
+          # Axis text (the values on the axes)
+         # axis.text.x = element_text(angle = 45, hjust = 1, size = 12),
+        #  axis.text.y = element_text(size = 18),
+          
+          # Legend elements (you've already set these, but adjusted for consistency)
+          legend.title = element_text(face = "bold", size = 20),
+          legend.text = element_text(size = 19),
+
+          # Plot title
+          #plot.title = element_text(face = "bold", size = 24, hjust = 0.5, margin = margin(b = 20)),
+          
+          
           panel.grid.major.y = element_blank(),
           strip.text = element_text(size = 15, face = "bold"),
-          legend.position = "right",
+          legend.position = "bottom",
           plot.title = element_text(hjust = 0.5))
   ggsave("plots/p1_combined.png", p1, height = 9, width = 18, dpi = 600)
   
   p1# Create stacked bar chart for Combined data
+  
+  
+  
+  
+  
   p2 <- ggplot(dfTotal, aes(x = "Combined", y = n, fill = Race)) +
     geom_bar(stat = "identity", color = "black", width = 0.4, size = 0.5) + # Reduced width
     scale_fill_brewer(palette = "Set3") + # Keeps original colors
@@ -192,19 +214,33 @@ getERacepieStacked <- function(df.enroll){
       }
     ) +
     guides(fill = guide_legend(title = "Race", 
-                               title.theme = element_text(size = 12, face = "bold"),
-                               label.theme = element_text(size = 10))) +
+                               title.theme = element_text(size = 35, face = "bold"),
+                               label.theme = element_text(size = 33))) +
     theme_DB() +
     ylab("Number of Participants") + 
     xlab("") +
     coord_flip() +
     # Reduce plot margins to decrease vertical footprint
-    theme(axis.text.x = element_text(size = 10),
-          axis.text.y = element_text(size = 12, face = "bold"),
+    theme(#axis.text.x = element_text(size = 10),
+          #axis.text.y = element_text(size = 12, face = "bold"),
+          # Axis labels (x and y labels)
+          axis.title.x = element_text(size = 35, face = "bold", margin = margin(t = 20)),
+          axis.title.y = element_text(size = 35, face = "bold", margin = margin(r = 20)),
+          
+          # Axis text (the values on the axes)
+          axis.text.x = element_text( hjust = 1, size = 35),
+          axis.text.y = element_text(size = 35),
+          
+          # Legend elements (you've already set these, but adjusted for consistency)
+          legend.title = element_text(face = "bold", size = 20),
+          legend.text = element_text(size = 35),
+
+          # Plot title
+          
           legend.position = "right",
           legend.key.size = unit(0.8, "cm"),
           plot.margin = margin(t = 10, r = 10, b = 10, l = 10, unit = "pt"))
-  ggsave("plots/p2_combined.png", p2, height = 9, width = 18, dpi = 600)
+  ggsave("plots/p2_combined.png", p2, height = 9, width = 27, dpi = 600)
   p2
   # Total count label for stacked bar
   #totalLabel <- data.frame(
@@ -257,6 +293,13 @@ getERacepieStacked <- function(df.enroll){
   
   return(plots_combined)
 }
+ER_clinCombStacked <- function(df.enroll){
+  df.enroll <- df.enroll %>%
+    mutate(location = ifelse( location == "Web", location, "Clinic"))
+ return(getERacepieStacked(df.enroll))
+  
+}
+
 ER_clinCombStacked(df.enroll )
 
 getERacepieDot <- function(df.enroll){
@@ -378,7 +421,6 @@ getERacepieDot <- function(df.enroll){
   
   return(combined_plot)
 }
-ER_clinCombDot(df.enroll )
 
 ER_clinCombDot <- function(df.enroll){
   df.enroll <- df.enroll %>%
@@ -396,12 +438,6 @@ ER_clinComb <- function(df.enroll){
   
 }
 ER_clinComb(df.enroll )
-ER_clinCombStacked <- function(df.enroll){
-  df.enroll <- df.enroll %>%
-    mutate(location = ifelse( location == "Web", location, "Clinic"))
-  return(getERacepieStacked(df.enroll))
-  
-}
 
 
 #sS <- getPieChart(df.enroll, "SurveyStatus", "survey.png" , "Title", plot_by_location = FALSE)

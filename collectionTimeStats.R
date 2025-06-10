@@ -21,15 +21,28 @@ result <- df %>%
   summarize(`Specimen_Collection Event_Date and Time` = first(`Specimen_Collection Event_Date and Time`),
             .groups = 'keep')
 
+
+joined_df_modified <- joined_df %>%
+  mutate(
+    # Extract numeric part (remove prefix)
+    Numeric_ID = as.numeric(str_extract(bcsbusername, "\\d+")),
+    # Remove leading zeros
+    #    Simple_ID = as.character(Numeric_ID)
+  )
+
+
+resultTest <-  result %>%
+  inner_join(joined_df_modified, by = c( "Participant_PPID" = "Numeric_ID")) 
+
 # Now, add both baseline and interval time differences
-result_with_diffs <- result %>%
+result_with_diffs <- resultTest %>%
   # Make sure data is sorted by collection date within each participant
   arrange(Participant_PPID, `Specimen_Collection Event_Date and Time`) %>%
   group_by(Participant_PPID) %>%
   mutate(
     # Get the baseline date (first timepoint for each participant)
     Baseline_Date = first(`Specimen_Collection Event_Date and Time`),
-    
+    EarliestConsentDate = first(`EarliestConsentDate`),
     # Calculate time from baseline in days
     Time_From_Baseline_Days = as.numeric(difftime(`Specimen_Collection Event_Date and Time`, 
                                                   Baseline_Date, 
@@ -40,25 +53,121 @@ result_with_diffs <- result %>%
                                         lag(`Specimen_Collection Event_Date and Time`), 
                                         units = "days")),
     
-    # First record for each participant will have NA for interval difference
+    # Calculate time from baseline in days
+    Time_From_Consent_Days = as.numeric(difftime(`Specimen_Collection Event_Date and Time`, 
+                                                 EarliestConsentDate, 
+                                                  units = "days")),
+    
+  # First record for each participant will have NA for interval difference
     Interval_Days = ifelse(is.na(Interval_Days), 0, Interval_Days)
   ) %>%
   ungroup()
 
 
+
+
 # Step 3: Final grouping and collapsing all columns
-final_result <- result_with_diffs %>% 
+gresult_with_diffs <- result_with_diffs %>% 
   group_by(Participant_PPID) %>% 
   summarize(
     `Visit_Event Labels` = toString(`Visit_Event Label`),
     `Collection_Dates` = toString(`Specimen_Collection Event_Date and Time`),
-    #`Baseline_Dates` = toString(Baseline_Date),
-    `Time_From_Baseline_Days` = toString(Time_From_Baseline_Days),
-    `Interval_Days` = toString(Interval_Days),
+    `EarliestConsentDate` = first(`EarliestConsentDate`),
+    `Time_From_Baseline_Dayss` = toString(Time_From_Baseline_Days),
+    `Time_From_Consent_Dayss` = toString(Time_From_Consent_Days),
+    `Interval_Dayss` = toString(Interval_Days),
     .groups = 'drop'
   )
 
+gresult_with_diffs <- gresult_with_diffs %>%
+  mutate(
+    Has_Baseline = grepl("Baseline", `Visit_Event Labels`),
+    Has_Y1 = grepl("Y1 Follow Up", `Visit_Event Labels`),
+    Has_Y2 = grepl("Y2 Follow Up", `Visit_Event Labels`),
+    Visit_TypeCOMB = case_when(
+      Has_Baseline & !Has_Y1 & !Has_Y2 ~ "Baseline Only",
+      !Has_Baseline & Has_Y1 & !Has_Y2 ~ "Y1 Only",
+      !Has_Baseline & !Has_Y1 & Has_Y2 ~ "Y2 Only",
+      Has_Baseline & Has_Y1 & !Has_Y2 ~ "Baseline + Y1",
+      Has_Baseline & !Has_Y1 & Has_Y2 ~ "Baseline + Y2",
+      !Has_Baseline & Has_Y1 & Has_Y2 ~ "Y1 + Y2",
+      Has_Baseline & Has_Y1 & Has_Y2 ~ "Baseline + Y1 + Y2",
+      TRUE ~ "Other"
+    )
+  )
 
+gresult_with_diffs <- gresult_with_diffs %>%
+  mutate(
+    Primary_Visit = case_when(
+      Has_Baseline & !Has_Y1 & !Has_Y2 ~ "Baseline",
+      Has_Baseline & Has_Y1 & !Has_Y2 ~ "Y1 Follow Up",
+      Has_Baseline & Has_Y1 & Has_Y2 ~ "Y2 Follow Up",
+      TRUE ~ "Other"
+    )
+  )
+
+
+result_with_visit_types <- result_with_diffs %>%
+  mutate(
+    Has_Baseline = grepl("Baseline", `Visit_Event Label`),
+    Has_Y1 = grepl("Y1 Follow Up", `Visit_Event Label`),
+    Has_Y2 = grepl("Y2 Follow Up", `Visit_Event Label`),
+    Visit_Type = case_when(
+      Has_Baseline & !Has_Y1 & !Has_Y2 ~ "Baseline Only",
+      !Has_Baseline & Has_Y1 & !Has_Y2 ~ "Y1 Only",
+      !Has_Baseline & !Has_Y1 & Has_Y2 ~ "Y2 Only", 
+      Has_Baseline & Has_Y1 & !Has_Y2 ~ "Baseline + Y1",
+      Has_Baseline & !Has_Y1 & Has_Y2 ~ "Baseline + Y2",
+      !Has_Baseline & Has_Y1 & Has_Y2 ~ "Y1 + Y2",
+      Has_Baseline & Has_Y1 & Has_Y2 ~ "Baseline + Y1 + Y2",
+      TRUE ~ "Other"
+    ),
+    Primary_Visit_Type = case_when(
+      Has_Baseline & !Has_Y1 & !Has_Y2 ~ "Baseline",
+      Has_Y1 ~ "Y1 Follow Up",
+      Has_Y2 ~ "Y2 Follow Up",
+      TRUE ~ "Other"
+    )
+  )
+
+gresult_with_visit_types <- result_with_visit_types %>% 
+  group_by(Participant_PPID) %>% 
+  summarize(
+    #`Visit_Event Labels` = toString(`Visit_Event Label`),
+    #`Collection_Dates` = toString(`Specimen_Collection Event_Date and Time`),
+    `Baseline_Dates` = toString(Baseline_Date),
+    #`Time_From_Baseline_Days` = toString(Time_From_Baseline_Days),
+    #`Interval_Days` = toString(Interval_Days),
+    #`Has_Baselines` = toString(Has_Baseline),
+    #`Has_Y1s` = toString(Has_Y1),
+    #`Has_Y2s` = toString(Has_Y2),
+    #`Visit_Types` = toString(Visit_Type),
+    #`Primary_Visit_Types` = toString(Primary_Visit_Type),
+    .groups = 'drop'
+  )
+
+merged_full <- result_with_visit_types %>% 
+  select(Participant_PPID, "Visit_Event Label", Baseline_Date, Time_From_Baseline_Days, Time_From_Consent_Days,
+         Interval_Days,Visit_Type,Primary_Visit_Type) %>%
+  left_join(gresult_with_diffs, by = "Participant_PPID") 
+
+
+
+
+
+
+# Calculate the difference for records where Primary_Visit_Type is "Baseline"
+DF <- merged_full %>%
+  mutate(
+    Time_From_Baseline_Days = case_when(
+      Primary_Visit_Type == "Baseline" ~ as.numeric(difftime(Baseline_Date, EarliestConsentDate, units = "days")),
+      TRUE ~ Time_From_Baseline_Days  # Keep existing values for non-baseline visits
+    ),
+    Interval_Days = case_when(
+      Primary_Visit_Type == "Baseline" ~ as.numeric(difftime(Baseline_Date, EarliestConsentDate, units = "days")),
+      TRUE ~ Interval_Days  # Keep existing values for non-baseline visits
+    )
+  )
 
 library(ggplot2)
 library(gridExtra) # For arranging multiple plots
@@ -75,7 +184,8 @@ library(scales)    # For better axis formatting
 # ===== 1. OVERVIEW STATISTICS =====
 
 # Basic statistics for interval days
-interval_stats <- result_with_diffs %>%
+interval_stats <- DF %>%
+  group_by(`Visit_Event Label`) %>%
   filter(Interval_Days > 0) %>%
   summarize(
     Mean_Interval = mean(Interval_Days, na.rm = TRUE),
@@ -92,7 +202,8 @@ interval_stats <- result_with_diffs %>%
   )
 
 # Basic statistics for time from baseline
-baseline_stats <- result_with_diffs %>%
+baseline_stats <- merged_full %>%
+  group_by(`Visit_Event Label`) %>%
   filter(Time_From_Baseline_Days > 0) %>%
   summarize(
     Mean_Baseline_Time = mean(Time_From_Baseline_Days, na.rm = TRUE),
@@ -107,6 +218,23 @@ baseline_stats <- result_with_diffs %>%
     Count = n()
   )
 
+consent_stats <- merged_full %>%
+  group_by(`Visit_Event Label`) %>%
+  #filter(Time_From_Consent_Days > 0) %>%
+  summarise(
+    Mean_Baseline_Time = mean(Time_From_Consent_Days, na.rm = TRUE),
+    Median_Baseline_Time = median(Time_From_Consent_Days, na.rm = TRUE),
+    SD_Baseline_Time = sd(Time_From_Consent_Days, na.rm = TRUE),
+    Min_Baseline_Time = min(Time_From_Consent_Days, na.rm = TRUE),
+    Max_Baseline_Time = max(Time_From_Consent_Days, na.rm = TRUE),
+    Q1_Baseline_Time = quantile(Time_From_Consent_Days, 0.25, na.rm = TRUE),
+    Q3_Baseline_Time = quantile(Time_From_Consent_Days, 0.75, na.rm = TRUE),
+    IQR_Baseline = Q3_Baseline_Time - Q1_Baseline_Time,
+    Count = n()
+  )
+
+
+
 # Print statistics
 print("=== Interval Days Statistics ===")
 print(interval_stats)
@@ -116,15 +244,115 @@ print(baseline_stats)
 # ===== 2. VISIT PATTERN ANALYSIS =====
 
 # Add visit number for each participant
-visit_patterns <- result_with_diffs %>%
+visit_patterns <- DF %>%
   group_by(Participant_PPID) %>%
-  arrange(Participant_PPID, Time_From_Baseline_Days) %>%
+  arrange(Participant_PPID, Time_From_Baseline_Days, Time_From_Consent_Days) %>%
   mutate(
     Visit_Number = row_number(),
     Expected_Time = (Visit_Number - 1) * 365,
-    Deviation_From_Expected = Time_From_Baseline_Days - Expected_Time
+    Deviation_From_ExpectedB = Time_From_Baseline_Days - Expected_Time,
+    Deviation_From_ExpectedC = Time_From_Consent_Days - Expected_Time,
+    ) %>%
+  ungroup()
+
+
+Due_dates <-  DF %>%
+  group_by(Participant_PPID) %>%
+  #arrange(Participant_PPID, Time_From_Baseline_Days, Time_From_Consent_Days) %>%
+  mutate(
+    Visit_Number = row_number(),
+    #Expected_Time = (Visit_Number + 1) * 330,
+    Expected_Time = (Visit_Number -1) * 330,
+    DueDate = as.Date(EarliestConsentDate) + days(Expected_Time),
+    
+    # For date differences, as.numeric() ensures proper numeric results
+    DaysRemaining = as.numeric( DueDate - Sys.Date())
+    
+    
   ) %>%
   ungroup()
+
+
+Due_datesCS <- Due_dates %>%
+  group_by(Participant_PPID) %>%
+  summarize(
+    `Visit_Event` = toString(Visit_TypeCOMB),
+    `Primary_Visit` = toString(Primary_Visit),
+    `EarliestConsentDate` = toString(EarliestConsentDate),
+    `Baseline_Date` = toString(Baseline_Date),
+    `DueDate` = toString(DueDate),
+    `DaysRemaining` = toString(DaysRemaining),
+  )
+
+Due_datesC <- Due_dates %>%
+  group_by(Participant_PPID) %>%
+  summarize(
+    `Visit_Event` = first(Visit_TypeCOMB),
+    `Primary_Visit` = first(Primary_Visit),
+    `EarliestConsentDate` = first(EarliestConsentDate),
+    `Baseline_Date` = first(Baseline_Date),
+    `DueDate` = last(DueDate),
+    `DaysRemaining` = last(DaysRemaining),
+  )
+
+
+
+write.csv(Due_datesC, "out/Due_dates.csv")
+
+
+Due_datesC <- Due_datesC %>%
+  mutate(DaysRemaining = as.numeric(DaysRemaining))
+
+p <- ggplot(Due_datesC, aes(x = DaysRemaining, fill = Primary_Visit)) +
+  geom_histogram(binwidth = 30, position = "dodge", alpha = 0.8) +
+  labs(
+    title = "Days Remaining Until Next Visit",
+    x = "Days Remaining",
+    y = "Count",
+    fill = "Visit Type"
+  ) +
+  theme_minimal() +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  annotate("text", x = 5, y = 1, label = "Today", hjust = 0, color = "red")
+
+# For "Other" visits, we can add text annotations after identifying their positions
+# We'll need to do this in a separate step
+
+# First, run the plot to see what it looks like
+print(p)
+
+# Create a faceted histogram instead
+pp_facet <- ggplot(Due_datesC, aes(x = as.numeric(DaysRemaining))) +
+  geom_histogram(binwidth = 30, fill = "steelblue", alpha = 0.8) +
+  facet_wrap(~ Primary_Visit, scales = "free_y") +
+  labs(
+    title = "Days Remaining Until Next Visit",
+    x = "Days Remaining",
+    y = "Count"
+  ) +
+  theme_minimal() +
+  geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
+  # Add more breaks on the x-axis for clearer reading
+  scale_x_continuous(
+    breaks = seq(-180, 360, by = 30),  # Adjust this range based on your data
+    labels = seq(-180, 360, by = 30)
+  ) +
+  # Improve x-axis label visibility
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 8),
+    strip.text = element_text(size = 10, face = "bold")
+  )
+print(pp_facet)
+
+
+
+grid_arrangementDue <- grid.arrange(
+   pp_facet,p)
+
+grid_arrangementDue
+
+ggsave("plots/DueDay_analysis_plots.png", grid_arrangementDue, width = 20, height = 16)
+
 
 # Calculate statistics on visit adherence
 visit_adherence <- visit_patterns %>%
@@ -177,7 +405,7 @@ baseline_outliers <- visit_patterns %>%
   filter(Visit_Number > 1) %>%  # Skip first visit
   filter(abs(Deviation_From_Expected) > 30) %>%
   select(Participant_PPID, `Visit_Event Label`, Visit_Number, 
-         Time_From_Baseline_Days, Expected_Time, Deviation_From_Expected) %>%
+         Time_From_Baseline_Days, ,  Expected_Time, Deviation_From_Expected) %>%
   arrange(desc(abs(Deviation_From_Expected)))
 
 print("=== Interval Outliers (>30 days from expected 365-day interval) ===")
@@ -200,20 +428,37 @@ my_theme <- theme_minimal() +
     legend.text = element_text(size = 10)
   )
 
-# 1. Histogram of interval days
-p1 <- ggplot(result_with_diffs %>% filter(Interval_Days > 0), 
+# Original ungrouped plot
+p1 <- ggplot(DF %>% filter(Primary_Visit_Type == "Baseline") %>%
+               filter(Interval_Days > 0), 
              aes(x = Interval_Days)) +
   geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
+  geom_vline(xintercept = 90, color = "red", linetype = "dashed") +
+  labs(title = "Distribution of Days Between Consent and First Visit",
+       x = "Interval (Days)",
+       y = "Count") +
+  annotate("text", x = 90, y = Inf, label = "3 months", 
+           vjust = 2, hjust = 1.1, color = "red") +
+  my_theme
+
+p1
+# Grouped by Primary_Visit_Type - faceted version
+p1_facet <- ggplot(merged_full %>% filter(Interval_Days > 0), 
+                   aes(x = Interval_Days)) +
+  geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
   geom_vline(xintercept = 365, color = "red", linetype = "dashed") +
-  labs(title = "Distribution of Days Between Visits",
+  facet_wrap(~Primary_Visit_Type, scales = "free_y") +
+  labs(title = "Distribution of Days Between Visits by Visit Type",
        x = "Interval (Days)",
        y = "Count") +
   annotate("text", x = 365, y = Inf, label = "1 Year", 
            vjust = 2, hjust = 1.1, color = "red") +
   my_theme
+p1_facet
+
 
 # 2. Histogram of time from baseline
-p2 <- ggplot(result_with_diffs %>% filter(Time_From_Baseline_Days > 0), 
+p2 <- ggplot(merged_full %>% filter(Time_From_Baseline_Days > 0), 
              aes(x = Time_From_Baseline_Days)) +
   geom_histogram(binwidth = 30, fill = "lightgreen", color = "black", alpha = 0.7) +
   geom_vline(xintercept = c(365, 730, 1095), 
@@ -229,10 +474,51 @@ p2 <- ggplot(result_with_diffs %>% filter(Time_From_Baseline_Days > 0),
   annotate("text", x = 1095, y = Inf, label = "3 Years", 
            vjust = 2, hjust = 1.1, color = "purple") +
   my_theme
+p2
 
+
+p2_facet <- ggplot(merged_full %>% filter(Time_From_Baseline_Days > 0), 
+                   aes(x = Time_From_Baseline_Days)) +
+  geom_histogram(binwidth = 30, fill = "lightgreen", color = "black", alpha = 0.7) +
+  # Define the lines separately to avoid color mapping issues
+  geom_vline(xintercept = 365, color = "red", linetype = "dashed") +
+  geom_vline(xintercept = 730, color = "blue", linetype = "dashed") +
+  geom_vline(xintercept = 1095, color = "purple", linetype = "dashed") +
+  facet_wrap(~Primary_Visit_Type, scales = "free_y") +
+  labs(title = "Distribution of Days From Baseline by Visit Type",
+       x = "Time From Baseline (Days)",
+       y = "Count") +
+  annotate("text", x = 365, y = Inf, label = "1 Year", 
+           vjust = 2, hjust = 1.1, color = "red") +
+  annotate("text", x = 730, y = Inf, label = "2 Years", 
+           vjust = 2, hjust = 1.1, color = "blue") +
+  annotate("text", x = 1095, y = Inf, label = "3 Years", 
+           vjust = 2, hjust = 1.1, color = "purple") +
+  my_theme
+p2_facet
+
+p2_color <- ggplot(merged_full %>% filter(Time_From_Baseline_Days > 0), 
+                   aes(x = Time_From_Baseline_Days, fill = Primary_Visit_Type)) +
+  geom_histogram(binwidth = 30, position = "dodge", alpha = 0.7, color = "black") +
+  geom_vline(xintercept = c(365, 730, 1095), 
+             color = c("red", "blue", "purple"), 
+             linetype = "dashed") +
+  labs(title = "Distribution of Days From Baseline by Visit Type",
+       x = "Time From Baseline (Days)",
+       y = "Count",
+       fill = "Visit Type") +
+  annotate("text", x = 365, y = Inf, label = "1 Year", 
+           vjust = 2, hjust = 1.1, color = "red") +
+  annotate("text", x = 730, y = Inf, label = "2 Years", 
+           vjust = 2, hjust = 1.1, color = "blue") +
+  annotate("text", x = 1095, y = Inf, label = "3 Years", 
+           vjust = 2, hjust = 1.1, color = "purple") +
+  scale_fill_brewer(palette = "Set2") +
+  my_theme
+p2_color
 # 3. Boxplot of interval days by visit event label
-p3 <- ggplot(result_with_diffs %>% filter(Interval_Days > 0), 
-             aes(x = reorder(`Visit_Event Label`, Interval_Days, FUN = median), 
+p3 <- ggplot(DF %>% filter(Interval_Days > 0), 
+             aes(x = reorder(`Primary_Visit_Type`, Interval_Days, FUN = median), 
                  y = Interval_Days)) +
   geom_boxplot(fill = "skyblue", alpha = 0.7) +
   geom_hline(yintercept = 365, color = "red", linetype = "dashed") +
@@ -241,7 +527,28 @@ p3 <- ggplot(result_with_diffs %>% filter(Interval_Days > 0),
        y = "Interval (Days)") +
   my_theme +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+p3
 
+
+grid_arrangement3 <- grid.arrange(
+  p1, p1_facet, p2_color, p3)
+
+grid_arrangement3
+
+ggsave("plots/day_analysis_plots.png", grid_arrangement3, width = 20, height = 16)
+
+
+p33 <- ggplot(merged_full %>% 
+               filter(Interval_Days > 0), 
+             aes(x = Primary_Visit_Type, y = Interval_Days)) +
+  geom_boxplot(fill = "skyblue", alpha = 0.7) +
+  geom_hline(yintercept = 365, color = "red", linetype = "dashed") +
+  labs(title = "Interval Days by Primary Visit Type",
+       x = "Primary Visit Type",
+       y = "Interval (Days)") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.5))
+p33
 # 4. Scatter plot of time from baseline by visit number
 p4 <- ggplot(visit_patterns, 
              aes(x = Visit_Number, y = Time_From_Baseline_Days, color = Participant_PPID)) +

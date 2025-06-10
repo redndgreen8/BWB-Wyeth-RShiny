@@ -21,6 +21,8 @@ library(stringdist)
 library(tidygeocoder)
 library(leaflet)
 
+library(lubridate)
+library(patchwork)
 
 ui <- fluidPage(
   titlePanel(paste("BCSB Dashboard -", Sys.Date())),
