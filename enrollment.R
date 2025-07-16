@@ -40,7 +40,12 @@ getEnrollment <- function(enroll_str) {
   return(df.enroll)
 }
 
+
+# part X of full super matrix
 df.enroll <- getEnrollment(enroll_str)
+
+
+write_csv(df.enroll,"out/BWB-BCSB-consented-enroll.matrix.csv")
 
 getERacepie <- function(df.enroll){
   dfPCR <- df.enroll %>%

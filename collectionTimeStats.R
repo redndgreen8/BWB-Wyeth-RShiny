@@ -6,7 +6,7 @@ source("str_list.R")
 
 
 #df <- read.csv()
-df <- OS_Whole_Blood_CollectionDateTime
+df <- read.csv(openSpecimen)
 
 library(dplyr)
 library(lubridate)
@@ -168,6 +168,10 @@ DF <- merged_full %>%
       TRUE ~ Interval_Days  # Keep existing values for non-baseline visits
     )
   )
+
+
+#full DF, part X of full super matrix
+write_csv(DF,"out/BWB-BCSB-openspecimen_consent.matrix.csv")
 
 library(ggplot2)
 library(gridExtra) # For arranging multiple plots

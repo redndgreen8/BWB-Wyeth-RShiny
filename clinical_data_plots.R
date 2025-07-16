@@ -404,9 +404,13 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
 
 }
 
+
+write_csv(clind,"out/BWB-BCSB-clind_subtype_unconsolidated.matrix.csv")
+
 plt <- getYrSinceDiagnosis(dx_str, clind)
 #plt$gp
 #plt$gp2
+write_csv(plt$df.DxDate,"out/BWB-BCSB-enrolled-diagnosis_date.matrix.csv")
 
 if (0) {
   files <- list.files("demographics/", "DATA_LABELS.*csv$", recursive = T, full.names = T)

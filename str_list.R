@@ -45,15 +45,19 @@ find_latest_file <- function(base_pattern) {
   return(rownames(file_info)[which.max(file_info$mtime)])
 }
 
-# Apply to your specific files
-eligible_str <- find_latest_file("web eligibility suvey")
 calend_str <- find_latest_file("Calendly_phone consult_events-export")
+
+# Apply to your specific files
+eligible_str <- find_latest_file("Web Eligibility Survey")
+openSpecimen <-find_latest_file("OpenSpecimen_collection")
+
+dx_str <- find_latest_file("BaselineTimeFromDx")
+dx_strFull <- find_latest_file("BaselineFTimeFromDx")
 screen_str <- find_latest_file("ScreeningSummary")
 enroll_str <- find_latest_file("EnrollmentSummary_DATA")
 enroll_str1 <- find_latest_file("EnrollmentSummaryFol")
+
 master_str <- find_latest_file("MasterList")
-dx_str <- find_latest_file("BaselineTimeFromDx")
-dx_strFull <- find_latest_file("BaselineFTimeFromDx")
 
 # Show results
 cat("Eligible file:", eligible_str, "\n")
@@ -64,3 +68,4 @@ cat("Enrollment follow-up file:", enroll_str1, "\n")
 cat("Master file:", master_str, "\n")
 cat("Dx file:", dx_str, "\n")
 cat("DxF file:", dx_strFull, "\n")
+cat("OpSp file:", openSpecimen, "\n")
