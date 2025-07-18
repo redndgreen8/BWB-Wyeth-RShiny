@@ -62,6 +62,42 @@ getClinDatSimple <- function(master_str) {
 #missing_clin <- getClinMissing(clind)
 
 
+clind <- getClinDatSimple(master_str)
+
+
+getclind2 <- function(clind){
+  clind2 <- clind %>%
+    mutate(RS2 = ifelse(is.na(RS2), "UNKNOWN", RS2),
+           RS2 = ifelse(grepl(";", RS2), "MULTIFOCAL", RS2),
+           ER_Pos = grepl("ER\\+", RS2),
+           PR_Pos = grepl("PR\\+", RS2),
+           HER2_Pos = grepl("HER2\\+", RS2),
+           ER_Neg = grepl("ER\\-", RS2),
+           PR_Neg = grepl("PR\\-", RS2),
+           HER2_Neg = grepl("HER2\\-", RS2),
+           RS3 = case_when(
+             ER_Pos & PR_Pos & HER2_Pos ~ "Triple Positive",
+             (ER_Pos | PR_Pos) & HER2_Pos ~ "Triple Positive",      
+             ER_Neg & PR_Neg & HER2_Neg ~ "Triple Negative",
+             (ER_Pos | PR_Pos) & HER2_Neg ~ "HR+/HER2-",
+             ER_Neg & PR_Neg & HER2_Pos ~ "HR-/HER2+",
+             RS2 == "MULTIFOCAL" ~ "MULTIFOCAL",
+             TRUE ~ "UNKNOWN"
+           )) 
+  
+  clind2 <- clind2 %>%
+    mutate(BreastCancerDiagnosisDate = str_extract_all(BreastCancerDiagnosisDate, "\\d{1,2}/\\d{1,2}/\\d{4}") %>%
+             lapply(function(dates) {
+               if (length(dates) == 0) return(NA)
+               parsed_dates <- mdy(dates)
+               if (all(is.na(parsed_dates))) return(NA)
+               format(max(parsed_dates, na.rm = TRUE), "%Y-%m-%d")
+             }) %>%
+             unlist())
+  
+  return(clind2)
+}
+
 getClinMissing <-function(clind) {
   
   df.missing <- data.frame(ID = clind$StudyID,
@@ -211,9 +247,7 @@ getClinPie <- function(clind) {
 }
 
 
-clind <- getClinDatSimple(master_str)
-subtype <- getClinPie(clind)
-subtype
+
 
 getEarliestConsentDate <- function(dx_str){
   cd <- read.csv(paste0( dx_str))
@@ -406,6 +440,9 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
 
 
 write_csv(clind,"out/BWB-BCSB-clind_subtype_unconsolidated.matrix.csv")
+write_csv(clind2,"out/BWB-BCSB-clind_subtype_consolidated.matrix.csv")
+
+
 
 plt <- getYrSinceDiagnosis(dx_str, clind)
 #plt$gp
