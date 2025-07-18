@@ -285,7 +285,7 @@ getEarliestConsentDate <- function(dx_str){
 #Diag <- getEarliestConsentDate(dx_str)
 
 
-getYrSinceDiagnosis <- function(dx_str, clind) {
+getYrSinceDiagnosis <- function(dx_str, clind, DF) {
   cd <- read.csv(paste0( dx_str))
   cd[cd == ""] <- NA
   # Process cd (file_df)
@@ -329,23 +329,39 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
     filter(sapply(SplitDates, length) <= 1)
   
   # Left join cd and clindat
-  joined_df <- merge(df.DxDa, clind, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
+  joined_df0 <- merge(df.DxDa, clind, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
+
+  DF$Participant_PPID <- paste0("BCSB", sprintf("%04s", DF$Participant_PPID))  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  OS_joined <- merge(DF, joined_df0, by.x = "Participant_PPID", by.y = "bcsbusername")
   
 #  write.csv(joined_df, file = "out/Dx_joined_Consent.txt", row.names = FALSE)
   
   
   
   # Address NA in diagnosisdate
-  joined_df <- joined_df %>%
+  joined_df <- OS_joined %>%
     mutate(BreastCancerDiagnosisDate = as.Date(BreastCancerDiagnosisDate, format = "%m/%d/%Y"),
-      diagnosisdate = ifelse(is.na(BreastCancerDiagnosisDate), breastcancerdiagdate, BreastCancerDiagnosisDate),
+      diagnosisdate = ifelse(is.na(BreastCancerDiagnosisDate), BreastCancerDiagnosisDate, BreastCancerDiagnosisDate),
       diagnosisdate = as.Date(diagnosisdate)) %>%
     filter(!is.na(diagnosisdate))
   
+  
+  
+  
   # Calculate years since diagnosis
-  joined_df <- joined_df %>%
+  joined_df <- OS_joined %>%
     mutate(
-      Days.since.Dx = EarliestConsentDate - diagnosisdate,
+      Days.since.Dx = as.Date(Baseline_Date) - as.Date(BreastCancerDiagnosisDate),
       Years.since.Dx = floor(Days.since.Dx / 365.25),
       Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", as.character(Years.since.Dx)),
       lab = paste0(Years.since.Dx2, " YEARS")) %>%
@@ -408,12 +424,11 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
-    ggtitle("Years since diagnosis to Consent date") +   #
+    ggtitle("Years since diagnosis to Blood Draw date") +   #
     labs(subtitle = "Data for participants on study who have completed Baseline Session, 
-         signed consent and completed surveys. 
-         (blood sample and/or clinical data may be pending)")
+         signed consent and completed surveys.")
 
-  #gp
+  gp
   
   days_in_year <- 365.25
   
@@ -432,8 +447,26 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
     xlab("Years Since Diagnosis") +
     scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks),  limits = c(0, 3652.5) ) +
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
-  
+  gp2
   #print(gp2)
+  
+  
+  
+  # Round to bin and group
+  summary_df <- joined_df %>%
+    mutate(bin = cut(Days.since.Dx, breaks = seq(0, 3652.5, by = days_in_year), include.lowest = TRUE)) %>%
+    group_by(bin, Visit_Type) %>%
+    summarise(count = n(), .groups = "drop")
+  
+  # Plot using geom_col (manual histogram)
+  gp3 <- ggplot(summary_df, aes(x = bin, y = count, fill = Visit_Type)) +
+    geom_col(position = "stack", color = "black") +
+    ylab("Number of Patients") +
+    xlab("Years Since Diagnosis") +
+    theme_DB(bold.axis.title = TRUE, grid.x = TRUE, rotate.x = TRUE)
+  gp3
+  
+  
   return(list(noConsent = na_rows, outlier_days = outlier_days_since_dx, multiple_dates = multiple_dates_df, df.DxDate = joined_df, gp = gp, gp2 = gp2))
 
 }
@@ -444,7 +477,7 @@ write_csv(clind2,"out/BWB-BCSB-clind_subtype_consolidated.matrix.csv")
 
 
 
-plt <- getYrSinceDiagnosis(dx_str, clind)
+plt <- getYrSinceDiagnosis(dx_str, clind2, DF)
 #plt$gp
 #plt$gp2
 write_csv(plt$df.DxDate,"out/BWB-BCSB-enrolled-diagnosis_date.matrix.csv")
