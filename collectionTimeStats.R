@@ -166,7 +166,8 @@ DF <- merged_full %>%
     Interval_Days = case_when(
       Primary_Visit_Type == "Baseline" ~ as.numeric(difftime(Baseline_Date, EarliestConsentDate, units = "days")),
       TRUE ~ Interval_Days  # Keep existing values for non-baseline visits
-    )
+    ),
+    Participant_PPID = paste0("BCSB", sprintf("%04s", Participant_PPID))  
   )
 
 
@@ -319,6 +320,7 @@ p <- ggplot(Due_datesC, aes(x = DaysRemaining, fill = Primary_Visit)) +
   geom_vline(xintercept = 0, linetype = "dashed", color = "red") +
   annotate("text", x = 5, y = 1, label = "Today", hjust = 0, color = "red")
 
+p
 # For "Other" visits, we can add text annotations after identifying their positions
 # We'll need to do this in a separate step
 
@@ -366,8 +368,8 @@ visit_adherence <- visit_patterns %>%
     Last_Visit_Time = max(Time_From_Baseline_Days),
     Expected_Last_Visit_Time = (n() - 1) * 365,
     Overall_Adherence = Last_Visit_Time / Expected_Last_Visit_Time,
-    Avg_Absolute_Deviation = mean(abs(Deviation_From_Expected[Visit_Number > 1]), na.rm = TRUE),
-    Max_Absolute_Deviation = max(abs(Deviation_From_Expected[Visit_Number > 1]), na.rm = TRUE),
+    Avg_Absolute_Deviation = mean(abs(Deviation_From_ExpectedB[Visit_Number > 1]), na.rm = TRUE),
+    Max_Absolute_Deviation = max(abs(Deviation_From_ExpectedB[Visit_Number > 1]), na.rm = TRUE),
     .groups = 'drop'
   ) %>%
   mutate(
@@ -407,10 +409,10 @@ interval_outliers <- result_with_diffs %>%
 # Identify baseline time outliers
 baseline_outliers <- visit_patterns %>%
   filter(Visit_Number > 1) %>%  # Skip first visit
-  filter(abs(Deviation_From_Expected) > 30) %>%
+  filter(abs(Deviation_From_ExpectedB) > 30) %>%
   select(Participant_PPID, `Visit_Event Label`, Visit_Number, 
-         Time_From_Baseline_Days, ,  Expected_Time, Deviation_From_Expected) %>%
-  arrange(desc(abs(Deviation_From_Expected)))
+         Time_From_Baseline_Days, ,  Expected_Time, Deviation_From_ExpectedB) %>%
+  arrange(desc(abs(Deviation_From_ExpectedB)))
 
 print("=== Interval Outliers (>30 days from expected 365-day interval) ===")
 print(head(interval_outliers, 10))  # Show top 10 outliers
@@ -597,7 +599,7 @@ p6 <- ggplot(month_year_data, aes(x = factor(Month), y = factor(Year), fill = n)
 
 # 7. Deviation from expected pattern
 p7 <- ggplot(visit_patterns %>% filter(Visit_Number > 1), 
-             aes(x = Visit_Number, y = Deviation_From_Expected)) +
+             aes(x = Visit_Number, y = Deviation_From_ExpectedB)) +
   geom_boxplot(aes(group = Visit_Number), fill = "salmon", alpha = 0.7) +
   geom_hline(yintercept = 0, linetype = "dashed") +
   labs(title = "Deviation From Expected Visit Pattern",
@@ -618,7 +620,7 @@ p8 <- ggplot(adherence_summary, aes(x = "", y = Percent, fill = Schedule_Status)
 
 # Arrange plots in a grid and save
 grid_arrangement <- grid.arrange(
-  p1, p2, p3, p4, 
+  p1, p2_color, p3, p4, 
   p5, p6, p7, p8,
   ncol = 2
 )
@@ -628,8 +630,10 @@ ggsave("plots/all_visit_analysis_plots.png", grid_arrangement, width = 14, heigh
 # Save all plots
 # Save individual plots
 ggsave("plots/interval_distribution.png", p1, width = 8, height = 6)
-ggsave("plots/baseline_distribution.png", p2, width = 8, height = 6)
+ggsave("plots/baseline_distribution.png", p2_color, width = 8, height = 6)
 ggsave("plots/interval_by_visit_type.png", p3, width = 10, height = 6)
+ggsave("plots/interval_by_visit.png", p33, width = 10, height = 6)
+
 ggsave("plots/baseline_by_visit_number.png", p4, width = 8, height = 6)
 ggsave("plots/interval_by_visit_number.png", p5, width = 8, height = 6)
 ggsave("plots/collection_dates_heatmap.png", p6, width = 8, height = 6)

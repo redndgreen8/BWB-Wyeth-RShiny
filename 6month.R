@@ -84,7 +84,6 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
   
   return(lineChart)
 }
-chartStartE(df.enroll, df.DxDate, "location")
 
 getLineChartEveryoneQ <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = format(Sys.Date(), "%Y-%m")) {
   # Merge the dataframes
@@ -315,3 +314,6 @@ lineC <- getLineChartPublicationReady(
  return(lineC)
 }
 chartStartE
+
+
+chartStartE(df.enroll, df.DxDate, "location")
