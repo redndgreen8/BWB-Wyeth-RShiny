@@ -2,6 +2,11 @@
 library(lubridate)
 library(patchwork)
 
+
+source("EnrolmentFancy.R")
+
+
+
 df.DxDate <- plt$df.DxDate
 #df.DxDate <- df.DxDa
 
@@ -314,4 +319,5 @@ lineC <- getLineChartPublicationReady(
   )
  return(lineC)
 }
+chartStartE(df.enroll, df.DxDate, "location")
 chartStartE

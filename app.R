@@ -158,6 +158,8 @@ server <- function(input, output, session) {
   source("str_list.R")
   source("retention.R")
   source("6month.R")
+  source("collectionTimeStats.R")
+  
   # Define the directory path
   .dir <- "~/Documents/" 
   
@@ -253,9 +255,8 @@ server <- function(input, output, session) {
     endDate <- input$dateRange1[2]
     tryCatch({
       selectedColumn <- input$selectedColumnEA
-      
-     # Diag <- getYrSinceDiagnosis(dx_str, clin)
-      Diag <- getEarliestConsentDate(dx_strFull)
+      # Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getEarliestConsentDate(dx_str)
       chart <- getLineChartEveryone(PC, Diag, selectedColumn)
 #      chart <- getLineChartEveryone(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)
@@ -272,7 +273,7 @@ server <- function(input, output, session) {
     endDate <- input$dateRange2[2]
     tryCatch({
       #Diag <- getYrSinceDiagnosis(dx_str, clin)
-      Diag <- getEarliestConsentDate(dx_strFull)
+      Diag <- getEarliestConsentDate(dx_str)
       chart <- getLineChart(PC, Diag, "Race")
 #      chart <- getLineChart(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)

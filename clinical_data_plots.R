@@ -3,31 +3,36 @@ library(tidyverse)
 library(ggrepel)
 source("theme_DB.R")
 source("str_list.R")
-
+source("collectionTimeStats.R")
 .dir <- "~/Documents/" 
 
 
-getClinDatSimple <- function(master_str) {
-  cd <- read.csv(paste0( master_str))
+getClinDatSimple <- function(master_str, mc.cores = 8) {
+  # Step 1: Read and clean the data
+  cd <- read.csv(paste0(master_str))
   cd[cd == ""] <- NA
+  
+  # Process RS field into RS2
   cd$RS2 <- strsplit(cd$RS, ", ") |> 
     purrr::map(function(x) {
       x <- x[!is.na(x)]
-      if (length(x) == 0) return(NA)
+      if (length(x) == 0) return(NA)  # Early return - keep this
       x <- trimws(x)
       x <- x[order(x)]
-      return(paste0(x, collapse = ", "))
+      paste0(x, collapse = ", ")  # Last expression is implicitly returned
     }) |> unlist()
   
+  # Split by StudyID and process each group
   cd <- split(cd, cd$StudyID)
   cd.u <- mclapply(cd, function(x) {
-    z <- lapply(x, function(y) {
+    # This function still returns z implicitly at the end
+    lapply(x, function(y) {
       y <- trimws(y)
       y <- y[!is.na(y)]
-      if (length(y) == 0) return(NA)
+      if (length(y) == 0) return(NA)  # Early return - keep this
       u <- unique(y)
-      if (length(u) == 1) return(u)
-      else return(paste0(u, collapse = "; "))
+      if (length(u) == 1) return(u)  # Early return - keep this
+      else paste0(u, collapse = "; ")  # Last expression is implicitly returned
     }) |> 
       dplyr::bind_cols() |> 
       dplyr::mutate(SurgicalHistoryNumber = as.character(SurgicalHistoryNumber), 
@@ -43,9 +48,44 @@ getClinDatSimple <- function(master_str) {
                     TumorSizeAtBiopsy = as.character(TumorSizeAtBiopsy),
                     ERStainingIntensity = as.character(ERStainingIntensity),
                     PRStainingIntensity = as.character(PRStainingIntensity))
-    return(z)
-  }, mc.cores = 8) |> dplyr::bind_rows()
-  return(cd.u)
+    # The result of the dplyr::mutate call is implicitly returned
+  }, mc.cores = mc.cores) |> dplyr::bind_rows()
+  
+  # Step 2: Additional processing (from getclind2)
+  cd.final <- cd.u %>%
+    dplyr::mutate(
+      RS2 = ifelse(is.na(RS2), "UNKNOWN", RS2),
+      RS2 = ifelse(grepl(";", RS2), "MULTIFOCAL", RS2),
+      ER_Pos = grepl("ER\\+", RS2),
+      PR_Pos = grepl("PR\\+", RS2),
+      HER2_Pos = grepl("HER2\\+", RS2),
+      ER_Neg = grepl("ER\\-", RS2),
+      PR_Neg = grepl("PR\\-", RS2),
+      HER2_Neg = grepl("HER2\\-", RS2),
+      RS3 = dplyr::case_when(
+        ER_Pos & PR_Pos & HER2_Pos ~ "Triple Positive",
+        (ER_Pos | PR_Pos) & HER2_Pos ~ "Triple Positive",      
+        ER_Neg & PR_Neg & HER2_Neg ~ "Triple Negative",
+        (ER_Pos | PR_Pos) & HER2_Neg ~ "HR+/HER2-",
+        ER_Neg & PR_Neg & HER2_Pos ~ "HR-/HER2+",
+        RS2 == "MULTIFOCAL" ~ "MULTIFOCAL",
+        TRUE ~ "UNKNOWN"
+      )
+    )
+  
+  # Process BreastCancerDiagnosisDate
+  cd.final <- cd.final %>%
+    dplyr::mutate(BreastCancerDiagnosisDate = stringr::str_extract_all(BreastCancerDiagnosisDate, "\\d{1,2}/\\d{1,2}/\\d{4}") %>%
+                    lapply(function(dates) {
+                      if (length(dates) == 0) return(NA)  # Early return - keep this
+                      parsed_dates <- lubridate::mdy(dates)
+                      if (all(is.na(parsed_dates))) return(NA)  # Early return - keep this
+                      format(max(parsed_dates, na.rm = TRUE), "%Y-%m-%d")  # Last expression is implicitly returned
+                    }) %>%
+                    unlist())
+  
+  # The final return for the main function
+  return(cd.final)
 }
 #clin_str <- "MasterList_Clinical Information_3.19.24.csv"
 #clind <- getClinDatSimple(clin_str)
@@ -127,33 +167,10 @@ getClinMissing <-function(clind) {
 
 getClinPie <- function(clind) {
   
-  df <- clind %>%
-    mutate(RS2 = ifelse(is.na(RS2), "UNKNOWN", RS2),
-           RS2 = ifelse(grepl(";", RS2), "MULTIFOCAL", RS2))
+
     
-  df <- df %>%  
-    select(StudyID, RS2)
-  
-  df <- df %>%
-    mutate(
-      ER_Pos = grepl("ER\\+", RS2),
-      PR_Pos = grepl("PR\\+", RS2),
-      HER2_Pos = grepl("HER2\\+", RS2),
-      ER_Neg = grepl("ER\\-", RS2),
-      PR_Neg = grepl("PR\\-", RS2),
-      HER2_Neg = grepl("HER2\\-", RS2))
-  
-  df <- df %>%
-    mutate(RS3 = case_when(
-      ER_Pos & PR_Pos & HER2_Pos ~ "Triple Positive",
-      (ER_Pos | PR_Pos) & HER2_Pos ~ "Triple Positive",      
-      ER_Neg & PR_Neg & HER2_Neg ~ "Triple Negative",
-      (ER_Pos | PR_Pos) & HER2_Neg ~ "HR+/HER2-",
-      ER_Neg & PR_Neg & HER2_Pos ~ "HR-/HER2+",
-      RS2 == "MULTIFOCAL" ~ "MULTIFOCAL",
-      TRUE ~ "UNKNOWN"
-    )) 
-  
+  df <- clind %>%  
+    select(StudyID, RS3)
   
   df <- df %>%
     filter(RS3 != "UNKNOWN") %>%
@@ -226,13 +243,21 @@ getEarliestConsentDate <- function(dx_str){
                              is.na(dateconsentsignedbypt_v2sp) & 
                              is.na(dateconsentsignedbypt_ch_v1) & 
                              is.na(dateconsentsignedbypt_ko_v1) &
-                             is.na(dtconsentsignedbypt_sp_v2))
+                             is.na(dtconsentsignedbypt_sp_v2)& 
+                             is.na(dateconsentsignedbypt_v5) & 
+                             is.na(dateconsentsignedbypt_v2sp_v3) & 
+                             is.na(dateconsentsignedbypt_ch_v1_v2) &
+                             is.na(dateconsentsignedbypt_ko_v1_v2))
   df.DxDa <- cd %>%
     mutate(
       dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
       dateconsentsignedbypt_v2 = as.Date(dateconsentsignedbypt_v2),
       dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
       dateconsentsignedbypt_v4 = as.Date(dateconsentsignedbypt_v4),
+      dateconsentsignedbypt_v5 = as.Date(dateconsentsignedbypt_v5),
+      dateconsentsignedbypt_v2sp_v3 = as.Date(dateconsentsignedbypt_v2sp_v3),
+      dateconsentsignedbypt_ch_v1_v2 = as.Date(dateconsentsignedbypt_ch_v1_v2),
+      dateconsentsignedbypt_ko_v1_v2 = as.Date(dateconsentsignedbypt_ko_v1_v2),
       dateconsentsignedbypt_v2sp = as.Date(dateconsentsignedbypt_v2sp),
       dateconsentsignedbypt_ch_v1 = as.Date(dateconsentsignedbypt_ch_v1),
       dateconsentsignedbypt_ko_v1 = as.Date(dateconsentsignedbypt_ko_v1),
@@ -250,68 +275,37 @@ getEarliestConsentDate <- function(dx_str){
 }
 #Diag <- getEarliestConsentDate(dx_str)
 
+DF <- getDF(merged_full)
 
-getYrSinceDiagnosis <- function(dx_str, clind) {
-  cd <- read.csv(paste0( dx_str))
-  cd[cd == ""] <- NA
-  # Process cd (file_df)
-  na_rows <- cd %>% filter(is.na(dateconsentsignedbypt) & 
-                             is.na(dateconsentsignedbypt_v2) & 
-                             is.na(dateconsentsignedbypt_v2_v3) & 
-                             is.na(dateconsentsignedbypt_v4) & 
-                             is.na(dateconsentsignedbypt_v2sp) & 
-                             is.na(dateconsentsignedbypt_ch_v1) & 
-                             is.na(dateconsentsignedbypt_ko_v1) &
-                             is.na(dtconsentsignedbypt_sp_v2))
-  df.DxDa <- cd %>%
-    mutate(
-      dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
-      dateconsentsignedbypt_v2 = as.Date(dateconsentsignedbypt_v2),
-      dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
-      dateconsentsignedbypt_v4 = as.Date(dateconsentsignedbypt_v4),
-      dateconsentsignedbypt_v2sp = as.Date(dateconsentsignedbypt_v2sp),
-      dateconsentsignedbypt_ch_v1 = as.Date(dateconsentsignedbypt_ch_v1),
-      dateconsentsignedbypt_ko_v1 = as.Date(dateconsentsignedbypt_ko_v1),
-      dtconsentsignedbypt_sp_v2 = as.Date(dtconsentsignedbypt_sp_v2),
-      EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, 
-                                 dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,
-                                 dateconsentsignedbypt_v2sp,dtconsentsignedbypt_sp_v2,
-                                 dateconsentsignedbypt_ch_v1, dateconsentsignedbypt_ko_v1,
-                                 na.rm = TRUE),
-      breastcancerdiagdate = as.Date(breastcancerdiagdate)
-    ) %>%
-    filter(!is.na(EarliestConsentDate))
-  
-  # Process clindat (df)
-  multiple_dates_df <- clind %>%
-    select(StudyID, BreastCancerDiagnosisDate) %>%
-    mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
-    filter(sapply(SplitDates, length) > 1)
-  write.csv(multiple_dates_df$StudyID, file = "out/multiple_dx.txt", row.names = FALSE)
-  
-  clind <- clind %>%
-    select(StudyID, BreastCancerDiagnosisDate) %>%
-    mutate(SplitDates = strsplit(BreastCancerDiagnosisDate, ";")) %>%
-    filter(sapply(SplitDates, length) <= 1)
-  
+getYrSinceDiagnosis <- function(dx_str, clind, DF) {
+  df.DxDa <- getEarliestConsentDate(dx_str)
+  df.DxDa <- df.DxDa %>% 
+    select(-dateconsentsignedbypt, -dateconsentsignedbypt_v2, 
+           -dateconsentsignedbypt_v2_v3, -dateconsentsignedbypt_v4,
+           -dateconsentsignedbypt_v2sp,-dtconsentsignedbypt_sp_v2,
+           -dateconsentsignedbypt_ch_v1, -dateconsentsignedbypt_ko_v1,
+           -dateconsentsignedbypt_v5, -dateconsentsignedbypt_v2sp_v3, 
+           -dateconsentsignedbypt_ch_v1_v2, -dateconsentsignedbypt_ko_v1_v2) 
+
   # Left join cd and clindat
-  joined_df <- merge(df.DxDa, clind, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
+  joined_df0 <- merge(df.DxDa, clind, by.x = "bcsbusername", by.y = "StudyID", all.x = TRUE)
   
 #  write.csv(joined_df, file = "out/Dx_joined_Consent.txt", row.names = FALSE)
+  OS_joined <- merge( joined_df0,DF, by.y = "Participant_PPID", by.x = "bcsbusername")
   
   
   
   # Address NA in diagnosisdate
-  joined_df <- joined_df %>%
-    mutate(BreastCancerDiagnosisDate = as.Date(BreastCancerDiagnosisDate, format = "%m/%d/%Y"),
-      diagnosisdate = ifelse(is.na(BreastCancerDiagnosisDate), breastcancerdiagdate, BreastCancerDiagnosisDate),
-      diagnosisdate = as.Date(diagnosisdate)) %>%
-    filter(!is.na(diagnosisdate))
+  #joined_df <- OS_joined %>%
+  #  mutate(BreastCancerDiagnosisDate = as.Date(BreastCancerDiagnosisDate, format = "%m/%d/%Y"),
+  #    diagnosisdate = ifelse(is.na(BreastCancerDiagnosisDate), BreastCancerDiagnosisDate, BreastCancerDiagnosisDate),
+  #    diagnosisdate = as.Date(diagnosisdate)) %>%
+  #  filter(!is.na(diagnosisdate))
   
   # Calculate years since diagnosis
-  joined_df <- joined_df %>%
+  joined_df <- OS_joined %>%
     mutate(
-      Days.since.Dx = EarliestConsentDate - diagnosisdate,
+      Days.since.Dx = as.Date(Baseline_Date) - as.Date(BreastCancerDiagnosisDate, format = "%Y-%m-%d"),
       Years.since.Dx = floor(Days.since.Dx / 365.25),
       Years.since.Dx2 = ifelse(Years.since.Dx > 6, "7+", as.character(Years.since.Dx)),
       lab = paste0(Years.since.Dx2, " YEARS")) %>%
@@ -374,7 +368,7 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
           plot.title = element_text(hjust = 0.5),  
           plot.subtitle = element_text(hjust = 0.5)) +
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
-    ggtitle("Years since diagnosis to Consent date") +   #
+    ggtitle("Years since diagnosis to Blood Draw date") +   #
     labs(subtitle = "Data for participants on study who have completed Baseline Session, 
          signed consent and completed surveys. 
          (blood sample and/or clinical data may be pending)")
@@ -400,14 +394,29 @@ getYrSinceDiagnosis <- function(dx_str, clind) {
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
   
   #print(gp2)
-  return(list(noConsent = na_rows, outlier_days = outlier_days_since_dx, multiple_dates = multiple_dates_df, df.DxDate = joined_df, gp = gp, gp2 = gp2))
+  
+  # Round to bin and group
+  summary_df <- joined_df %>%
+    mutate(bin = cut(Days.since.Dx, breaks = seq(0, 3652.5, by = days_in_year), include.lowest = TRUE)) %>%
+    group_by(bin, Visit_Type) %>%
+    summarise(count = n(), .groups = "drop")
+  
+  # Plot using geom_col (manual histogram)
+  gp3 <- ggplot(summary_df, aes(x = bin, y = count, fill = Visit_Type)) +
+    geom_col(position = "stack", color = "black") +
+    ylab("Number of Patients") +
+    xlab("Years Since Diagnosis") +
+    theme_DB(bold.axis.title = TRUE, grid.x = TRUE, rotate.x = TRUE)
+  #gp3
+  
+  return(list(outlier_days = outlier_days_since_dx,  df.DxDate = joined_df, gp = gp, gp2 = gp2, summary= summary_df, gp3=gp3))
 
 }
 
 
-write_csv(clind,"out/BWB-BCSB-clind_subtype_unconsolidated.matrix.csv")
+write_csv(clind,"out/BWB-BCSB-clind_subtype_consolidated.matrix.csv")
 
-plt <- getYrSinceDiagnosis(dx_str, clind)
+plt <- getYrSinceDiagnosis(dx_str, clind, DF)
 #plt$gp
 #plt$gp2
 write_csv(plt$df.DxDate,"out/BWB-BCSB-enrolled-diagnosis_date.matrix.csv")
