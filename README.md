@@ -16,15 +16,14 @@ The pipeline uses the following input files (automatically mathces the prefix in
 - `MasterList` - Master registry from CAFÉ DSCi database
 
 ## Repository Structure
-
-├── input/
-├── out/
-├── plots/
-├── rsconnect/
-├── [scripts].R
-├── README.md
-
-
+```
+├── input/      # Input data files
+├── out/        # Output files
+├── plots/      # Generated figures
+├── rsconnect/  # R Shiny app deployment
+├── [scripts].R # All scripts
+├── README.md   # Documentation
+```
 ## Usage
 
 Clone the repository and run the scripts from the main directory.
