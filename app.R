@@ -158,6 +158,8 @@ server <- function(input, output, session) {
   source("str_list.R")
   source("retention.R")
   source("6month.R")
+  source("collectionTimeStats.R")
+  
   # Define the directory path
   .dir <- "~/Documents/" 
   
@@ -174,6 +176,19 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
+  
+  
+  processedOSData <- reactive({
+    tryCatch({
+      DF <- getDFBaseline(merged_full)
+      return(DF)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing OpenSpecimen data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
   
   # Reactive expression for processing eligibility data
   processedData <- reactive({
@@ -198,9 +213,7 @@ server <- function(input, output, session) {
     #req(input$clinFileInput) 
     #clinFile <- input$clinFileInput
     tryCatch({
-      clin_dat <- getClinDatSimple(master_str) %>%
-        dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
-                                        tryFormats = "%m/%d/%Y"))
+      clin_dat <- getClinDatSimple(master_str)
       return(clin_dat)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
@@ -208,6 +221,7 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
+    
   
   processedEnroll <- reactive({
     tryCatch({
@@ -253,9 +267,8 @@ server <- function(input, output, session) {
     endDate <- input$dateRange1[2]
     tryCatch({
       selectedColumn <- input$selectedColumnEA
-      
-     # Diag <- getYrSinceDiagnosis(dx_str, clin)
-      Diag <- getEarliestConsentDate(dx_strFull)
+      # Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getEarliestConsentDate(dx_str)
       chart <- getLineChartEveryone(PC, Diag, selectedColumn)
 #      chart <- getLineChartEveryone(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)
@@ -272,7 +285,7 @@ server <- function(input, output, session) {
     endDate <- input$dateRange2[2]
     tryCatch({
       #Diag <- getYrSinceDiagnosis(dx_str, clin)
-      Diag <- getEarliestConsentDate(dx_strFull)
+      Diag <- getEarliestConsentDate(dx_str)
       chart <- getLineChart(PC, Diag, "Race")
 #      chart <- getLineChart(PC, Diag$df.DxDate, "Race", startDate, endDate)
       return(chart)
@@ -332,8 +345,9 @@ server <- function(input, output, session) {
   
   output$histChartDiag <- renderPlot({
     clin <- req(processedClinData())
+    DFOS <- req(processedOSData())
     tryCatch({
-      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getYrSinceDiagnosis(dx_str, clin, DFOS)
       return(Diag$gp)
     }, error = function(e) {
       shiny::showNotification(paste("Error plotting Diag 1 data:", e$message), type = "error")
@@ -344,8 +358,9 @@ server <- function(input, output, session) {
   
   output$pieChartDiag <- renderPlot({
     clin <- req(processedClinData())
+    DFOS <- req(processedOSData())
     tryCatch({
-      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getYrSinceDiagnosis(dx_str, clin, DFOS)
       return(Diag$gp2)
     }, error = function(e) {
       shiny::showNotification(paste("Error plotting Diag 2 data:", e$message), type = "error")

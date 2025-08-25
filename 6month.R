@@ -2,9 +2,15 @@
 library(lubridate)
 library(patchwork)
 
+source("clinical_data_plots.R")
+
+
+plt <- getYrSinceDiagnosis(dx_str, clind, DF)
+
 df.DxDate <- plt$df.DxDate
 #df.DxDate <- df.DxDa
 
+#issue with multple earliest consent
 enrollField <- "Race"
 
 getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = format(Sys.Date(), "%Y-%m")) {
@@ -84,6 +90,8 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
   
   return(lineChart)
 }
+#chartStartE(df.enroll, df.DxDate, "location")
+
 
 getLineChartEveryoneQ <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = format(Sys.Date(), "%Y-%m")) {
   # Merge the dataframes
@@ -287,33 +295,36 @@ getLineChart <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05
 #chart6month <- getLineChart(df.enroll, df.DxDate, "Race", "2022-05", "2024-07")
 #chart6month
 
-chartStart <- getLineChart(df.enroll, df.DxDate, "Race")
-chartStart
+#chartStart <- getLineChart(df.enroll, df.DxDate, "Race")
+#chartStart
 
 
 
 chartStartE <- function(df.enroll, df.DxDate, fields){
   df.enroll <- df.enroll %>%
     mutate(location = ifelse( location == "Web", location, "Clinic"))
-  
-lineC <- getLineChartPublicationReady(
-    df.enroll = df.enroll,
-    df.DxDate = df.DxDate,
-    enrollField = "location",
-    startDate = "2022-05",
-    endDate = "2025-05",
-    plot_title = "Monthly Enrollment by Location",
-    color_palette = "viridis",
-    x_interval = 2,                    # Show every 2nd month on x-axis
-    legend_position = "right",
-    output_file = "plots/enrollment_by_loc",
-    output_format = "pdf",
-    width = 10,
-    height = 6
-  )
- return(lineC)
 }
-chartStartE
+
+#lineC <- getLineChartPublicationReady(
+#    df.enroll = df.enroll,
+#    df.DxDate = df.DxDate,
+#    enrollField = "location",
+#    startDate = "2022-05",
+#    endDate = "2025-05",
+#    plot_title = "Monthly Enrollment by Location",
+#    color_palette = "viridis",
+#    x_interval = 2,                    # Show every 2nd month on x-axis
+#    legend_position = "right",
+#    output_file = "plots/enrollment_by_loc",
+#    output_format = "pdf",
+#    width = 10,
+#    height = 6
+#  )
+# return(lineC)
+
+#chartStartE(df.enroll, df.DxDate, "location")
+#chartStartE
+#chartStartE
 
 
-chartStartE(df.enroll, df.DxDate, "location")
+#chartStartE(df.enroll, df.DxDate, "location")
