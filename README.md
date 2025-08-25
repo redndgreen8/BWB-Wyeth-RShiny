@@ -26,4 +26,4 @@ The pipeline uses the following input files (automatically mathces the prefix in
 ```
 ## Usage
 
-Clone the repository and run the scripts from the main directory.
+Clone the repository and run the app.R script from the main directory, in Rstudio.
