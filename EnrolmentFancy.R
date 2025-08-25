@@ -1,3 +1,16 @@
+
+
+  
+  # Load required libraries
+  require(dplyr)
+  require(ggplot2)
+  require(scales)
+  require(viridis)
+  require(lubridate)
+  
+
+
+
 getLineChartPublicationReady <- function(df.enroll, 
                                          df.DxDate, 
                                          enrollField, 
@@ -19,14 +32,7 @@ getLineChartPublicationReady <- function(df.enroll,
                                          height = 6,
                                          dpi = 600,
                                          output_format = "png") {
-  
-  # Load required libraries
-  require(dplyr)
-  require(ggplot2)
-  require(scales)
-  require(viridis)
-  require(lubridate)
-  
+
   # Error handling
   if (!is.data.frame(df.enroll) || !is.data.frame(df.DxDate)) {
     stop("Input arguments must be data frames")
@@ -44,7 +50,7 @@ getLineChartPublicationReady <- function(df.enroll,
   })
   
   # Convert 'EarliestConsentDate' to date format
-  df.merged$EarliestConsentDate <- as.Date(df.merged$EarliestConsentDate)
+  df.merged$EarliestConsentDate <- as.Date(df.merged$EarliestConsentDate.xx)
   
   # Extract the year and month from 'EarliestConsentDate'
   df.merged$YearMonth <- format(df.merged$EarliestConsentDate, "%Y-%m")
@@ -262,23 +268,24 @@ getLineChartPublicationReady <- function(df.enroll,
   
   return(lineChart)
 }
-df.enroll <- df.enroll %>%
-  mutate(location = ifelse( location == "Web", location, "Clinic"))
-(getLineChartPublicationReady(
-  df.enroll = df.enroll,
-  df.DxDate = df.DxDate,
-  enrollField = "location",
-  startDate = "2022-05",
-  endDate = "2025-05",
-  plot_title = "Monthly Enrollment by Location",
-  color_palette = "viridis",
-  x_interval = 2,                    # Show every 2nd month on x-axis
-  legend_position = "right",
-  output_file = "plots/enrollment_by_race",
-  output_format = "png",
-  width = 10,
-  height = 6
-))
+#df.enroll <- df.enroll %>%
+#  mutate(location = ifelse( location == "Web", location, "Clinic"))
+
+#(getLineChartPublicationReady(
+#  df.enroll = df.enroll,
+#  df.DxDate = df.DxDate,
+#  enrollField = "location",
+#  startDate = "2022-05",
+#  endDate = "2025-05",
+#  plot_title = "Monthly Enrollment by Location",
+#  color_palette = "viridis",
+#  x_interval = 2,                    # Show every 2nd month on x-axis
+#  legend_position = "right",
+#  output_file = "plots/enrollment_by_race",
+#  output_format = "png",
+#  width = 10,
+#  height = 6
+#))
 # Example usage:
 # getLineChartPublicationReady(
 #   df.enroll = enrollment_data, 

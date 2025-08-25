@@ -195,6 +195,24 @@ getDF <- function(merged_full){
 return(DF)
   }
 
+getDFBaseline <- function(merged_full){
+  DF <- merged_full %>%
+    mutate(
+      Time_From_Baseline_Days = case_when(
+        Primary_Visit_Type == "Baseline" ~ as.numeric(difftime(Baseline_Date, EarliestConsentDate, units = "days")),
+        TRUE ~ Time_From_Baseline_Days  # Keep existing values for non-baseline visits
+      ),
+      Interval_Days = case_when(
+        Primary_Visit_Type == "Baseline" ~ as.numeric(difftime(Baseline_Date, EarliestConsentDate, units = "days")),
+        TRUE ~ Interval_Days  # Keep existing values for non-baseline visits
+      ),
+      Participant_PPID = paste0("BCSB", sprintf("%04s", Participant_PPID))  
+    ) %>%
+    # Filter to keep only rows where Visit_Event Label is "Baseline"
+    filter(`Visit_Event Label` == "Baseline")
+  return(DF)
+}
+
 DF <- getDF(merged_full)
 
 #full DF, part X of full super matrix

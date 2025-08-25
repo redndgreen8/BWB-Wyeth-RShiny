@@ -177,6 +177,19 @@ server <- function(input, output, session) {
     })
   })
   
+  
+  processedOSData <- reactive({
+    tryCatch({
+      DF <- getDFBaseline(merged_full)
+      return(DF)
+    }, error = function(e) {
+      # Return NULL or a default value if there's an error
+      shiny::showNotification(paste("Error processing OpenSpecimen data:", e$message), type = "error")
+      return(NULL)
+    })
+  })
+  
+  
   # Reactive expression for processing eligibility data
   processedData <- reactive({
     tryCatch({
@@ -200,9 +213,7 @@ server <- function(input, output, session) {
     #req(input$clinFileInput) 
     #clinFile <- input$clinFileInput
     tryCatch({
-      clin_dat <- getClinDatSimple(master_str) %>%
-        dplyr::mutate(date.Dx = as.Date(gsub("; .*", "", BreastCancerDiagnosisDate),
-                                        tryFormats = "%m/%d/%Y"))
+      clin_dat <- getClinDatSimple(master_str)
       return(clin_dat)
     }, error = function(e) {
       # Return NULL or a default value if there's an error
@@ -210,6 +221,7 @@ server <- function(input, output, session) {
       return(NULL)
     })
   })
+    
   
   processedEnroll <- reactive({
     tryCatch({
@@ -333,8 +345,9 @@ server <- function(input, output, session) {
   
   output$histChartDiag <- renderPlot({
     clin <- req(processedClinData())
+    DFOS <- req(processedOSData())
     tryCatch({
-      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getYrSinceDiagnosis(dx_str, clin, DFOS)
       return(Diag$gp)
     }, error = function(e) {
       shiny::showNotification(paste("Error plotting Diag 1 data:", e$message), type = "error")
@@ -345,8 +358,9 @@ server <- function(input, output, session) {
   
   output$pieChartDiag <- renderPlot({
     clin <- req(processedClinData())
+    DFOS <- req(processedOSData())
     tryCatch({
-      Diag <- getYrSinceDiagnosis(dx_str, clin)
+      Diag <- getYrSinceDiagnosis(dx_str, clin, DFOS)
       return(Diag$gp2)
     }, error = function(e) {
       shiny::showNotification(paste("Error plotting Diag 2 data:", e$message), type = "error")
