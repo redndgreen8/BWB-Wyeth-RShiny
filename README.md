@@ -17,12 +17,12 @@ The pipeline uses the following input files (automatically mathces the prefix in
 
 ## Repository Structure
 
-├── input/                 # Input data files
-├── out/                   # Output files
-├── plots/                 # Generated figures
-├── rsconnect/             # R Shiny app deployment
-├── [scripts].R            # All scripts
-├── README.md              # Documentation
+├── input/
+├── out/
+├── plots/
+├── rsconnect/
+├── [scripts].R
+├── README.md
 
 
 ## Usage
