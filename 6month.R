@@ -92,6 +92,7 @@ getLineChartEveryone <- function(df.enroll, df.DxDate, enrollField, startDate = 
 }
 #chartStartE(df.enroll, df.DxDate, "location")
 
+
 getLineChartEveryoneQ <- function(df.enroll, df.DxDate, enrollField, startDate = "2022-05", endDate = format(Sys.Date(), "%Y-%m")) {
   # Merge the dataframes
   df.merged <- inner_join(df.enroll, df.DxDate, by = c("ID" = "bcsbusername"))
@@ -323,3 +324,7 @@ chartStartE <- function(df.enroll, df.DxDate, fields){
 
 #chartStartE(df.enroll, df.DxDate, "location")
 #chartStartE
+#chartStartE
+
+
+#chartStartE(df.enroll, df.DxDate, "location")

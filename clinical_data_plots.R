@@ -102,6 +102,44 @@ getClinDatSimple <- function(master_str, mc.cores = 8) {
 #missing_clin <- getClinMissing(clind)
 
 
+clind <- getClinDatSimple(master_str)
+
+
+getclind2 <- function(clind){
+  clind2 <- clind %>%
+    mutate(RS2 = ifelse(is.na(RS2), "UNKNOWN", RS2),
+           RS2 = ifelse(grepl(";", RS2), "MULTIFOCAL", RS2),
+           ER_Pos = grepl("ER\\+", RS2),
+           PR_Pos = grepl("PR\\+", RS2),
+           HER2_Pos = grepl("HER2\\+", RS2),
+           ER_Neg = grepl("ER\\-", RS2),
+           PR_Neg = grepl("PR\\-", RS2),
+           HER2_Neg = grepl("HER2\\-", RS2),
+           RS3 = case_when(
+             ER_Pos & PR_Pos & HER2_Pos ~ "Triple Positive",
+             (ER_Pos | PR_Pos) & HER2_Pos ~ "Triple Positive",      
+             ER_Neg & PR_Neg & HER2_Neg ~ "Triple Negative",
+             (ER_Pos | PR_Pos) & HER2_Neg ~ "HR+/HER2-",
+             ER_Neg & PR_Neg & HER2_Pos ~ "HR-/HER2+",
+             RS2 == "MULTIFOCAL" ~ "MULTIFOCAL",
+             TRUE ~ "UNKNOWN"
+           )) 
+  
+  clind2 <- clind2 %>%
+    mutate(BreastCancerDiagnosisDate = str_extract_all(BreastCancerDiagnosisDate, "\\d{1,2}/\\d{1,2}/\\d{4}") %>%
+             lapply(function(dates) {
+               if (length(dates) == 0) return(NA)
+               parsed_dates <- mdy(dates)
+               if (all(is.na(parsed_dates))) return(NA)
+               format(max(parsed_dates, na.rm = TRUE), "%Y-%m-%d")
+             }) %>%
+             unlist())
+  
+  return(clind2)
+}
+
+clind2 <- getclind2(clind)
+
 getClinMissing <-function(clind) {
   
   df.missing <- data.frame(ID = clind$StudyID,
@@ -228,9 +266,7 @@ getClinPie <- function(clind) {
 }
 
 
-clind <- getClinDatSimple(master_str)
-subtype <- getClinPie(clind)
-subtype
+
 
 getEarliestConsentDate <- function(dx_str){
   cd <- read.csv(paste0( dx_str))
@@ -302,6 +338,10 @@ getYrSinceDiagnosis <- function(dx_str, clind, DF) {
   #    diagnosisdate = as.Date(diagnosisdate)) %>%
   #  filter(!is.na(diagnosisdate))
   
+
+  
+#  write.csv(joined_df, file = "out/Dx_joined_Consent.txt", row.names = FALSE)
+
   # Calculate years since diagnosis
   joined_df <- OS_joined %>%
     mutate(
@@ -370,10 +410,9 @@ getYrSinceDiagnosis <- function(dx_str, clind, DF) {
     guides(fill = guide_legend(nrow = 2, byrow = T)) +
     ggtitle("Years since diagnosis to Blood Draw date") +   #
     labs(subtitle = "Data for participants on study who have completed Baseline Session, 
-         signed consent and completed surveys. 
-         (blood sample and/or clinical data may be pending)")
+         signed consent and completed surveys.")
 
-  #gp
+  gp
   
   days_in_year <- 365.25
   
@@ -392,9 +431,10 @@ getYrSinceDiagnosis <- function(dx_str, clind, DF) {
     xlab("Years Since Diagnosis") +
     scale_x_continuous(breaks = yearBreaks, labels = names(yearBreaks),  limits = c(0, 3652.5) ) +
     theme_DB(bold.axis.title = T, grid.x = T, rotate.x = T) 
-  
+  gp2
   #print(gp2)
   
+
   # Round to bin and group
   summary_df <- joined_df %>%
     mutate(bin = cut(Days.since.Dx, breaks = seq(0, 3652.5, by = days_in_year), include.lowest = TRUE)) %>%
@@ -417,6 +457,7 @@ getYrSinceDiagnosis <- function(dx_str, clind, DF) {
 write_csv(clind,"out/BWB-BCSB-clind_subtype_consolidated.matrix.csv")
 
 plt <- getYrSinceDiagnosis(dx_str, clind, DF)
+
 #plt$gp
 #plt$gp2
 write_csv(plt$df.DxDate,"out/BWB-BCSB-enrolled-diagnosis_date.matrix.csv")
