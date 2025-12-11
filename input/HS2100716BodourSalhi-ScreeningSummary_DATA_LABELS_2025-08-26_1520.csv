@@ -1,0 +1,1450 @@
+"Study ID: BCSBXXXX [created by Audrey prior to call. XXXX is the REDCap record number with any leading zeros: eg. if REDCap record number is 123 then Study ID is BCSB0123]","What is your Race/Ethnicity?",Clinic,"Disposition flag:","Date/Time Consult Completed:If no contact, record time of first approach. Update later when consult completed.","Participant study activities preference: If no contact, record location of consult","Date of Website Eligibility Survey","In Person Calendly Appt Date/Time","Clinic Appt Date/Time   First approached appt, do not change"
+BCSB0001,White,,Enrolled,"2022-05-17 10:14",In-Person,2022-05-16,"2022-05-25 10:30",
+BCSB0002,White,,Enrolled,"2022-05-17 10:53",Remote,2022-05-16,,
+BCSB0003,White,,Enrolled,"2022-05-17 10:57",In-Person,2022-05-17,"2022-05-31 09:30",
+BCSB0004,"Hispanic or Latinx",,Enrolled,"2022-05-17 11:01",Remote,2022-05-17,,
+BCSB0005,White,,Enrolled,"2022-05-17 11:05",In-Person,2022-05-16,,
+BCSB0006,White,,Enrolled,"2022-05-17 11:46",In-Person,2022-05-16,"2022-05-26 10:30",
+BCSB0007,"Hispanic or Latinx",,Enrolled,"2022-05-17 13:39",In-Person,2022-05-17,,
+BCSB0008,Asian,,Enrolled,"2022-05-18 09:11",In-Person,2022-05-17,"2022-06-01 10:00",
+BCSB0009,White,,Enrolled,"2022-05-18 09:30",In-Person,2022-05-17,"2022-05-24 11:00",
+BCSB0010,White,,Enrolled,"2022-05-18 09:49",In-Person,2022-05-17,"2022-10-12 12:00",
+BCSB0011,"Hispanic or Latinx",,Ineligible,"2022-05-18 12:04",,2022-05-18,,
+BCSB0012,Asian,,Ineligible,"2022-05-18 16:16",,2022-05-18,,
+BCSB0013,White,,Enrolled,"2022-05-19 11:28",Remote,2022-05-19,,
+BCSB0014,White,,Refused,"2022-05-19 11:49",Remote,2022-05-18,,
+BCSB0015,"Hispanic or Latinx",,Enrolled,"2022-05-19 12:15",Remote,2022-05-16,,
+BCSB0016,"Hispanic or Latinx",,Enrolled,"2022-05-24 09:31",Remote,2022-05-18,,
+BCSB0017,"Hispanic or Latinx",,Enrolled,"2022-05-24 09:47",Hybrid,2022-05-19,"2022-11-30 11:30",
+BCSB0018,White,,Enrolled,"2022-05-24 11:07",Remote,2022-05-20,,
+BCSB0019,"Black or African American",,Refused,"2022-05-24 14:40",In-Person,2022-05-20,,
+BCSB0020,White,,Enrolled,"2022-05-24 15:11",Remote,2022-05-21,,
+BCSB0021,White,,Enrolled,"2022-05-24 15:27",Remote,2022-05-23,,
+BCSB0022,White,,Enrolled,"2022-05-25 09:46",Remote,2022-05-16,,
+BCSB0023,"Hispanic or Latinx",,Enrolled,"2022-05-25 13:47",In-Person,2022-05-24,"2022-07-20 12:30",
+BCSB0024,Asian,,Enrolled,"2022-05-25 15:04",In-Person,2022-05-25,"2022-06-22 12:30",
+BCSB0025,White,,Enrolled,"2022-05-26 09:48",In-Person,2022-05-16,"2022-06-08 11:00",
+BCSB0026,White,,Enrolled,"2022-05-26 13:45",In-Person,2022-05-23,"2022-06-14 11:00",
+BCSB0027,White,,Enrolled,"2022-05-26 14:13",Remote,2022-05-18,,
+BCSB0028,"Hispanic or Latinx",,Enrolled,"2022-10-06 09:36",In-Person,2022-10-04,,
+BCSB0029,White,,Enrolled,"2022-05-31 09:30",In-Person,2022-05-27,"2022-06-01 13:00",
+BCSB0030,White,,Enrolled,"2022-05-31 12:51",Remote,2022-05-28,,
+BCSB0031,"Hispanic or Latinx",,Enrolled,"2022-05-31 13:27",Remote,2022-05-27,,
+BCSB0032,White,,Enrolled,"2022-05-31 14:41",Remote,2022-05-27,,
+BCSB0033,White,,Enrolled,"2022-06-01 09:13",Remote,2022-05-31,,
+BCSB0034,White,,Enrolled,"2022-06-01 09:34",Remote,2022-05-28,,
+BCSB0035,White,,Enrolled,"2022-06-02 09:30",Remote,2022-06-02,,
+BCSB0036,White,,Enrolled,"2022-06-02 15:16",In-Person,2022-05-27,"2022-06-30 15:30",
+BCSB0037,White,,Enrolled,"2022-06-07 09:13",In-Person,2022-06-02,"2022-07-19 09:00",
+BCSB0038,White,,Considering,"2022-06-07 09:35",,2022-06-05,,
+BCSB0039,"Black or African American",,Enrolled,"2022-06-07 10:26",Remote,2022-05-16,,
+BCSB0040,White,,Refused,"2022-06-07 10:47",Remote,2022-06-06,,
+BCSB0041,White,,Enrolled,"2022-06-07 14:11",Remote,2022-06-01,,
+BCSB0042,White,,"Unable to Contact","2023-11-15 12:19",,2022-06-04,,
+BCSB0043,White,,Enrolled,"2022-06-07 14:51",Remote,2022-06-07,,
+BCSB0044,White,,Enrolled,"2022-06-08 09:23",Remote,2022-05-31,,
+BCSB0045,"Hispanic or Latinx",,Enrolled,"2022-06-08 09:39",Remote,2022-06-05,,
+BCSB0046,White,,Enrolled,"2022-06-08 14:02",In-Person,2022-06-06,"2022-06-16 11:30",
+BCSB0047,"Hispanic or Latinx",,"Unable to Contact","2023-11-15 10:30",,2022-06-05,,
+BCSB0048,White,,Enrolled,"2022-06-14 10:02",Remote,2022-06-07,,
+BCSB0049,White,,Enrolled,"2022-06-14 15:06",In-Person,2022-06-07,"2022-06-29 14:00",
+BCSB0050,Asian,,Enrolled,"2022-06-15 09:15",Remote,2022-06-02,,
+BCSB0051,White,,Enrolled,"2022-06-15 11:10",In-Person,2022-06-15,"2022-06-22 10:00",
+BCSB0052,"Black or African American",,Enrolled,"2022-06-16 09:52",In-Person,2022-06-23,"2022-06-23 09:30",
+BCSB0053,Asian,,Enrolled,"2022-06-16 10:37",In-Person,2022-06-16,,
+BCSB0054,White,,Enrolled,"2022-06-16 11:17",Remote,2022-06-15,,
+BCSB0055,Asian,,Enrolled,"2022-06-16 15:44",In-Person,2022-06-15,"2022-06-28 12:30",
+BCSB0056,"Black or African American",,Enrolled,"2022-06-16 16:34",Hybrid,2022-06-16,"2022-07-13 12:30",
+BCSB0057,White,,Enrolled,"2022-06-16 18:01",Remote,2022-06-15,,
+BCSB0058,White,,Enrolled,"2022-06-21 09:43",In-Person,2022-06-17,"2022-06-28 09:30",
+BCSB0059,White,,Enrolled,"2022-06-21 10:12",Remote,2022-07-06,,
+BCSB0060,White,,Enrolled,"2022-06-21 12:42",Remote,2022-06-18,,
+BCSB0061,White,,Enrolled,"2022-06-21 14:41",Remote,2022-05-18,,
+BCSB0062,White,,Enrolled,"2022-06-21 15:10",Remote,2022-06-17,,
+BCSB0063,"Black or African American",,Enrolled,"2022-06-21 15:45",Hybrid,2022-06-15,"2022-11-22 09:00",
+BCSB0064,White,,Enrolled,"2022-06-22 09:21",In-Person,2022-06-15,,
+BCSB0065,White,,Enrolled,"2022-06-28 10:17",Remote,2022-06-24,,
+BCSB0066,Asian,,Enrolled,"2022-06-28 11:21",Hybrid,2022-06-15,"2022-07-21 13:30",
+BCSB0067,"Black or African American",,Considering,"2022-06-28 11:52",Remote,2022-06-27,,
+BCSB0068,"Hispanic or Latinx",,Enrolled,"2022-06-28 15:05",In-Person,2022-06-15,"2022-08-17 11:30",
+BCSB0069,"Hispanic or Latinx",,Enrolled,"2022-06-29 09:13",Remote,2022-06-28,,
+BCSB0070,White,,Considering,"2022-06-29 12:46",Remote,2022-06-28,,
+BCSB0071,White,,Enrolled,"2022-06-15 16:00",In-Person,2022-06-15,"2022-06-30 09:30",
+BCSB0072,White,,Enrolled,"2022-07-19 12:48",In-Person,2022-07-10,"2022-07-26 11:00",
+BCSB0073,"Black or African American",,Enrolled,"2023-04-25 10:28",Remote,2023-04-17,,
+BCSB0074,"American Indian or Alaskan Native",,Enrolled,"2022-07-20 15:47",Remote,2022-07-12,,
+BCSB0075,White,,Enrolled,"2022-07-21 10:17",Remote,2022-07-01,,
+BCSB0076,Asian,,Enrolled,"2023-04-07 12:49",Remote,2022-08-16,,
+BCSB0077,"Hispanic or Latinx",Norris,Enrolled,"2022-07-26 09:13",In-Person,2022-07-21,"2022-08-10 09:00",
+BCSB0078,White,,Enrolled,"2022-07-26 09:42",Remote,2022-07-25,,
+BCSB0079,White,,Enrolled,"2022-07-26 10:20",Remote,2022-07-23,,
+BCSB0080,White,,Enrolled,"2022-07-26 13:31",Remote,2022-07-23,,
+BCSB0081,"Hispanic or Latinx",,Enrolled,"2022-07-26 13:55",Remote,2022-07-24,,
+BCSB0082,White,,Enrolled,"2022-07-26 14:40",Remote,2022-07-24,,
+BCSB0083,White,,Enrolled,"2022-07-26 15:57",Remote,2022-07-25,,
+BCSB0084,White,,Refused,"2022-07-27 09:18",Remote,2022-07-24,,
+BCSB0085,White,,Enrolled,"2022-07-27 10:02",In-Person,2022-07-14,,
+BCSB0086,White,,Enrolled,"2022-07-27 12:34",Remote,2022-06-30,,
+BCSB0087,White,,Refused,"2022-07-27 13:15",Remote,2022-07-25,,
+BCSB0088,White,,Enrolled,"2022-07-27 13:51",Remote,2022-07-25,,
+BCSB0089,White,,Enrolled,"2022-07-28 09:09",Remote,2022-07-23,,
+BCSB0090,White,,Enrolled,"2022-07-28 09:46",In-Person,2022-07-24,"2022-09-06 11:00",
+BCSB0091,White,,Enrolled,"2022-07-28 10:12",Remote,2022-07-24,,
+BCSB0092,White,,Enrolled,"2022-07-28 10:44",Remote,2022-07-24,,
+BCSB0093,White,,Enrolled,"2022-07-28 11:42",Remote,2022-07-28,,
+BCSB0094,White,,Enrolled,"2022-07-28 13:12",Remote,2022-07-23,,
+BCSB0095,White,,Enrolled,"2022-07-28 13:54",Remote,2022-07-24,,
+BCSB0096,"Hispanic or Latinx",,Enrolled,"2022-07-28 14:12",Remote,2022-07-24,,
+BCSB0097,White,,Enrolled,"2022-07-28 14:57",Remote,2022-07-24,,
+BCSB0098,Asian,,Enrolled,"2022-07-28 16:53",Hybrid,2022-07-04,"2022-11-29 11:00",
+BCSB0099,White,,Enrolled,"2022-07-28 17:18",Remote,2022-07-23,,
+BCSB0100,White,,Enrolled,"2022-08-02 10:42",Remote,2022-07-24,,
+BCSB0101,White,,Enrolled,"2022-08-02 11:14",Remote,2022-07-23,,
+BCSB0102,"Hispanic or Latinx",,Enrolled,"2022-08-02 14:16",Remote,2022-07-30,,
+BCSB0103,White,,Enrolled,"2022-08-02 14:41",Remote,2022-07-29,,
+BCSB0104,White,,Enrolled,"2022-08-02 15:45",Remote,2022-07-24,,
+BCSB0105,White,,Enrolled,"2022-08-02 16:12",Remote,2022-07-23,,
+BCSB0106,White,,Enrolled,"2022-08-03 09:13",Remote,2022-07-23,,
+BCSB0107,White,,Enrolled,"2022-08-03 09:44",Remote,2022-07-13,"2022-07-13 13:47",
+BCSB0108,"Hispanic or Latinx",,Enrolled,"2022-08-03 10:14",Remote,2022-08-02,,
+BCSB0109,White,,Enrolled,"2022-08-04 09:15",Remote,2022-06-24,,
+BCSB0110,White,,Enrolled,"2022-08-04 10:14",Remote,2022-08-04,,
+BCSB0111,"Hispanic or Latinx",,Enrolled,"2022-08-04 11:30",In-Person,2022-07-29,,
+BCSB0112,White,,Enrolled,"2022-08-05 15:59",Remote,2022-08-05,,
+BCSB0113,White,,Enrolled,"2022-08-09 09:47",Remote,2022-08-09,,
+BCSB0114,White,,Enrolled,"2022-08-09 10:07",In-Person,2022-08-08,"2022-08-17 09:00",
+BCSB0115,"Prefer not to answer",,Enrolled,"2022-08-09 10:46",In-Person,2022-08-01,"2022-09-08 09:00",
+BCSB0116,White,,Enrolled,"2022-08-10 12:05",Remote,2022-08-08,"2022-09-29 12:15",
+BCSB0117,"Black or African American",,Ineligible,"2022-08-10 16:27",,2022-08-09,,
+BCSB0118,White,,Enrolled,"2022-08-11 10:08",In-Person,2022-08-09,"2022-09-08 11:30",
+BCSB0119,White,,Enrolled,"2022-08-11 15:59",Remote,2022-08-01,,
+BCSB0120,"Hispanic or Latinx",,Enrolled,"2022-08-16 11:21",Remote,2022-08-11,,
+BCSB0121,White,,Considering,"2022-08-16 17:31",Remote,2022-08-12,,
+BCSB0122,White,,Enrolled,"2022-08-18 09:09",In-Person,2022-08-04,"2022-09-07 09:30",
+BCSB0123,Asian,,"Unable to Contact","2022-08-18 00:00",,2022-08-17,,
+BCSB0124,White,,Enrolled,"2022-08-18 11:55",In-Person,2022-08-16,"2022-09-15 12:00",
+BCSB0125,Asian,,Considering,"2022-08-18 15:18",,2022-08-16,,
+BCSB0126,"Hispanic or Latinx",,Enrolled,"2022-08-18 17:10",Hybrid,2022-08-18,"2022-09-15 16:30",
+BCSB0127,White,,Enrolled,"2022-09-06 09:18",Remote,2022-08-31,,
+BCSB0128,White,,Enrolled,"2022-09-06 13:44",In-Person,2022-08-24,"2022-09-22 11:00",
+BCSB0129,White,,Enrolled,"2022-09-13 11:18",In-Person,2022-09-11,,
+BCSB0130,White,,Enrolled,"2022-09-14 17:08",In-Person,2022-09-13,"2022-10-11 15:00",
+BCSB0131,"Black or African American",,Enrolled,"2022-09-20 09:18",In-Person,2022-09-14,"2022-09-28 09:00",
+BCSB0132,White,,Enrolled,"2022-09-21 14:15",In-Person,2022-09-16,"2022-09-27 10:30",
+BCSB0133,White,,Enrolled,"2022-09-22 14:18",Remote,2022-08-25,,
+BCSB0134,White,,Enrolled,"2022-09-27 17:32",Remote,2022-08-29,,
+BCSB0135,"Black or African American",,Enrolled,"2022-09-28 16:09",Remote,2022-09-28,,
+BCSB0136,"Hispanic or Latinx",,Refused,"2022-09-29 10:21",Remote,2022-09-22,,
+BCSB0137,"Hispanic or Latinx",,Enrolled,"2022-10-04 11:15",In-Person,2022-09-15,"2022-10-19 11:30",
+BCSB0138,White,,Refused,"2022-10-04 14:14",Remote,2022-10-04,,
+BCSB0139,White,,Enrolled,"2022-10-25 11:12",Hybrid,2022-10-18,"2022-12-14 08:30",
+BCSB0140,"Black or African American",,Enrolled,"2023-01-05 15:59",Remote,2022-11-30,,
+BCSB0141,White,,Enrolled,"2023-01-04 10:19",In-Person,2022-12-03,"2023-01-17 11:30",
+BCSB0142,"Black or African American",,Refused,"2023-01-11 08:59",,2022-12-07,,
+BCSB0143,White,,Enrolled,"2023-01-25 10:50",Remote,2023-01-24,,
+BCSB0144,"Prefer not to answer",,Enrolled,"2023-01-31 16:45",Remote,2023-01-29,,
+BCSB0145,Asian,,Ineligible,"2023-02-02 09:46",,2023-01-24,,
+BCSB0146,White,,Enrolled,"2023-02-02 11:15",Remote,2023-01-31,,
+BCSB0147,White,,Enrolled,"2023-02-07 15:20",In-Person,2023-02-06,"2023-02-14 10:00",
+BCSB0148,"Hispanic or Latinx",,Enrolled,"2023-02-08 10:11",In-Person,2023-02-02,"2023-04-25 11:00",
+BCSB0149,"Hispanic or Latinx",,Enrolled,"2023-02-16 14:17",Remote,2023-02-15,,
+BCSB0150,"Black or African American",,Refused,"2023-02-21 11:16",In-Person,2023-02-17,"2023-03-08 13:00",
+BCSB0151,"Hispanic or Latinx",,Enrolled,"2023-02-21 11:45",In-Person,2023-02-05,"2023-03-23 10:30",
+BCSB0152,White,,Enrolled,"2023-02-28 11:00",In-Person,2023-02-27,"2023-03-21 10:30",
+BCSB0153,White,,Refused,"2023-02-28 15:00",In-Person,2023-02-23,,
+BCSB0154,White,,Enrolled,"2023-03-03 15:45",In-Person,2023-03-01,"2023-03-07 10:00",
+BCSB0155,White,,Enrolled,"2023-03-07 09:15",In-Person,2023-03-05,"2023-03-15 11:00",
+BCSB0156,White,,Refused,"2023-03-09 09:05",,2023-02-26,,
+BCSB0157,"Hispanic or Latinx",,"Unable to Contact","2023-03-09 13:45",,2023-03-01,,
+BCSB0158,Asian,,Enrolled,"2023-03-22 10:13",In-Person,2023-03-18,"2023-04-06 11:00",
+BCSB0159,"Hispanic or Latinx",,Enrolled,"2023-03-22 11:22",In-Person,2023-03-16,"2023-03-30 13:00",
+BCSB0160,"Hispanic or Latinx",,Enrolled,"2023-03-28 09:45",Remote,2023-03-18,,
+BCSB0161,"Hispanic or Latinx",,Enrolled,"2023-03-30 10:15",Remote,2023-03-22,,
+BCSB0162,"Hispanic or Latinx",,Enrolled,"2023-04-04 09:43",In-Person,2023-03-31,"2023-04-05 11:00",
+BCSB0163,White,,Enrolled,"2023-04-04 10:12",In-Person,2023-03-18,"2023-04-12 11:30",
+BCSB0164,"Hispanic or Latinx",,Enrolled,"2023-04-06 09:14",In-Person,2023-04-04,"2023-04-20 09:00",
+BCSB0165,White,,Enrolled,"2023-04-06 10:15",Remote,2023-03-15,,
+BCSB0166,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-05-01 01:30",In-Person,,"2023-06-29 14:00",
+BCSB0167,"Hispanic or Latinx",,Enrolled,"2023-05-03 11:45",In-Person,2023-05-01,"2023-05-17 15:30",
+BCSB0168,White,Norris,Refused,"2023-05-09 10:45",In-Person,,,
+BCSB0169,Asian,Norris,Considering,"2023-05-02 11:00",Hybrid,,,"2023-05-02 11:00"
+BCSB0170,White,,Considering,"2023-05-16 09:17",Remote,2023-05-13,,
+BCSB0171,White,,Enrolled,"2023-05-16 09:48",In-Person,2023-05-12,"2023-05-23 12:00",
+BCSB0172,White,,Enrolled,"2023-05-18 09:15",In-Person,2023-03-16,"2023-05-24 09:30",
+BCSB0173,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-05-22 13:00",In-Person,,,
+BCSB0174,Asian,"LAGMC (LAC+USC)",Enrolled,"2023-05-22 16:20",In-Person,,,"2023-12-11 14:00"
+BCSB0175,Asian,,Enrolled,"2023-05-23 09:55",In-Person,2023-05-17,"2023-05-24 14:00",
+BCSB0176,Asian,Norris,Refused,"2023-05-23 10:45",In-Person,,,
+BCSB0177,White,,Enrolled,"2023-05-23 15:45",In-Person,2023-02-04,"2023-05-31 15:30",
+BCSB0178,White,Norris,Refused,"2023-05-30 11:20",Remote,,,
+BCSB0179,"Black or African American",,Enrolled,"2023-06-01 13:15",Remote,2023-05-25,,
+BCSB0180,White,,Enrolled,"2023-05-30 16:11",Remote,2023-05-26,,
+BCSB0181,White,,Enrolled,"2023-05-31 10:15",Remote,2023-05-29,,
+BCSB0182,White,,Enrolled,"2023-05-31 10:48",Remote,2023-05-29,,
+BCSB0183,White,,Considering,"2023-05-31 14:59",Remote,2023-05-30,,
+BCSB0184,White,,Refused,"2023-06-01 16:23",Remote,2023-05-26,,
+BCSB0185,White,,Enrolled,"2023-06-01 09:42",Remote,2023-05-28,,
+BCSB0186,White,,Enrolled,"2023-06-01 10:16",Remote,2023-05-27,,
+BCSB0187,White,,Enrolled,"2023-06-01 10:42",Remote,2023-05-27,,
+BCSB0188,"Black or African American",,Enrolled,"2023-06-01 13:42",Remote,2023-05-30,,
+BCSB0189,White,,Enrolled,"2023-06-06 09:14",Remote,2022-07-25,,
+BCSB0190,"Black or African American",,"Unable to Contact","2023-06-06 12:46",,2023-06-05,,
+BCSB0191,"Hispanic or Latinx",,Refused,"2023-06-06 10:45",Remote,2023-05-28,,
+BCSB0192,"Hispanic or Latinx",,Enrolled,"2023-06-06 11:15",Remote,2023-05-27,,
+BCSB0193,White,,"Unable to Contact","2023-07-25 10:19",Remote,2023-05-27,,
+BCSB0194,Asian,,Enrolled,"2023-06-06 14:14",Remote,2023-06-05,,
+BCSB0195,"Black or African American",,Enrolled,"2023-06-07 09:16",Remote,2023-05-28,,
+BCSB0196,White,,Enrolled,"2023-06-07 09:41",Remote,2023-06-03,,
+BCSB0197,White,,Enrolled,"2023-06-07 10:17",Remote,2023-05-02,,
+BCSB0198,White,,"Unable to Contact","2023-06-07 12:39",,2023-05-30,,
+BCSB0199,White,,Enrolled,"2023-06-08 09:52",Remote,2023-06-04,,
+BCSB0200,White,,Enrolled,"2023-06-13 09:17",Remote,2023-06-09,,
+BCSB0201,White,,Enrolled,"2023-06-13 09:47",Remote,2023-06-10,,
+BCSB0202,White,,Refused,"2023-06-13 10:19",Remote,2023-06-12,,
+BCSB0203,White,,Enrolled,"2023-06-13 10:46",Remote,2023-06-11,,
+BCSB0204,White,,Enrolled,"2023-06-13 11:29",Remote,2023-06-10,,
+BCSB0205,White,,Enrolled,"2023-06-13 16:48",Remote,2023-06-11,,
+BCSB0206,"Black or African American",,Enrolled,"2023-06-13 16:35",Remote,2023-06-12,,
+BCSB0207,White,,Considering,"2023-06-14 16:39",Remote,2023-05-31,,
+BCSB0208,White,,Enrolled,"2023-06-14 09:44",Remote,2023-05-28,,
+BCSB0209,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2023-06-14 10:06",In-Person,,,
+BCSB0210,White,Norris,Enrolled,"2023-06-14 14:15",Hybrid,2023-06-13,"2023-07-05 09:00",
+BCSB0211,White,,Enrolled,"2023-06-14 14:45",Remote,2023-06-13,,
+BCSB0212,White,,Enrolled,"2023-06-15 09:15",Remote,2023-05-27,,
+BCSB0213,White,,Enrolled,"2023-06-15 09:44",Remote,2023-06-11,,
+BCSB0214,White,,Enrolled,"2023-06-15 10:17",Remote,2023-06-12,,
+BCSB0215,White,,Enrolled,"2023-06-15 16:24",Remote,2023-06-10,,
+BCSB0216,White,,Enrolled,"2023-06-15 17:02",Remote,2023-06-13,,
+BCSB0217,White,,Enrolled,"2023-06-20 09:47",Remote,2023-06-15,,
+BCSB0218,"Black or African American",,Considering,"2023-06-20 10:14",Remote,2023-06-15,,
+BCSB0219,"Hispanic or Latinx",,Enrolled,"2023-06-20 10:45",Remote,2023-06-15,,
+BCSB0220,White,,Enrolled,"2023-06-20 11:29",Remote,2023-06-15,,
+BCSB0221,White,,Refused,"2023-06-20 11:50",Remote,2023-06-16,,
+BCSB0222,White,,Enrolled,"2023-06-20 12:52",Remote,2023-06-16,,
+BCSB0223,"Prefer not to answer",,Enrolled,"2023-06-20 13:39",Remote,2023-06-16,,
+BCSB0224,White,,Enrolled,"2023-06-20 14:07",Remote,2023-06-16,,
+BCSB0225,White,,Refused,"2023-06-20 14:35",Remote,2023-06-16,,
+BCSB0226,White,,Ineligible,"2023-06-20 15:08",Remote,2023-06-16,,
+BCSB0227,White,,Enrolled,"2023-06-20 15:48",Remote,2023-06-15,,
+BCSB0228,White,,Enrolled,"2023-06-20 16:17",Remote,2023-06-16,,
+BCSB0229,White,,Enrolled,"2023-06-20 16:58",Remote,2023-06-16,,
+BCSB0230,"Prefer not to answer",,Refused,"2023-06-21 09:20",,2023-06-17,,
+BCSB0231,"Hispanic or Latinx",,Enrolled,"2023-06-21 10:17",Remote,2023-06-17,,
+BCSB0232,White,,Enrolled,"2023-08-22 14:13",Remote,2023-06-17,,
+BCSB0233,White,,Enrolled,"2023-06-21 10:54",Remote,2023-06-17,,
+BCSB0234,White,,Enrolled,"2023-06-21 11:17",Remote,2023-06-16,,
+BCSB0135,"Black or African American",,Enrolled,"2023-06-21 11:53",Remote,2023-06-19,,
+BCSB0236,"Black or African American",,Enrolled,"2023-06-21 15:16",Remote,2023-06-20,,
+BCSB0237,White,,Enrolled,"2023-06-21 13:21",Remote,2023-06-10,,
+BCSB0238,"Hispanic or Latinx",,Considering,"2023-06-21 13:54",Remote,2023-06-20,,
+BCSB0239,White,,Enrolled,"2023-06-21 14:32",Remote,2023-06-10,,
+BCSB0240,White,,Enrolled,"2023-06-21 15:00",Remote,2023-06-18,,
+BCSB0241,White,,Ineligible,"2023-06-21 15:46",Remote,2023-06-19,,
+BCSB0242,White,,Enrolled,"2023-06-21 16:23",Remote,2023-06-17,,
+BCSB0243,White,,Enrolled,"2023-06-21 17:03",Remote,2023-06-20,,
+BCSB0244,"Hispanic or Latinx",,Enrolled,"2023-06-22 09:22",Remote,2023-06-20,,
+BCSB0245,White,,Enrolled,"2023-06-22 09:46",Remote,2023-06-16,,
+BCSB0246,White,,Enrolled,"2023-06-22 13:18",Remote,2023-06-16,,
+BCSB0247,White,,Enrolled,"2023-06-22 13:52",Remote,2023-06-16,,
+BCSB0248,White,,Enrolled,"2023-06-22 14:30",Remote,2023-06-21,,
+BCSB0249,Asian,,Considering,"2023-06-22 15:28",Remote,2023-06-18,,
+BCSB0250,White,,Enrolled,"2023-07-06 14:15",Remote,2023-06-20,,
+BCSB0251,White,,Enrolled,"2023-06-22 16:02",Remote,2023-06-17,,
+BCSB0252,White,,Enrolled,"2023-06-22 16:30",Remote,2023-06-17,,
+BCSB0253,White,,Enrolled,"2023-06-27 09:34",Remote,2023-06-14,,
+BCSB0254,White,,Enrolled,"2023-06-27 09:52",Remote,2023-06-16,,
+BCSB0255,White,,Enrolled,"2023-06-27 10:17",Remote,2023-06-17,,
+BCSB0256,White,,Enrolled,"2023-06-27 11:14",Remote,2023-06-21,,
+BCSB0257,White,,Enrolled,"2023-06-27 11:46",Remote,2023-06-20,,
+BCSB0258,White,,"Unable to Contact","2023-07-19 14:07",,2023-06-19,,
+BCSB0259,White,,Enrolled,"2023-06-27 13:50",Remote,2023-06-21,,
+BCSB0260,White,,Enrolled,"2023-06-27 15:19",Remote,2023-06-16,,
+BCSB0261,White,,Enrolled,"2023-06-28 09:25",Remote,2023-06-22,,
+BCSB0262,White,,Enrolled,"2023-06-28 09:51",Remote,2023-06-19,,
+BCSB0263,White,,Enrolled,"2023-06-28 10:30",Remote,2023-06-21,,
+BCSB0264,White,,Enrolled,"2023-06-28 11:15",Remote,2023-06-15,,
+BCSB0265,White,,Enrolled,"2023-06-28 12:48",Remote,2023-06-19,,
+BCSB0266,White,,Enrolled,"2023-06-28 14:35",Remote,2023-06-17,,
+BCSB0267,White,,"Unable to Contact","2023-06-28 16:40",,2023-06-10,,
+BCSB0268,White,,Enrolled,"2023-06-29 09:21",Remote,2023-06-17,,
+BCSB0269,White,,"Unable to Contact","2023-06-29 09:30",Remote,2023-06-15,,
+BCSB0270,"Black or African American",,Enrolled,"2023-06-29 10:22",Remote,2023-06-16,,
+BCSB0271,"Black or African American",,Enrolled,"2023-06-29 10:50",Remote,2023-06-15,,
+BCSB0272,White,,"Unable to Contact","2023-06-29 11:04",Remote,2023-06-16,,
+BCSB0273,White,,Enrolled,"2023-06-29 13:17",Remote,2023-06-17,,
+BCSB0274,"Hispanic or Latinx",,Considering,"2023-07-06 09:14",Remote,2023-06-16,,
+BCSB0275,White,,Enrolled,"2023-07-05 14:41",Remote,2023-06-18,,
+BCSB0276,White,,Enrolled,"2023-07-06 08:40",Remote,2023-06-16,,
+BCSB0277,White,,Enrolled,"2023-07-06 09:45",Remote,2023-06-21,,
+BCSB0278,"Prefer not to answer",,Considering,"2023-07-06 11:42",Remote,2023-07-06,,
+BCSB0279,"Prefer not to answer",,Enrolled,"2023-07-06 11:11",Remote,2023-06-23,,
+BCSB0280,"Hispanic or Latinx",,Enrolled,"2023-07-06 13:17",In-Person,2023-05-25,"2023-08-23 09:00",
+BCSB0281,White,,Considering,"2023-07-11 09:19",Remote,2023-06-24,,
+BCSB0282,White,,Enrolled,"2023-07-11 09:58",Remote,2023-06-26,,
+BCSB0283,Asian,,Enrolled,"2023-07-11 13:19",Remote,2023-06-24,,
+BCSB0284,White,,"Unable to Contact","2023-07-11 13:35",Remote,2023-06-28,,
+BCSB0285,"Hispanic or Latinx",,Considering,"2023-07-11 14:19",Remote,2023-07-29,,
+BCSB0286,White,,Enrolled,"2023-07-11 14:38",Remote,2023-06-28,,
+BCSB0287,White,,Enrolled,"2023-07-12 11:19",Remote,2023-07-06,,
+BCSB0288,White,,Enrolled,"2023-07-12 10:49",Remote,2023-06-27,,
+BCSB0289,White,,"Unable to Contact","2023-07-12 10:30",Remote,2023-06-29,,
+BCSB0290,White,,Enrolled,"2023-07-12 11:46",Remote,2023-06-16,,
+BCSB0291,"Hispanic or Latinx",,Enrolled,"2023-07-12 13:45",Remote,2022-06-06,,
+BCSB0292,White,,Enrolled,"2023-07-13 09:27",Remote,2023-06-24,,
+BCSB0293,White,,Enrolled,"2023-07-13 09:56",Remote,2023-06-10,,
+BCSB0294,White,,Enrolled,"2023-07-13 10:49",Remote,2023-06-26,,
+BCSB0295,White,,"Unable to Contact","2023-07-13 14:09",Remote,2023-06-30,,
+BCSB0296,White,,Ineligible,"2023-07-13 15:04",Remote,2023-05-29,,
+BCSB0297,White,,Enrolled,"2023-07-18 09:19",Remote,2023-06-30,,
+BCSB0298,White,,Refused,"2023-07-18 09:52",Remote,2023-07-03,,
+BCSB0299,White,,Enrolled,"2023-07-18 10:20",Remote,2023-06-30,,
+BCSB0300,White,,Enrolled,"2023-07-18 11:46",Remote,2023-02-05,,
+BCSB0301,White,,"Unable to Contact","2023-08-03 13:01",Remote,2023-06-23,,
+BCSB0302,White,,Enrolled,"2023-07-19 09:20",Remote,2023-06-29,,
+BCSB0303,White,,Enrolled,"2023-07-19 09:53",Remote,2023-06-30,,
+BCSB0304,White,,Enrolled,"2023-07-19 10:18",Remote,2023-06-26,,
+BCSB0305,White,,Enrolled,"2023-07-19 11:33",Remote,2023-06-29,,
+BCSB0306,White,,"Unable to Contact","2023-07-20 09:08",Remote,2023-06-28,,
+BCSB0307,White,,"Unable to Contact","2023-07-20 10:24",Remote,2023-06-30,,
+BCSB0308,White,,Enrolled,"2023-07-20 13:06",Remote,2023-07-01,,
+BCSB0309,White,,Enrolled,"2023-07-20 14:16",Remote,2023-07-02,,
+BCSB0310,White,,Enrolled,"2023-07-20 14:47",In-Person,2023-07-02,"2023-08-18 13:00",
+BCSB0311,White,,Considering,"2023-07-25 09:57",Remote,2023-06-22,,
+BCSB0312,White,,"Unable to Contact","2023-07-25 09:30",Remote,2023-07-10,,
+BCSB0313,White,,Enrolled,"2023-07-25 10:58",Remote,2023-06-17,,
+BCSB0314,White,,"Unable to Contact","2023-07-25 11:25",Remote,2023-07-07,,
+BCSB0315,White,,Enrolled,"2023-07-25 15:00",Remote,2023-07-08,,
+BCSB0316,White,,Enrolled,"2023-07-26 09:15",Remote,2023-07-03,,
+BCSB0317,White,,Enrolled,"2023-07-26 10:05",Hybrid,2022-06-15,,
+BCSB0318,"Hispanic or Latinx",,Enrolled,"2023-07-26 10:52",In-Person,2023-05-03,"2023-08-09 10:30",
+BCSB0319,White,,Enrolled,"2023-07-26 11:50",Remote,2023-06-24,,
+BCSB0320,White,,Enrolled,"2023-07-26 12:45",Remote,2023-06-27,,
+BCSB0321,White,,"Unable to Contact","2023-07-27 11:47",Remote,2023-07-07,,
+BCSB0322,White,,"Unable to Contact","2023-07-27 12:39",Remote,2023-07-09,,
+BCSB0323,White,,Enrolled,"2023-07-27 13:15",Remote,2023-07-14,,
+BCSB0324,White,,Considering,"2023-07-27 13:42",Remote,2023-07-15,,
+BCSB0325,White,,Enrolled,"2023-07-27 14:31",Remote,2023-07-12,,
+BCSB0326,White,,Enrolled,"2023-07-27 14:45",Remote,2023-07-04,,
+BCSB0327,White,,"Unable to Contact","2023-08-01 09:18",,2023-07-16,,
+BCSB0328,White,,Enrolled,"2023-08-01 10:13",Remote,2023-07-14,,
+BCSB0329,White,,Enrolled,"2023-08-01 11:05",Remote,2023-07-15,,
+BCSB0330,White,,"Unable to Contact","2023-08-01 11:17",Remote,2023-07-18,,
+BCSB0331,White,,Enrolled,"2023-08-01 12:00",Remote,2023-07-19,,
+BCSB0332,White,,Enrolled,"2023-08-01 12:45",Remote,2023-07-19,,
+BCSB0333,White,,Considering,"2023-08-02 09:55",Remote,2023-07-12,,
+BCSB0334,White,,Enrolled,"2023-08-02 12:49",Remote,2023-07-17,,
+BCSB0335,Asian,,"Unable to Contact","2023-08-02 12:58",,2023-07-17,,
+BCSB0336,White,,Enrolled,"2023-08-02 13:15",Remote,2023-07-15,,
+BCSB0337,Asian,,Enrolled,"2023-08-02 13:47",Remote,2023-07-20,,
+BCSB0338,White,,Enrolled,"2023-08-03 09:16",Remote,2023-07-06,,
+BCSB0339,White,,Enrolled,"2023-08-03 09:45",Remote,2023-07-01,,
+BCSB0340,White,,Ineligible,"2023-08-03 10:41",,2023-07-17,,
+BCSB0341,"Hispanic or Latinx",,Enrolled,"2023-08-03 13:46",Remote,2023-07-20,,
+BCSB0342,"American Indian or Alaskan Native",,Enrolled,"2023-08-08 09:26",Remote,2023-07-21,,
+BCSB0343,White,,Enrolled,"2023-08-08 09:48",Remote,2023-07-23,,
+BCSB0344,White,,Enrolled,"2023-08-08 10:10",Remote,2023-07-17,,
+BCSB0345,White,,"Unable to Contact","2023-08-24 09:41",Remote,2023-07-23,,
+BCSB0346,White,,Enrolled,"2023-08-08 11:45",Remote,2023-07-26,,
+BCSB0347,White,,"Unable to Contact","2023-08-08 15:02",,2023-07-27,,
+BCSB0348,White,,Ineligible,"2023-08-09 09:05",,2023-07-26,,
+BCSB0349,White,,Enrolled,"2023-08-09 09:49",Remote,2023-07-20,,
+BCSB0350,White,,Enrolled,"2023-08-09 13:50",Remote,2023-07-27,,
+BCSB0351,White,,Enrolled,"2023-08-09 13:28",Remote,2023-07-27,,
+BCSB0352,White,,"Unable to Contact","2023-08-09 14:07",Remote,2023-07-27,,
+BCSB0353,White,,Enrolled,"2023-08-09 14:33",Remote,2023-07-29,,
+BCSB0354,White,,Considering,"2023-08-10 09:32",Remote,2023-07-27,,
+BCSB0355,White,,"Unable to Contact","2023-08-10 09:40",Remote,2023-07-28,,
+BCSB0356,White,,Enrolled,"2023-08-10 11:01",Remote,2023-07-27,,
+BCSB0357,White,,"Defer (Study Staff only)","2023-08-10 11:33",Remote,2023-07-28,,
+BCSB0358,White,,Enrolled,"2023-08-10 12:46",Remote,2023-07-21,,
+BCSB0359,White,,Enrolled,"2023-08-10 13:16",Remote,2023-07-25,,
+BCSB0360,White,,Enrolled,"2023-08-15 09:19",Remote,2023-07-25,,
+BCSB0361,White,,Considering,"2023-08-15 09:47",Remote,2023-07-27,,
+BCSB0362,White,,Refused,"2023-08-15 10:03",,2023-07-21,,
+BCSB0363,White,,"Unable to Contact","2023-08-15 11:19",,2023-07-14,,
+BCSB0364,White,,Enrolled,"2023-08-15 14:00",Remote,2023-07-20,,
+BCSB0365,White,,Enrolled,"2023-08-16 09:39",Remote,2023-07-30,,
+BCSB0366,White,,Enrolled,"2023-08-16 10:43",Remote,2023-08-02,,
+BCSB0367,White,,Enrolled,"2023-08-16 12:40",Remote,2023-08-02,,
+BCSB0368,White,,Enrolled,"2023-08-16 12:47",Remote,2023-06-17,,
+BCSB0369,White,,Enrolled,"2023-08-17 09:45",Remote,2023-08-02,,
+BCSB0370,White,,Enrolled,"2023-08-17 10:15",Remote,2023-07-18,,
+BCSB0371,White,,Enrolled,"2023-08-17 10:50",Remote,2023-07-31,,
+BCSB0372,White,,Ineligible,"2023-08-17 11:44",,2023-07-24,,
+BCSB0373,White,,Enrolled,"2023-08-17 15:00",Remote,2023-08-01,,
+BCSB0374,White,,Considering,"2023-09-19 10:37",Remote,2023-07-27,,
+BCSB0375,White,,Enrolled,"2023-08-22 12:44",Remote,2023-08-03,,
+BCSB0376,White,,Refused,"2023-08-22 13:20",,2023-07-08,,
+BCSB0377,White,,"Unable to Contact","2023-08-22 13:37",,2023-08-02,,
+BCSB0378,White,,Ineligible,"2023-08-22 14:30",Remote,2023-07-21,,
+BCSB0379,"Black or African American",,Enrolled,"2023-08-22 15:03",Remote,2023-07-30,,
+BCSB0380,White,,"Defer (Study Staff only)","2023-08-23 11:47",Remote,2023-08-06,,
+BCSB0381,White,,Refused,"2023-08-23 12:44",,2023-08-07,,
+BCSB0382,White,,Enrolled,"2023-08-23 14:14",Remote,2023-08-07,,
+BCSB0383,White,,"Unable to Contact","2023-08-23 13:50",,2023-08-05,,
+BCSB0384,White,,Considering,"2023-08-23 14:41",Remote,2023-08-07,,
+BCSB0385,White,,Considering,"2023-08-23 15:07",Remote,2023-07-21,,
+BCSB0386,White,,Enrolled,"2023-08-24 09:19",Remote,2023-08-02,,
+BCSB0387,White,,Enrolled,"2023-08-24 11:54",Remote,2023-08-08,,
+BCSB0388,White,,Ineligible,"2023-08-24 12:39",,2023-08-09,,
+BCSB0389,White,,Enrolled,"2023-08-24 14:05",Remote,2023-08-08,,
+BCSB0390,White,,"Unable to Contact","2023-08-29 09:12",,2023-08-10,,
+BCSB0391,"Hispanic or Latinx",,Enrolled,"2023-08-29 09:42",Remote,2023-08-10,,
+BCSB0392,White,,Enrolled,"2023-08-29 10:11",Remote,2023-08-12,,
+BCSB0393,White,,Enrolled,"2023-09-27 10:07",Remote,2023-08-12,,
+BCSB0394,White,,Enrolled,"2023-08-29 14:18",Remote,2023-08-05,,
+BCSB0395,White,,Enrolled,"2023-10-05 11:46",Remote,2023-07-02,,
+BCSB0396,White,,"Unable to Contact","2023-08-30 10:10",,2023-08-13,,
+BCSB0397,White,,Ineligible,"2023-08-30 10:34",,2023-08-15,,
+BCSB0398,White,,Enrolled,"2023-08-30 13:43",Remote,2023-08-15,,
+BCSB0399,"Black or African American",,Enrolled,"2023-08-30 14:55",Remote,2023-07-31,,
+BCSB0400,White,,Enrolled,"2023-08-31 09:19",Remote,2023-08-12,,
+BCSB0401,Asian,,Enrolled,"2023-08-31 10:11",Remote,2023-08-04,,
+BCSB0402,White,,Enrolled,"2023-08-31 11:29",Remote,2023-08-16,,
+BCSB0403,White,,Refused,"2023-08-31 11:58",Remote,2023-08-10,,
+BCSB0404,White,,"Unable to Contact","2023-08-31 14:46",,2023-08-16,,
+BCSB0405,White,,"Unable to Contact","2023-09-05 11:03",,2023-07-01,,
+BCSB0406,White,,Enrolled,"2023-09-05 11:50",Remote,2023-08-17,,
+BCSB0407,White,,"Unable to Contact","2023-09-05 10:15",,2023-08-17,,
+BCSB0408,"Native Hawaiian or Pacific Islander",,Enrolled,"2023-09-05 10:57",Remote,2023-08-19,,
+BCSB0409,White,,Ineligible,"2023-09-05 13:17",,2023-08-19,,
+BCSB0410,White,,Enrolled,"2023-09-05 14:58",Remote,2023-08-17,,
+BCSB411,White,,Ineligible,"2023-09-06 09:17",,2023-08-19,,
+BCSB0412,White,,"Unable to Contact","2023-09-06 13:42",,2023-08-21,,
+BCSB0413,White,,Enrolled,"2023-09-06 14:33",Remote,2023-08-16,,
+BCSB0414,White,,Enrolled,"2023-09-06 15:07",Remote,2023-08-20,,
+BCSB0415,White,,"Unable to Contact","2023-09-07 09:12",,2023-08-12,,
+BCSB0416,White,,"Unable to Contact","2023-09-07 09:33",,2023-08-19,,
+BCSB0417,White,,"Unable to Contact","2023-09-07 10:44",,2023-08-17,,
+BCSB0418,White,,Enrolled,"2023-09-07 11:45",Remote,2023-08-14,,
+BCSB0419,White,,Enrolled,"2023-09-07 13:48",Remote,2023-08-23,,
+BCSB0420,"Black or African American",,"Unable to Contact","2023-09-12 09:14",,2023-08-25,,
+BCSB0421,White,,Enrolled,"2023-09-12 09:46",Remote,2023-08-28,,
+BCSB0422,"Black or African American",,Enrolled,"2023-09-12 11:48",Remote,2023-08-20,,
+BCSB0423,White,,Enrolled,"2023-09-12 13:20",Remote,2023-08-26,,
+BCSB0424,"Black or African American",,Enrolled,"2023-09-12 14:33",Remote,2023-07-31,,
+BCSB0425,White,,"Unable to Contact","2023-09-13 10:44",,2023-08-22,,
+BCSB0426,White,,Enrolled,"2023-09-13 13:59",Remote,2023-08-20,,
+BCSB0427,White,,Enrolled,"2023-10-18 10:01",Remote,2023-06-16,,
+BCSB0428,White,,Enrolled,"2023-09-14 09:14",Remote,2023-08-28,,
+BCSB0429,White,,Considering,"2023-09-14 09:53",,2023-08-29,,
+BCSB0430,White,,"Unable to Contact","2023-09-14 10:10",,2023-08-26,,
+BCSB0431,White,,"Unable to Contact","2023-09-14 10:50",,2023-08-29,,
+BCSB0432,White,,Enrolled,"2023-09-14 13:17",Remote,2023-08-24,,
+BCSB0433,"Hispanic or Latinx",,"Unable to Contact","2023-09-14 13:44",,2023-08-27,,
+BCSB0434,Asian,"LAGMC (LAC+USC)",Considering,"2023-09-18 09:27",In-Person,,,
+BCSB0435,White,,Enrolled,"2023-09-19 09:25",Remote,2023-08-25,,
+BCSB0436,White,,"Unable to Contact","2023-09-19 09:46",,2023-08-28,,
+BCSB0437,White,,Enrolled,"2023-09-19 10:25",Remote,2023-08-15,,
+BCSB0438,White,,Refused,"2023-09-19 11:30",Remote,2023-08-27,,
+BCSB0439,White,,Enrolled,"2023-09-26 13:20",Remote,2023-08-22,,
+BCSB0440,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-09-18 11:00",In-Person,,,"2023-09-18 11:00"
+BCSB0441,Asian,"LAGMC (LAC+USC)",Enrolled,"2024-03-04 10:13",Hybrid,,,"2024-03-04 09:30"
+BCSB0442,White,,Enrolled,"2023-09-20 09:16",Remote,2023-08-28,,
+BCSB0443,White,,Enrolled,"2023-09-20 09:45",Remote,2023-08-16,,
+BCSB0444,White,,"Unable to Contact","2023-09-20 10:55",,2023-08-29,,
+BCSB0445,White,,Enrolled,"2023-09-20 11:49",Remote,2023-08-29,,
+BCSB0446,"Hispanic or Latinx",,Enrolled,"2023-10-24 12:45",Remote,2023-08-29,,
+BCSB0447,White,,Enrolled,"2023-09-20 14:16",Remote,2023-08-30,,
+BCSB0448,White,,"Unable to Contact","2023-09-21 09:32",,2023-08-31,,
+BCSB0449,"Hispanic or Latinx",,Enrolled,"2023-11-08 13:14",Remote,2023-08-30,,
+BCSB0450,"Hispanic or Latinx",Norris,Enrolled,"2023-09-21 12:11",In-Person,,"2023-11-15 11:00",
+BCSB0451,White,,"Unable to Contact","2023-09-21 13:10",Remote,2023-08-30,,
+BCSB0452,"American Indian or Alaskan Native",,Enrolled,"2023-09-21 13:31",Remote,2023-08-28,,
+BCSB0453,"Black or African American",,Enrolled,"2023-09-21 13:51",Remote,2023-08-25,,
+BCSB0454,Asian,Norris,Enrolled,"2023-09-21 12:40",In-Person,,,
+BCSB0455,Asian,"LAGMC (LAC+USC)",Enrolled,"2023-09-25 10:57",Hybrid,,,"2023-09-25 10:57"
+BCSB0456,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2023-09-25 09:00",In-Person,,,
+BCSB0457,White,,Enrolled,"2023-09-26 09:15",Remote,2023-08-24,,
+BCSB0458,White,,Enrolled,"2023-09-26 11:10",Remote,2023-08-31,,
+BCSB0459,White,,Enrolled,"2023-09-26 10:00",Remote,2023-08-31,,
+BCSB0460,White,,Enrolled,"2023-09-26 11:27",Remote,2023-09-21,,
+BCSB0461,White,,Enrolled,"2023-09-26 11:59",Remote,2023-08-31,,
+BCSB0462,White,,Enrolled,"2023-09-26 12:18",Remote,2023-08-31,,
+BCSB0463,White,,"Unable to Contact","2023-09-27 09:46",,2023-08-30,,
+BCSB0464,White,,Refused,"2023-09-27 10:45",Remote,2023-08-30,,
+BCSB0465,White,,Ineligible,"2023-09-27 13:05",,2023-08-30,,
+BCSB0466,White,,Enrolled,"2023-09-27 13:48",Remote,2023-09-01,,
+BCSB0467,White,,Enrolled,"2023-10-26 14:55",Remote,2023-09-01,,
+BCSB0468,White,,"Unable to Contact","2023-09-28 10:06",,2023-08-31,,
+BCSB0469,White,,Enrolled,"2023-09-28 11:03",Remote,2023-08-30,,
+BCSB0470,White,,Enrolled,"2023-09-28 11:32",Remote,2023-08-23,,
+BCSB0471,White,,"Unable to Contact","2023-09-28 14:12",Remote,2023-08-31,,
+BCSB0472,White,,"Unable to Contact","2023-09-28 14:49",Remote,2023-09-01,,
+BCSB0473,White,Norris,Enrolled,"2023-09-29 10:45",Remote,,,
+BCSB0474,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-10-02 08:58",,,,
+BCSB0475,Asian,"LAGMC (LAC+USC)",Refused,"2023-10-02 10:12",In-Person,,,
+BCSB0476,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2023-10-02 10:17",In-Person,,,
+BCSB0477,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-10-02 11:10",In-Person,,"2024-03-22 08:30","2023-10-02 11:10"
+BCSB0478,White,,"Unable to Contact","2023-10-03 09:14",,2023-09-04,,
+BCSB0479,White,,Enrolled,"2023-10-03 09:46",Remote,2023-09-02,,
+BCSB0480,White,,Enrolled,"2023-10-03 10:24",Remote,2023-09-01,,
+BCSB0481,White,,Refused,"2023-10-03 10:37",,2023-08-21,,
+BCSB0482,White,,Ineligible,"2023-10-03 13:47",Remote,2023-09-04,,
+BCSB0483,White,,Enrolled,"2023-10-04 16:36",Remote,2023-09-02,,
+BCSB0484,White,,Refused,"2023-10-04 09:13",Remote,2023-09-10,,
+BCSB0485,White,,Enrolled,"2023-10-04 09:45",Remote,2023-09-10,,
+BCSB0486,White,,Enrolled,"2023-10-04 10:41",Remote,2023-09-01,,
+BCSB0487,White,,"Unable to Contact","2023-10-04 11:24",,2023-09-04,,
+BCSB0488,White,,Enrolled,"2023-10-04 12:44",Remote,2023-09-10,,
+BCSB0489,White,,"Unable to Contact","2023-11-02 12:49",,2023-09-10,,
+BCSB0490,White,,Enrolled,"2023-10-05 09:30",Remote,2023-09-04,,
+BCSB0491,"Black or African American",Norris,Refused,"2023-10-05 09:40",In-Person,,,"2024-01-18 09:42"
+BCSB0492,White,,"Unable to Contact","2023-10-05 10:10",,2023-09-02,,
+BCSB0493,White,,Ineligible,"2023-10-05 10:39",,2023-09-24,,
+BCSB0494,White,,Enrolled,"2023-10-05 13:31",Remote,2023-09-11,,
+BCSB0495,White,,"Unable to Contact","2023-10-05 14:56",,2023-09-04,,
+BCSB0496,White,Norris,Enrolled,"2023-10-06 10:06",Hybrid,,,
+BCSB0497,White,,Ineligible,"2023-10-10 09:20",,2023-09-03,,
+BCSB0498,White,,"Unable to Contact","2023-10-10 10:11",,2023-09-11,,
+BCSB0499,White,,Enrolled,"2023-10-10 10:48",Remote,2023-09-12,,
+BCSB0500,"Black or African American",,Ineligible,"2025-07-15 09:45",Remote,2023-09-13,,
+BCSB0501,White,,Enrolled,"2023-10-10 12:44",Remote,2023-09-07,,
+BCSB0502,White,,Enrolled,"2023-10-11 09:17",Remote,2023-09-07,,
+BCSB0503,White,,"Defer (Study Staff only)","2023-10-11 09:53",Remote,2023-09-12,,
+BCSB0504,White,,Ineligible,"2023-10-11 10:45",,2023-09-06,,
+BCSB0505,White,,Enrolled,"2023-10-11 13:14",Remote,2023-09-13,,
+BCSB0506,White,,Enrolled,"2023-10-11 14:14",Remote,2023-09-12,,
+BCSB0507,White,,"Unable to Contact","2023-10-11 14:49",,2023-09-07,,
+BCSB0508,"Hispanic or Latinx",Norris,Enrolled,"2023-10-11 15:16",Hybrid,,,
+BCSB0509,White,Norris,Enrolled,"2023-10-12 09:15",Hybrid,,,
+BCSB0510,White,,Enrolled,"2023-10-12 09:26",Remote,2023-09-14,,
+BCSB0511,"Black or African American",,Refused,"2023-10-12 10:01",Remote,2023-09-04,,
+BCSB0512,"Hispanic or Latinx",Norris,Enrolled,"2023-10-12 10:05",Hybrid,,,
+BCSB0513,White,,"Unable to Contact","2023-10-12 10:51",Remote,2023-09-14,,
+BCSB0514,White,,Enrolled,"2023-10-12 11:32",Remote,2023-09-13,,
+BCSB0515,White,Norris,Refused,"2023-10-12 12:20",In-Person,,,
+BCSB0516,White,,"Defer (Study Staff only)","2023-10-12 13:17",Remote,2023-09-13,,
+BCSB0517,White,,"Unable to Contact","2023-10-12 14:26",,2023-09-10,,
+BCSB0518,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-10-16 09:39",In-Person,,,
+BCSB0519,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-10-16 10:00",In-Person,,"2024-04-19 15:00","2023-10-16 10:00"
+BCSB0520,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-10-16 11:20",In-Person,,,
+BCSB0521,White,,Ineligible,"2023-10-17 09:33",Remote,2023-10-07,,
+BCSB0522,White,,"Defer (Study Staff only)","2023-10-17 10:15",Remote,2023-09-14,,
+BCSB0523,White,,Enrolled,"2023-10-17 10:42",Remote,2023-10-08,,
+BCSB0524,White,,Ineligible,"2023-10-17 14:14",,2023-08-22,,
+BCSB0525,White,,Enrolled,"2023-10-17 14:48",Remote,2023-09-14,,
+BCSB0526,White,,Refused,"2023-10-18 09:20",Remote,2023-08-27,,
+BCSB0527,"Black or African American",,Ineligible,"2023-10-18 10:53",,2023-09-18,,
+BCSB0528,White,,Enrolled,"2023-10-18 12:45",Remote,2023-09-18,,
+BCSB0529,White,,Ineligible,"2023-10-18 13:26",Remote,2023-09-19,,
+BCSB0530,White,Norris,Enrolled,"2023-10-18 13:42",Hybrid,,"2023-10-18 13:42",
+BCSB0531,White,,Enrolled,"2023-10-18 15:04",Remote,2023-09-15,,
+BCSB0532,"Prefer not to answer",Norris,Considering,"2023-10-18 14:44",In-Person,,,
+BCSB0533,Asian,Norris,Enrolled,"2023-10-18 16:26",Hybrid,,,
+BCSB0534,White,,Ineligible,"2023-10-19 09:45",,2023-09-17,,
+BCSB0535,"Black or African American",,Enrolled,"2023-10-19 09:52",Remote,2023-09-20,,
+BCSB0536,White,,Enrolled,"2023-10-19 10:49",Remote,2023-09-20,,
+BCSB0537,White,,Enrolled,"2023-10-19 14:49",Remote,2023-09-18,,
+BCSB0538,"Hispanic or Latinx",Norris,Considering,"2023-10-20 13:37",,,,
+BCSB0539,White,Norris,Enrolled,"2023-10-20 14:25",Hybrid,,,
+BCSB0540,"Hispanic or Latinx",Norris,Enrolled,"2023-10-20 16:43",In-Person,,"2023-10-24 15:30","2023-10-20 16:00"
+BCSB0541,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-10-23 09:30",In-Person,,,
+BCSB0542,"Black or African American","LAGMC (LAC+USC)",Considering,"2023-10-23 10:00",,,,
+BCSB0543,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-10-23 10:15",In-Person,,,
+BCSB0544,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2023-10-23 10:45",In-Person,,,
+BCSB0545,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2023-10-23 14:36",In-Person,,,
+BCSB0546,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-10-23 15:06",Hybrid,,,"2023-10-23 15:06"
+BCSB0547,White,,Enrolled,"2023-11-14 10:26",Remote,2023-09-21,,
+BCSB0548,White,,Enrolled,"2023-10-24 10:13",Remote,2023-09-17,,
+BCSB0549,White,,Enrolled,"2023-12-12 13:03",Remote,2023-09-20,,
+BCSB0550,White,,Enrolled,"2023-10-24 14:57",Remote,2023-09-09,,
+BCSB0551,White,,"Unable to Contact","2023-10-25 09:14",,2023-09-21,,
+BCSB0552,White,,Enrolled,"2023-10-25 09:46",Remote,2023-09-22,,
+BCSB0553,White,,Enrolled,"2023-10-25 10:14",Remote,2023-09-27,,
+BCSB0554,White,,Enrolled,"2023-10-25 11:10",Remote,2023-09-28,,
+BCSB0555,White,,Enrolled,"2023-12-12 09:45",Remote,2023-09-22,,
+BCSB0556,White,,Enrolled,"2023-10-25 13:08",Remote,2023-09-23,,
+BCSB0557,White,Norris,Considering,"2023-10-25 15:17",,,,
+BCSB0558,White,,Enrolled,"2023-10-26 09:12",Remote,2023-09-21,,
+BCSB0559,White,,"Unable to Contact","2023-10-26 09:32",Remote,2023-09-21,,
+BCSB0560,"Black or African American",,Enrolled,"2023-10-26 10:27",Remote,2023-09-25,,
+BCSB0561,White,,"Defer (Study Staff only)","2023-10-26 11:55",Remote,2023-09-24,,
+BCSB0562,"Hispanic or Latinx",Norris,Refused,"2023-10-26 11:23",In-Person,,,"2023-10-26 11:23"
+BCSB0563,Asian,Norris,Considering,"2023-10-26 11:05",,,,
+BCSB0564,White,,"Defer (Study Staff only)","2023-10-26 12:40",Remote,2023-09-25,,
+BCSB0565,"Hispanic or Latinx",Norris,Enrolled,"2023-10-27 11:09",In-Person,,"2024-01-26 11:00",
+BCSB0566,"Black or African American",Norris,Considering,"2023-10-27 15:09",In-Person,,,
+BCSB0567,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-10-30 17:15",In-Person,,,
+BCSB0568,White,,Enrolled,"2023-10-31 10:57",Remote,2023-08-20,,
+BCSB0569,White,,Ineligible,"2023-10-31 13:09",,2023-08-12,,
+BCSB0570,White,,Enrolled,"2023-10-31 14:17",Remote,2023-09-30,,
+BCSB0571,White,,Refused,"2023-10-31 14:50",,2023-09-19,,
+BCSB0572,White,,Enrolled,"2023-11-01 09:14",Remote,2023-10-01,,
+BCSB0573,"Black or African American",,"Unable to Contact","2023-11-01 09:44",,2023-10-02,,
+BCSB0574,"Black or African American",,Ineligible,"2023-11-01 11:20",,2023-10-02,,
+BCSB0575,White,,Enrolled,"2023-11-01 13:29",Remote,2023-08-21,,
+BCSB0576,White,,"Unable to Contact","2023-11-01 14:05",,2023-10-04,,
+BCSB0577,White,,"Defer (Study Staff only)","2023-12-20 14:44",Remote,2023-10-01,,
+BCSB0578,"Black or African American",,Considering,"2023-11-02 09:35",,2023-09-29,,
+BCSB0579,White,,"Defer (Study Staff only)","2023-11-02 13:24",Remote,2023-09-13,,
+BCSB0580,White,Norris,Refused,"2023-11-02 14:27",In-Person,,,
+BCSB0581,White,,Enrolled,"2023-11-02 14:59",Remote,2023-09-23,,
+BCSB0582,Asian,Norris,Enrolled,"2023-11-03 10:53",Hybrid,,,
+BCSB0583,Asian,Norris,Refused,"2023-11-03 13:23",In-Person,,,
+BCSB0584,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-11-06 10:00",In-Person,,,
+BCSB0585,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-11-06 10:46",Hybrid,,,"2023-11-06 08:30"
+BCSB0586,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-11-06 14:07",In-Person,,,"2023-11-06 13:40"
+BCSB0587,White,Norris,Enrolled,"2023-11-07 09:25",In-Person,2023-10-26,"2024-02-13 12:00",
+BCSB0588,White,Norris,Enrolled,"2023-11-07 09:49",Hybrid,2023-10-05,"2023-11-14 09:30",
+BCSB0589,White,,Considering,"2023-11-07 11:38",Hybrid,2023-10-05,,
+BCSB0590,White,,Enrolled,"2023-11-07 12:00",Remote,2023-09-29,,
+BCSB0591,White,,"Unable to Contact","2023-11-07 13:11",,2023-10-06,,
+BCSB0592,"Hispanic or Latinx",,Ineligible,"2023-11-07 14:15",,2023-10-05,,
+BCSB0593,White,,Ineligible,"2023-11-08 09:46",,2023-07-26,,
+BCSB0594,White,,Enrolled,"2023-11-08 10:12",Remote,2023-10-03,,
+BCSB0595,White,,Considering,"2023-11-08 11:05",Remote,2023-10-06,,
+BCSB0596,White,Norris,Enrolled,"2023-11-08 11:47",Remote,2023-10-05,,
+BCSB0597,"Prefer not to answer",,Ineligible,"2023-11-08 14:46",,2023-10-05,,
+BCSB0598,White,,Enrolled,"2023-11-09 09:43",Remote,2023-10-02,,
+BCSB0599,White,,"Defer (Study Staff only)","2023-11-09 11:35",Remote,2023-10-06,,
+BCSB0600,"Hispanic or Latinx",,"Unable to Contact","2023-11-09 14:17",,2023-10-06,,
+BCSB0601,"Hispanic or Latinx",,"Unable to Contact","2023-11-09 14:45",,2023-10-09,,
+BCSB0602,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-11-13 10:14",Hybrid,,,"2023-11-13 10:00"
+BCSB0603,Asian,"LAGMC (LAC+USC)",Refused,"2023-11-13 10:51",In-Person,,,"2023-11-13 09:30"
+BCSB0604,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-11-13 14:35",In-Person,,,"2023-11-13 14:30"
+BCSB0605,White,,Enrolled,"2023-11-14 09:15",Remote,2023-10-10,,
+BCSB0606,White,,Enrolled,"2023-11-14 09:38",Remote,2023-08-22,,
+BCSB0607,White,,Enrolled,"2023-11-14 12:45",Remote,2023-10-11,,
+BCSB0608,White,,Enrolled,"2023-11-14 14:18",Remote,2023-10-05,,
+BCSB0609,"Hispanic or Latinx",,Enrolled,"2023-11-14 14:46",Remote,2023-10-11,,
+BCSB0610,White,,Enrolled,"2023-11-15 09:10",Remote,2023-10-07,,
+BCSB0611,White,,Enrolled,"2023-11-15 10:19",Remote,2023-10-05,,
+BCSB0612,White,,Enrolled,"2023-11-15 13:27",Remote,2023-10-12,,
+BCSB0613,"Black or African American",,Enrolled,"2023-11-15 14:02",Remote,2023-10-13,,
+BCSB0614,White,,"Unable to Contact","2023-11-15 14:44",,2023-10-13,,
+BCSB0615,White,,Enrolled,"2023-11-16 09:20",Remote,2023-10-11,,
+BCSB0616,White,,Refused,"2023-11-16 10:09",Remote,2023-10-13,,
+BCSB0617,White,,Enrolled,"2023-11-16 10:43",Remote,2023-10-11,,
+BCSB0618,White,,"Unable to Contact","2023-11-16 11:17",Remote,2023-10-13,,
+BCSB0619,White,,Enrolled,"2023-11-16 11:20",Remote,2023-10-11,,
+BCSB0620,White,Norris,Enrolled,"2023-11-16 11:36",Hybrid,,,"2023-11-16 11:30"
+BCSB0621,White,,Enrolled,"2023-11-16 14:13",Remote,2023-10-11,,
+BCSB0622,"Hispanic or Latinx","LAGMC (LAC+USC)",Ineligible,"2023-11-20 09:15",In-Person,,,"2023-11-20 08:00"
+BCSB0623,Asian,"LAGMC (LAC+USC)",Enrolled,"2023-11-20 09:56",In-Person,,"2023-12-06 10:30","2023-11-20 08:30"
+BCSB0624,White,,Enrolled,"2023-11-28 09:18",Remote,2023-10-14,,
+BCSB0625,White,,"Defer (Study Staff only)","2023-11-28 09:35",Remote,2023-10-17,,
+BCSB0626,White,,Ineligible,"2023-11-28 10:02",,2023-10-16,,
+BCSB0627,Asian,Norris,Enrolled,"2023-11-28 10:54",Hybrid,2023-10-18,,
+BCSB0628,"Black or African American",,Enrolled,"2023-11-28 12:02",Remote,2023-10-17,,
+BCSB0629,White,,Enrolled,"2023-11-28 12:42",Remote,2023-10-14,,
+BCSB0630,White,,Enrolled,"2023-11-29 09:14",Remote,2023-10-18,,
+BCSB0631,Asian,,"Unable to Contact","2023-11-29 09:59",Remote,2023-10-16,,
+BCSB0632,White,,"Defer (Study Staff only)","2023-11-29 10:34",Remote,2023-10-18,,
+BCSB0633,White,Norris,Ineligible,"2023-11-29 11:04",Hybrid,2023-10-18,,
+BCSB0634,White,,Enrolled,"2023-11-29 12:13",Remote,2023-10-13,,
+BCSB0635,Asian,,Considering,"2023-11-29 12:44",Remote,2023-10-19,,
+BCSB0636,White,,Enrolled,"2023-11-29 13:43",Remote,2023-10-14,,
+BCSB0637,White,,Enrolled,"2023-11-29 15:01",Remote,2023-10-18,,
+BCSB0638,White,,Enrolled,"2023-11-30 09:43",Remote,2023-10-18,,
+BCSB0639,White,,Enrolled,"2023-12-06 09:19",Remote,2023-10-20,,
+BCSB0640,"Prefer not to answer",Norris,Refused,"2023-11-30 10:07",In-Person,,"2023-11-30 09:40",
+BCSB0641,"American Indian or Alaskan Native",Norris,Ineligible,"2023-11-30 10:10",,,,
+BCSB0642,"Prefer not to answer",Norris,Refused,"2023-11-30 10:13",In-Person,,,
+BCSB0643,White,,Enrolled,"2023-11-30 09:45",Remote,2023-09-16,,
+BCSB0644,White,,"Defer (Study Staff only)","2023-11-30 11:15",Remote,2023-11-11,,
+BCSB0645,White,,Ineligible,"2023-11-30 11:59",,2023-10-19,,
+BCSB0646,Asian,Norris,Enrolled,"2023-11-30 12:02",Hybrid,,,"2023-11-30 10:40"
+BCSB0647,"Black or African American",Norris,Enrolled,"2023-11-30 12:05",Hybrid,,,"2023-11-30 11:00"
+BCSB0648,White,,Refused,"2023-11-30 12:50",Remote,2023-10-19,,
+BCSB0649,White,,Enrolled,"2024-04-11 12:00",Remote,2023-10-20,,
+BCSB0650,White,,Enrolled,"2023-11-30 13:54",Hybrid,2023-10-18,,
+BCSB0651,"Black or African American",,Considering,"2023-11-30 14:44",Remote,2023-10-18,,
+BCSB0652,"Hispanic or Latinx",,Enrolled,"2023-11-30 15:03",Remote,2023-10-13,,
+BCSB0653,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-12-04 14:52",In-Person,,,"2023-12-04 13:30"
+BCSB0654,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-12-04 16:07",In-Person,,,"2023-12-04 13:40"
+BCSB0655,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-05-20 15:32",In-Person,,,"2023-12-04 14:30"
+BCSB0656,"Black or African American",,Ineligible,"2023-12-05 09:13",,2023-10-21,,
+BCSB0657,White,,"Defer (Study Staff only)","2023-12-05 09:45",Remote,2023-10-22,,
+BCSB0658,White,,Refused,"2023-12-05 10:12",,2023-10-22,,
+BCSB0659,"American Indian or Alaskan Native",,Ineligible,"2023-12-05 11:45",Remote,2023-10-21,,
+BCSB0660,White,Norris,Enrolled,"2023-12-05 11:07",Hybrid,,,"2023-12-05 10:30"
+BCSB0661,"Black or African American",,Enrolled,"2023-12-05 14:50",Remote,2023-10-21,,
+BCSB0662,White,,Enrolled,"2023-12-06 10:45",Remote,2023-10-22,,
+BCSB0663,"Black or African American",,Refused,"2023-12-06 11:52",Remote,2023-10-21,,
+BCSB0664,White,,"Defer (Study Staff only)","2023-12-06 13:13",Remote,2023-10-22,,
+BCSB0665,"Black or African American",,Enrolled,"2023-12-15 10:22",Remote,2023-10-22,,
+BCSB0666,White,,Enrolled,"2023-12-06 09:52",In-Person,2023-10-21,,
+BCSB0667,Asian,,"Unable to Contact","2023-12-07 09:26",,2023-10-23,,
+BCSB0668,White,,Enrolled,"2023-12-07 10:17",Remote,2023-10-22,,
+BCSB0669,White,,"Defer (Study Staff only)","2023-12-07 10:45",Remote,2023-10-24,,
+BCSB0670,Asian,,"Unable to Contact","2023-12-07 12:35",,2023-10-24,,
+BCSB0671,White,,"Defer (Study Staff only)","2023-12-07 13:16",Remote,2023-11-11,,
+BCSB0672,White,Norris,Refused,"2023-12-07 13:25",In-Person,,,"2023-12-07 13:20"
+BCSB0673,"Black or African American",,Enrolled,"2023-12-07 14:15",Remote,2023-10-23,,
+BCSB0674,White,Norris,Enrolled,"2023-12-07 16:18",Hybrid,,,"2023-12-07 16:00"
+BCSB0675,White,,Enrolled,"2023-12-08 08:17",Remote,2023-11-13,,
+BCSB0676,Asian,Norris,Enrolled,"2023-12-08 10:55",Hybrid,,,"2023-12-08 10:15"
+BCSB0677,White,Norris,Enrolled,"2023-12-08 11:11",Hybrid,,,"2023-12-08 10:30"
+BCSB0678,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-12-11 10:49",In-Person,,,"2023-12-11 09:30"
+BCSB0679,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2023-12-11 15:03",In-Person,,,"2023-12-11 14:00"
+BCSB0680,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2023-12-11 15:17",,,,"2023-12-11 13:40"
+BCSB0681,White,,Enrolled,"2023-12-12 09:15",Remote,2023-10-04,,
+BCSB0682,White,,Refused,"2023-12-12 10:15",Remote,2023-10-25,,
+BCSB0683,White,,"Unable to Contact","2023-12-12 14:54",,2023-10-22,,
+BCSB0684,White,,Enrolled,"2023-12-13 09:14",Remote,2023-10-25,,
+BCSB0685,Asian,,Refused,"2023-12-13 10:03",Remote,2023-10-29,,
+BCSB0686,White,,Considering,"2023-12-13 10:32",,2023-10-27,,
+BCSB0687,Asian,,Enrolled,"2023-12-13 10:59",Remote,2023-10-29,,
+BCSB0688,White,,"Defer (Study Staff only)","2023-12-13 13:44",Remote,2023-06-10,,
+BCSB0689,White,,"Unable to Contact","2023-12-13 14:07",,2023-10-31,,
+BCSB0690,White,,"Unable to Contact","2023-12-14 09:14",Remote,2023-11-04,,
+BCSB0691,"Black or African American",,Enrolled,"2023-12-14 10:00",Remote,2023-10-30,,
+BCSB0692,"Hispanic or Latinx",,Enrolled,"2023-12-14 11:36",Remote,2023-11-02,,
+BCSB0693,White,,Enrolled,"2023-12-14 12:16",Remote,2023-11-03,,
+BCSB0694,White,,Enrolled,"2023-12-14 12:42",Remote,2023-10-25,,
+BCSB0695,White,,Enrolled,"2023-12-14 14:48",Remote,2023-10-01,,
+BCSB0696,White,Norris,"Unable to Contact","2023-12-14 11:20",,,,"2023-12-14 10:40"
+BCSB0697,White,Norris,Refused,"2023-12-14 12:12",In-Person,,,"2023-12-14 11:40"
+BCSB0698,White,Norris,Refused,"2023-12-14 15:13",In-Person,,,"2023-12-14 13:00"
+BCSB0699,White,Norris,Enrolled,"2023-12-14 14:55",,,,"2023-12-14 13:00"
+BCSB0700,Asian,Norris,Refused,"2023-12-15 09:55",In-Person,,,"2023-12-15 09:00"
+BCSB0701,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2023-12-18 09:38",In-Person,,,"2023-12-18 08:00"
+BCSB0702,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2023-12-18 10:06",In-Person,,,"2023-12-18 09:00"
+BCSB0703,Asian,"LAGMC (LAC+USC)",Enrolled,"2023-12-18 11:14",Hybrid,,,"2023-12-18 09:30"
+BCSB0704,White,Norris,Refused,"2023-11-02 11:20",In-Person,,,"2023-11-02 11:20"
+BCSB0705,Asian,Norris,"Unable to Contact","2023-12-08 10:30",,,,"2023-12-08 10:30"
+BCSB0706,"Prefer not to answer",Norris,Ineligible,"2023-12-15 11:45",In-Person,,,"2023-12-15 11:45"
+BCSB0707,White,,"Unable to Contact","2023-12-19 09:08",,2023-10-31,,
+BCSB0708,White,,Enrolled,"2025-06-04 14:34",Remote,2023-11-05,,
+BCSB0709,"Black or African American",,Enrolled,"2023-12-19 10:20",Remote,2023-11-04,,
+BCSB0710,"Black or African American",Norris,Enrolled,"2023-12-19 13:38",Remote,2023-10-15,,
+BCSB0711,"Black or African American",,"Unable to Contact","2023-12-19 14:24",,2023-11-02,,
+BCSB0712,White,,Enrolled,"2024-01-09 15:43",Remote,2023-10-07,,
+BCSB0713,"Black or African American",Norris,Enrolled,"2023-12-19 16:15",Remote,,"2024-08-22 10:30","2023-12-19 15:30"
+BCSB0714,White,,Enrolled,"2023-12-20 09:32",Remote,2023-11-07,,
+BCSB0715,"Black or African American",,Enrolled,"2023-12-20 12:48",Remote,2023-11-08,,
+BCSB0716,White,,Enrolled,"2023-12-20 14:21",Remote,2023-11-08,,
+BCSB0717,White,,"Unable to Contact","2023-12-20 14:02",,2023-10-06,,
+BCSB0718,White,,Ineligible,"2024-01-03 09:06",,2023-10-12,,
+BCSB0719,White,,Enrolled,"2024-01-03 09:44",In-Person,2023-11-16,,
+BCSB0720,"Hispanic or Latinx",,"Unable to Contact","2024-01-03 10:12",Remote,2023-11-17,,
+BCSB0721,White,,"Unable to Contact","2024-01-03 11:46",,2023-11-17,,
+BCSB0722,White,,Enrolled,"2024-01-03 14:28",,2023-11-15,,
+BCSB0723,White,,"Unable to Contact","2024-01-03 14:58",,2023-11-18,,
+BCSB0724,White,,"Unable to Contact","2024-01-11 10:48",Remote,2023-11-18,,
+BCSB0725,White,,Ineligible,"2024-01-04 09:16",Remote,2023-11-12,,
+BCSB0726,"Black or African American",,Enrolled,"2024-01-04 10:10",Remote,2023-11-16,,
+BCSB0727,White,,Enrolled,"2024-01-04 10:18",Remote,2023-11-19,,
+BCSB0728,White,,Refused,"2024-01-04 13:12",Remote,2023-11-17,,
+BCSB0729,White,,Refused,"2024-01-04 15:03",Remote,2023-11-20,,
+BCSB0730,"Prefer not to answer",Norris,"Unable to Contact","2024-01-05 09:00",In-Person,,,"2024-01-05 09:00"
+BCSB0731,Asian,Norris,Considering,"2024-01-05 16:14",In-Person,,,
+BCSB0732,"Hispanic or Latinx",Norris,Ineligible,"2024-01-05 15:33",,,,"2024-01-05 15:33"
+BCSB0733,"Hispanic or Latinx","LAGMC (LAC+USC)",Ineligible,"2024-01-08 09:52",,,,
+BCSB0734,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-01-08 09:56",In-Person,,,"2024-01-08 09:56"
+BCSB0735,"Hispanic or Latinx","LAGMC (LAC+USC)",Ineligible,"2024-01-08 11:05",In-Person,,,
+BCSB0736,Asian,"LAGMC (LAC+USC)",Refused,"2024-01-08 11:46",In-Person,,,
+BCSB0737,White,,Ineligible,"2024-01-09 09:00",Remote,2023-11-19,,
+BCSB0738,White,,Enrolled,"2024-01-09 09:31",Remote,2023-11-15,,
+BCSB0739,"Black or African American",,"Unable to Contact","2024-01-09 10:15",Remote,2023-11-21,,
+BCSB0740,"Black or African American",,Ineligible,"2024-01-09 10:49",,2023-11-21,,
+BCSB0741,"Hispanic or Latinx",,Enrolled,"2024-01-09 11:46",Remote,2023-11-16,,
+BCSB0742,Asian,,Enrolled,"2024-01-09 12:41",Remote,2023-11-21,,
+BCSB0743,"Hispanic or Latinx",,"Unable to Contact","2024-01-10 09:12",,2023-11-23,,
+BCSB0744,White,,Enrolled,"2024-01-10 09:46",Remote,2023-11-26,,
+BCSB0745,White,,Considering,"2024-01-10 10:16",,2023-11-10,,
+BCSB0746,White,,"Defer (Study Staff only)","2024-01-10 12:10",Remote,2023-12-03,,
+BCSB0747,White,,Refused,"2024-01-10 12:45",Remote,2023-11-14,,
+BCSB0748,White,,Refused,"2024-01-17 14:15",Remote,2023-11-21,,
+BCSB0749,White,,Enrolled,"2024-01-11 09:20",Remote,2023-11-15,,
+BCSB0750,White,,"Unable to Contact","2024-01-11 09:35",Remote,2023-11-14,,
+BCSB0751,White,,Enrolled,"2024-01-11 10:34",Remote,2023-10-12,,
+BCSB0752,White,Norris,"Unable to Contact","2024-01-11 11:09",,,,
+BCSB0753,White,,Enrolled,"2024-01-11 11:47",Remote,2023-11-28,,
+BCSB0754,"Hispanic or Latinx",Norris,Refused,"2024-01-11 11:19",In-Person,,,
+BCSB0755,White,Norris,Refused,"2024-01-11 11:24",In-Person,,,
+BCSB0756,Asian,Norris,Enrolled,"2024-01-11 11:56",Hybrid,,,"2024-01-11 11:56"
+BCSB0757,White,,Enrolled,"2024-01-11 12:46",Remote,2023-11-27,,
+BCSB0758,"Hispanic or Latinx",Norris,"Unable to Contact","2024-01-12 09:44",In-Person,,,
+BCSB0759,Asian,Norris,Enrolled,"2024-01-12 11:02",Hybrid,,,
+BCSB0760,Asian,Norris,Enrolled,"2024-01-12 13:30",Hybrid,,,"2024-01-12 13:30"
+BCSB0761,"Black or African American",,Enrolled,"2024-01-16 10:29",Remote,2023-12-01,,
+BCSB0762,White,,Enrolled,"2024-01-16 09:52",Remote,2023-12-01,,
+BCSB0763,White,,Enrolled,"2024-01-16 10:18",Remote,2023-11-20,,
+BCSB0764,White,,"Unable to Contact","2024-01-16 10:42",,2023-12-03,,
+BCSB0765,White,Norris,Enrolled,"2023-11-21 09:45",Remote,2023-10-13,,
+BCSB0766,White,,Enrolled,"2024-01-16 14:20",Remote,2023-12-01,,
+BCSB0767,White,,"Unable to Contact","2024-01-16 14:58",,2023-11-28,,
+BCSB0768,White,,Enrolled,"2024-01-17 09:20",Remote,2023-11-03,,
+BCSB0769,White,,"Defer (Study Staff only)","2024-01-17 09:50",Remote,2023-11-27,,
+BCSB0770,White,,"Unable to Contact","2024-02-15 10:45",Remote,2023-12-02,,
+BCSB0771,White,,Refused,"2024-01-17 11:24",,2023-12-01,,
+BCSB0772,White,,Enrolled,"2024-01-17 13:02",Remote,2023-12-04,,
+BCSB0773,"Hispanic or Latinx",,"Unable to Contact","2024-01-18 09:10",Remote,2023-12-02,,
+BCSB0774,White,,Ineligible,"2024-01-19 09:10",Remote,2023-11-28,,
+BCSB0775,White,,Enrolled,"2024-01-23 10:16",Remote,2023-12-03,,
+BCSB0776,White,,Considering,"2024-01-18 13:53",,2023-12-06,,
+BCSB0777,Asian,Norris,Enrolled,"2024-01-18 14:48",In-Person,2023-12-03,"2024-01-25 10:00",
+BCSB0778,White,Norris,Enrolled,"2024-01-18 16:05",Hybrid,,,"2024-01-18 16:05"
+BCSB0779,White,Norris,Ineligible,"2024-01-18 16:53",In-Person,,,"2024-01-18 17:11"
+BCSB0780,"American Indian or Alaskan Native",Norris,"Unable to Contact","2024-01-19 11:01",,,,"2024-01-19 11:03"
+BCSB0781,Asian,Norris,Enrolled,"2024-01-19 12:12",Remote,,,"2024-01-19 12:14"
+BCSB0782,White,Norris,"Defer (Study Staff only)","2024-01-19 14:09",Hybrid,,,"2024-01-19 14:10"
+BCSB0783,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-01-22 10:42",In-Person,,,"2024-01-22 10:42"
+BCSB0784,"Prefer not to answer","LAGMC (LAC+USC)",Refused,"2024-01-22 14:35",In-Person,,,"2024-01-22 14:37"
+BCSB0785,White,"LAGMC (LAC+USC)",Refused,"2024-01-22 15:03",In-Person,,,"2024-01-22 15:06"
+BCSB0786,Asian,"LAGMC (LAC+USC)",Refused,"2024-01-22 15:37",In-Person,,,"2024-01-22 15:38"
+BCSB0787,White,,Enrolled,"2024-01-23 09:27",Remote,2023-12-07,,
+BCSB0788,Asian,,"Unable to Contact","2024-01-23 10:18",Remote,2023-12-03,,
+BCSB0789,White,,"Defer (Study Staff only)","2024-01-23 11:43",Remote,2023-12-07,,
+BCSB0790,White,,Considering,"2024-01-23 13:49",Remote,2023-12-07,,
+BCSB0791,White,,Enrolled,"2024-01-23 13:47",Remote,2023-12-08,,
+BCSB0792,White,,Enrolled,"2024-01-23 14:45",Remote,2023-12-07,,
+BCSB0793,White,,Enrolled,"2024-01-24 09:11",Remote,2023-12-08,,
+BCSB0794,White,,Enrolled,"2024-01-24 10:10",Remote,2023-12-08,,
+BCSB0795,White,,"Defer (Study Staff only)","2024-01-24 10:43",Remote,2023-12-08,,
+BCSB0796,White,,Enrolled,"2024-01-24 12:57",Remote,2023-12-08,,
+BCSB0797,White,,Ineligible,"2024-01-24 13:16",Remote,2023-12-07,,
+BCSB0798,White,,Enrolled,"2024-01-25 10:45",Remote,2023-12-08,,
+BCSB0799,White,,Enrolled,"2024-02-01 10:08",Remote,2023-12-06,,
+BCSB0800,White,,"Defer (Study Staff only)","2024-01-25 12:58",Remote,2023-12-08,,
+BCSB0801,Asian,Norris,Considering,"2024-01-25 13:24",In-Person,,,"2024-01-25 13:24"
+BCSB0802,White,,Enrolled,"2024-01-25 13:33",Remote,2023-11-18,,
+BCSB0803,White,,"Unable to Contact","2024-01-25 14:05",Remote,2023-12-08,,
+BCSB0804,White,,"Unable to Contact","2024-01-25 14:33",Remote,2023-12-08,,
+BCSB0805,White,Norris,"Unable to Contact","2024-01-25 14:28",,,,"2024-01-25 14:42"
+BCSB0806,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-01-29 09:16",Hybrid,,,"2024-01-29 10:12"
+BCSB0807,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-01-29 15:47",In-Person,,,"2024-01-29 15:49"
+BCSB0808,White,,Considering,"2024-01-30 09:17",Remote,2023-12-08,,
+BCSB0809,White,,"Unable to Contact","2024-01-30 09:41",Remote,2023-12-08,,
+BCSB0810,White,,"Unable to Contact","2024-01-30 10:03",Remote,2023-12-08,,
+BCSB0811,"Hispanic or Latinx",,Refused,"2024-01-30 11:58",,2023-12-08,,
+BCSB0812,White,,Enrolled,"2024-01-30 12:50",Remote,2024-01-29,,
+BCSB0813,White,,Enrolled,"2024-01-31 09:29",Remote,2023-12-08,,
+BCSB0814,"Hispanic or Latinx",,Enrolled,"2024-01-31 10:22",Remote,2023-12-08,,
+BCSB0815,Asian,,Enrolled,"2024-01-31 12:40",Remote,2023-12-08,,
+BCSB0816,White,,Enrolled,"2024-01-31 13:29",Remote,2023-12-06,,
+BCSB0817,White,,"Defer (Study Staff only)","2024-01-31 14:31",Remote,2023-12-08,,
+BCSB0818,White,,Ineligible,"2024-01-31 14:59",Remote,2023-12-08,,
+BCSB0819,White,,Enrolled,"2024-02-08 11:08",Remote,2023-12-08,,
+BCSB0820,White,,Enrolled,"2024-02-01 09:48",Remote,2023-12-08,,
+BCSB0821,White,,"Defer (Study Staff only)","2024-02-01 10:57",Remote,2024-12-08,,
+BCSB0822,White,,"Defer (Study Staff only)","2024-02-01 13:48",Remote,2023-12-08,,
+BCSB0823,White,,Enrolled,"2024-02-01 15:10",Remote,2023-12-08,,
+BCSB0824,White,,"Unable to Contact","2024-02-01 14:39",Remote,2023-12-08,,
+BCSB0825,White,Norris,Enrolled,"2024-02-01 16:08",Hybrid,,,"2024-02-01 16:31"
+BCSB0826,Asian,Norris,"Unable to Contact","2024-02-01 15:45",In-Person,,,"2024-02-01 16:45"
+BCSB0827,"Hispanic or Latinx",Norris,Considering,"2024-02-02 16:16",Hybrid,,,"2024-02-02 16:18"
+BCSB0828,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-02-05 10:11",Hybrid,,,"2024-02-05 09:00"
+BCSB0829,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-02-05 14:40",In-Person,,,"2024-02-05 14:42"
+BCSB0830,Asian,"LAGMC (LAC+USC)",Refused,"2024-02-05 15:01",In-Person,,,"2024-02-05 15:31"
+BCSB0831,Asian,"LAGMC (LAC+USC)",Refused,"2024-02-05 16:20",In-Person,,,"2024-02-05 17:04"
+BCSB0832,White,,Enrolled,"2024-02-06 09:26",Remote,2023-12-08,,
+BCSB0833,White,,"Defer (Study Staff only)","2024-02-06 10:10",Remote,2023-12-08,,
+BCSB0834,White,,"Unable to Contact","2024-02-06 10:15",Remote,2023-12-08,,
+BCSB0835,White,,Ineligible,"2024-02-06 10:46",Remote,2023-12-08,,
+BCSB0836,White,,Enrolled,"2024-02-06 14:02",Remote,2023-12-09,,
+BCSB0837,White,,Enrolled,"2024-02-06 14:44",Remote,2023-12-08,,
+BCSB0838,Asian,,Enrolled,"2024-02-07 09:21",Remote,2023-12-08,,
+BCSB0839,White,,Considering,"2024-02-08 11:32",Remote,2023-12-08,,
+BCSB0840,"Hispanic or Latinx",Norris,Enrolled,"2024-02-07 11:09",Hybrid,,,"2024-02-07 11:12"
+BCSB0841,White,,Ineligible,"2024-02-07 11:45",Remote,2023-12-08,,
+BCSB0842,"Hispanic or Latinx",,Enrolled,"2024-02-07 12:56",Remote,2023-12-08,,
+BCSB0843,"Hispanic or Latinx",Norris,Ineligible,"2024-02-07 13:31",In-Person,,,"2024-02-07 13:32"
+BCSB0844,White,,"Unable to Contact","2024-02-07 13:45",Remote,2023-12-08,,
+BCSB0845,"Hispanic or Latinx",Norris,Enrolled,"2024-02-07 15:09",In-Person,,,"2024-02-07 15:10"
+BCSB0846,"Black or African American",,Enrolled,"2024-02-08 09:50",Remote,2023-10-03,,
+BCSB0847,White,,Enrolled,"2024-02-08 10:15",Remote,2023-12-09,,
+BCSB0848,"Prefer not to answer",Norris,Refused,"2024-02-08 11:10",In-Person,,,"2024-02-08 11:11"
+BCSB0849,White,,Ineligible,"2024-02-08 11:45",Remote,2023-12-09,,
+BCSB0850,White,,"Defer (Study Staff only)","2024-02-08 14:57",Remote,2023-12-09,,
+BCSB0851,"Hispanic or Latinx",Norris,Refused,"2024-08-27 15:40",In-Person,,,"2024-02-08 14:59"
+BCSB0852,"Hispanic or Latinx",Norris,Enrolled,"2024-09-19 09:50",In-Person,,"2024-09-23 11:00","2024-02-08 15:21"
+BCSB0853,White,Norris,Enrolled,"2024-02-08 16:07",Hybrid,,,"2024-02-08 16:08"
+BCSB0854,Asian,Norris,"Unable to Contact","2024-02-09 09:31",In-Person,,,"2024-02-09 09:31"
+BCSB0855,"Prefer not to answer",Norris,Considering,"2024-02-09 16:47",In-Person,,,"2024-02-09 15:30"
+BCSB0856,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2024-02-12 09:03",,,,"2024-02-12 09:07"
+BCSB0857,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-02-12 09:29",In-Person,,,"2024-02-12 09:33"
+BCSB0858,Asian,"LAGMC (LAC+USC)",Enrolled,"2024-02-12 09:35",In-Person,,"2024-07-29 08:30","2024-02-12 10:32"
+BCSB0859,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-02-12 14:30",In-Person,,"2024-05-02 09:00","2024-02-12 15:20"
+BCSB0860,"American Indian or Alaskan Native",,Enrolled,"2024-02-13 09:15",Remote,2023-12-11,,
+BCSB0861,White,,Refused,"2024-02-13 09:45",Remote,2023-12-11,,
+BCSB0862,White,,Enrolled,"2024-02-13 10:13",Remote,2023-12-10,,
+BCSB0863,White,,Enrolled,"2024-02-13 10:46",Remote,2023-12-09,,
+BCSB0864,White,,Enrolled,"2024-02-13 11:28",Remote,2023-12-11,,
+BCSB0865,White,,Enrolled,"2024-02-13 14:44",Remote,2023-12-09,,
+BCSB0866,White,,Ineligible,"2024-02-14 09:00",Remote,2023-12-11,,
+BCSB0867,White,,Ineligible,"2024-02-14 09:33",Remote,2023-12-14,,
+BCSB0868,White,,Ineligible,"2024-02-14 10:37",,2023-12-14,,
+BCSB0869,White,,"Unable to Contact","2024-02-14 11:19",Remote,2023-12-15,,
+BCSB0870,White,,Enrolled,"2024-02-14 13:54",Remote,2023-12-13,,
+BCSB0871,Asian,,Considering,"2025-04-22 17:00",Remote,2023-12-07,,
+BCSB0872,Asian,Norris,Refused,"2024-02-15 09:50",In-Person,,,"2024-02-15 09:50"
+BCSB0873,White,Norris,"Unable to Contact","2024-02-15 09:52",,,,"2024-02-15 09:53"
+BCSB0874,White,,Refused,"2024-02-15 10:05",Remote,2023-12-08,,
+BCSB0875,Asian,,"Unable to Contact","2024-02-15 10:15",Remote,2023-12-11,,
+BCSB0876,Asian,Norris,Enrolled,"2024-02-15 10:22",Remote,,,"2024-02-15 10:32"
+BCSB0877,White,,Enrolled,"2024-02-15 12:48",Remote,2023-12-13,,
+BCSB0878,White,,Refused,"2024-02-15 13:45",Remote,2023-12-11,,
+BCSB0879,"Hispanic or Latinx",Norris,"Unable to Contact","2024-02-16 08:56",,,,"2024-02-16 08:00"
+BCSB0880,Asian,Norris,Refused,"2024-02-16 10:28",In-Person,,,"2024-02-16 10:30"
+BCSB0881,White,Norris,Enrolled,"2024-02-16 14:28",Hybrid,,,"2024-02-16 15:34"
+BCSB0882,White,,Considering,"2024-02-20 09:24",Remote,2023-12-10,,
+BCSB0883,White,,Enrolled,"2024-02-20 09:45",Remote,2023-12-11,,
+BCSB0884,"American Indian or Alaskan Native",,Enrolled,"2024-02-20 10:25",Remote,2023-12-18,,
+BCSB0885,White,,Enrolled,"2024-02-20 11:31",Remote,2023-10-28,,
+BCSB0886,White,,"Defer (Study Staff only)","2024-02-20 12:40",Remote,2023-12-09,,
+BCSB0887,"Hispanic or Latinx",,"Unable to Contact","2024-02-20 13:11",Remote,2023-12-17,,
+BCSB0888,White,,Enrolled,"2024-02-21 09:21",Remote,2023-12-23,,
+BCSB0889,"Black or African American",,Refused,"2024-02-21 09:43",Remote,2023-12-23,,
+BCSB0890,White,,Enrolled,"2024-02-21 12:51",Remote,2024-01-04,,
+BCSB0891,White,,Enrolled,"2024-02-21 13:44",Remote,2023-12-23,,
+BCSB0892,White,Norris,Considering,"2024-02-21 14:10",,,,"2024-02-21 14:13"
+BCSB0893,"Hispanic or Latinx",,Considering,"2024-02-21 14:13",Remote,2023-12-11,,
+BCSB0894,"Black or African American",,Enrolled,"2024-02-21 14:46",Remote,2023-12-21,,
+BCSB0895,White,Norris,Enrolled,"2024-02-21 15:08",Remote,,,"2024-02-21 15:08"
+BCSB0896,White,,"Unable to Contact","2024-02-22 09:15",Remote,2023-12-11,,
+BCSB0897,White,,"Unable to Contact","2024-02-22 09:45",Remote,2023-12-14,,
+BCSB0898,White,Norris,"Unable to Contact","2024-02-22 13:25",,,,"2024-02-22 13:26"
+BCSB0899,"Prefer not to answer",Norris,Refused,"2024-02-22 13:28",In-Person,,,"2024-02-22 13:29"
+BCSB0900,Asian,Norris,"Unable to Contact","2024-02-22 13:38",,,,"2024-02-22 13:38"
+BCSB0901,White,Norris,Enrolled,"2024-02-22 13:40",Hybrid,2024-02-22,,"2024-02-22 15:00"
+BCSB0902,White,,Ineligible,"2024-02-22 13:00",Remote,2023-12-24,,
+BCSB0903,White,,Enrolled,"2024-02-22 14:45",Remote,2024-12-20,,
+BCSB0904,White,Norris,"Unable to Contact","2024-02-23 11:22",In-Person,,,"2024-02-23 11:23"
+BCSB0905,Asian,Norris,Considering,"2024-02-23 12:11",In-Person,,,"2024-02-23 12:14"
+BCSB0906,"Prefer not to answer",Norris,"Unable to Contact","2024-02-23 12:12",,,,"2024-02-23 12:13"
+BCSB0907,Asian,"LAGMC (LAC+USC)",Considering,"2024-02-26 09:46",In-Person,,,"2024-02-26 10:19"
+BCSB0908,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-02-26 11:03",,,,"2024-02-26 11:04"
+BCSB0909,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-02-26 14:04",In-Person,,,"2024-02-26 14:06"
+BCSB0910,Asian,"LAGMC (LAC+USC)",Refused,"2024-02-26 14:09",In-Person,,,"2024-02-26 14:10"
+BCSB0911,White,,Refused,"2024-02-27 09:18",Remote,2023-12-24,,
+BCSB0912,White,,Enrolled,"2024-02-27 09:58",Remote,2023-12-26,,
+BCSB0913,Asian,Norris,Enrolled,"2024-02-27 10:08",In-Person,,,"2024-02-27 10:23"
+BCSB0914,White,,Refused,"2024-02-27 10:41",Remote,2023-12-26,,
+BCSB0915,"American Indian or Alaskan Native",,Ineligible,"2024-02-27 11:15",Remote,2023-12-27,,
+BCSB0916,White,,Ineligible,"2024-02-27 13:05",Remote,2023-12-20,,
+BCSB0917,White,,Enrolled,"2024-02-27 13:45",Remote,2023-12-28,,
+BCSB0918,White,Norris,"Unable to Contact","2024-02-27 13:35",,,,"2024-02-27 13:37"
+BCSB0919,White,Norris,Enrolled,"2024-02-27 14:22",Hybrid,,,"2024-02-27 14:22"
+BCSB0920,Asian,,Enrolled,"2024-02-28 09:30",Remote,2023-12-21,,
+BCSB0921,"Hispanic or Latinx",,Enrolled,"2024-02-28 10:57",Remote,2023-12-28,,
+BCSB0922,White,,Enrolled,"2024-02-28 10:44",Remote,2023-12-29,,
+BCSB0923,White,,Enrolled,"2024-02-28 12:48",Remote,2023-12-27,,
+BCSB0924,White,,Considering,"2024-02-28 14:19",Remote,2023-12-29,,
+BCSB0925,White,,Enrolled,"2024-02-29 09:30",Remote,2023-12-30,,
+BCSB0926,White,Norris,Refused,"2024-02-29 09:24",In-Person,,,"2024-02-29 09:25"
+BCSB0927,White,Norris,Enrolled,"2024-02-29 09:29",In-Person,,"2024-03-06 11:00","2024-02-29 09:31"
+BCSB0928,Asian,Norris,Enrolled,"2024-02-29 10:29",Hybrid,,,"2024-02-29 10:45"
+BCSB0929,Asian,,"Unable to Contact","2024-02-29 11:00",Remote,2023-12-29,,
+BCSB0930,White,,"Defer (Study Staff only)","2024-02-29 11:29",Remote,2023-12-31,,
+BCSB0931,"Hispanic or Latinx",Norris,Enrolled,"2024-02-29 13:09",Hybrid,,,"2024-02-29 13:09"
+BCSB0932,"Black or African American",,Enrolled,"2024-02-29 13:14",Remote,2023-12-23,,
+BCSB0933,White,,"Unable to Contact","2024-02-29 14:30",Remote,2024-01-01,,
+BCSB0934,White,,Enrolled,"2024-02-29 14:58",Remote,2023-12-25,,
+BCSB0935,"Prefer not to answer",Norris,Enrolled,"2024-08-28 12:20",In-Person,,,"2024-03-01 09:52"
+BCSB0936,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-03-04 10:43",In-Person,,,"2024-03-04 10:43"
+BCSB0937,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-03-04 14:10",In-Person,,,"2024-03-04 14:15"
+BCSB0938,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-03-04 14:24",In-Person,,,"2024-03-04 15:38"
+BCSB0939,"American Indian or Alaskan Native",,Enrolled,"2024-03-06 14:45",Remote,2024-01-04,,
+BCSB0940,White,,Ineligible,"2024-03-05 10:16",,2024-01-04,,
+BCSB0941,White,,Enrolled,"2024-03-05 14:18",Remote,2024-01-04,,
+BCSB0942,White,,Ineligible,"2024-03-06 09:15",Remote,2024-01-04,,
+BCSB0943,White,,Enrolled,"2024-03-06 10:14",Remote,2024-01-04,,
+BCSB0944,White,,"Defer (Study Staff only)","2024-03-07 11:32",Remote,2024-01-04,,
+BCSB0945,White,,Enrolled,"2024-03-06 11:00",Remote,2024-01-04,,
+BCSB0946,White,,"Unable to Contact","2024-03-06 12:56",Remote,2023-12-23,,
+BCSB0947,White,,Enrolled,"2024-03-06 14:35",Remote,2023-12-29,,
+BCSB0948,White,,"Defer (Study Staff only)","2024-03-13 13:02",Remote,2023-12-20,,
+BCSB0949,White,,"Defer (Study Staff only)","2024-03-07 09:49",Remote,2024-01-04,,
+BCSB0950,White,,Enrolled,"2024-03-07 10:54",Remote,2024-01-02,,
+BCSB0951,"Hispanic or Latinx",,Enrolled,"2024-03-07 12:45",Remote,2024-01-04,,
+BCSB0952,White,,Enrolled,"2024-03-07 13:52",Remote,2024-01-01,,
+BCSB0953,White,,Enrolled,"2024-03-07 14:26",Remote,2024-01-04,,
+BCSB0954,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-03-11 09:42",In-Person,,,"2024-03-11 09:43"
+BCSB0955,Asian,"LAGMC (LAC+USC)",Refused,"2024-03-11 09:46",In-Person,,,"2024-03-11 09:48"
+BCSB0956,Asian,"LAGMC (LAC+USC)","Unable to Contact","2024-03-11 09:55",,,,"2024-03-11 09:58"
+BCSB0957,Asian,"LAGMC (LAC+USC)",Enrolled,"2024-03-11 13:51",Hybrid,,"2024-08-26 10:00","2024-03-11 14:27"
+BCSB0958,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-03-11 15:42",Hybrid,,"2024-03-14 12:00","2024-03-11 15:45"
+BCSB0959,Asian,Norris,"Unable to Contact","2024-04-17 17:15",In-Person,,,"2024-03-12 10:24"
+BCSB0960,White,,Enrolled,"2024-03-12 09:40",Remote,2024-01-04,,
+BCSB0961,White,,Enrolled,"2024-03-12 10:30",Remote,2024-01-04,,
+BCSB0962,White,,"Unable to Contact","2024-03-12 10:55",Remote,2024-01-04,,
+BCSB0963,White,,Considering,"2024-03-12 11:51",Remote,2024-01-05,,
+BCSB0964,White,,Enrolled,"2024-03-12 13:41",Remote,2024-01-05,,
+BCSB0965,White,,Enrolled,"2024-03-12 14:36",Remote,2024-01-04,,
+BCSB0966,White,,Enrolled,"2024-03-13 09:14",Remote,2024-01-05,,
+BCSB0967,White,,Enrolled,"2024-03-13 10:10",Remote,2024-01-05,,
+BCSB0968,White,,Refused,"2024-03-13 10:45",Remote,2024-01-05,,
+BCSB0969,White,,"Unable to Contact","2024-03-13 14:42",Remote,2024-01-06,,
+BCSB0970,White,,Enrolled,"2024-03-13 14:16",Remote,2024-01-06,,
+BCSB0971,"Hispanic or Latinx",Norris,Enrolled,"2024-03-13 14:00",Hybrid,,,"2024-03-13 14:34"
+BCSB0972,White,Norris,Enrolled,"2024-03-13 14:50",Hybrid,,,"2024-03-13 15:53"
+BCSB0973,White,,Enrolled,"2024-03-14 09:35",Remote,2024-01-04,,
+BCSB0974,White,,"Unable to Contact","2024-03-14 09:44",Remote,2024-01-05,,
+BCSB0975,White,,Enrolled,"2024-03-14 11:17",Remote,2024-01-05,,
+BCSB0976,Asian,Norris,"Unable to Contact","2024-03-14 10:37",In-Person,,,"2024-03-14 10:38"
+BCSB0977,White,,Enrolled,"2024-03-14 10:45",Remote,2024-01-07,,
+BCSB0978,White,Norris,"Unable to Contact","2024-03-14 11:07",,,,"2024-03-14 11:07"
+BCSB0979,White,Norris,"Unable to Contact","2024-03-14 11:30",In-Person,,,"2024-03-14 11:30"
+BCSB0980,Asian,,Ineligible,"2024-03-14 11:48",Remote,2024-01-09,,
+BCSB0981,White,,Enrolled,"2024-03-14 13:47",Remote,2024-03-14,,
+BCSB0982,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-03-18 10:38",In-Person,,,"2024-03-18 10:39"
+BCSB0983,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-03-18 11:26",Hybrid,,"2024-09-09 09:30","2024-03-18 12:18"
+BCSB0984,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-03-18 15:35",In-Person,,"2024-04-01 08:00","2024-03-18 15:37"
+BCSB0985,White,,"Unable to Contact","2024-03-19 09:04",Remote,2024-01-09,,
+BCSB0986,White,,Enrolled,"2024-03-19 09:49",Remote,2024-01-10,,
+BCSB0987,"Hispanic or Latinx",,Refused,"2024-05-01 12:30",Remote,2024-01-13,,
+BCSB0988,White,,Considering,"2024-03-19 10:42",Remote,2024-01-10,,
+BCSB0989,White,,"Defer (Study Staff only)","2024-03-19 11:49",Remote,2024-01-13,,
+BCSB0990,White,,"Unable to Contact","2024-03-19 12:12",Remote,2024-01-06,,
+BCSB0991,"Black or African American",,Enrolled,"2024-03-19 14:16",Remote,2024-01-06,,
+BCSB0992,White,,"Defer (Study Staff only)","2024-08-27 11:19",Remote,2024-01-15,,
+BCSB0993,White,,"Defer (Study Staff only)","2024-03-20 10:46",Remote,2024-01-17,,
+BCSB0994,White,,"Defer (Study Staff only)","2024-03-21 14:27",Remote,2024-01-17,,
+BCSB0995,White,,Considering,"2024-03-20 12:01",Remote,2024-03-13,,
+BCSB0996,"Hispanic or Latinx",,Enrolled,"2024-03-20 12:44",Remote,2024-01-15,,
+BCSB0997,White,,Enrolled,"2024-03-20 13:11",Remote,2024-01-15,,
+BCSB0998,White,,Ineligible,"2024-03-20 14:39",Remote,2024-01-16,,
+BCSB0999,White,,Enrolled,"2024-03-21 09:45",Remote,2024-01-12,,
+BCSB1000,White,Norris,Enrolled,"2024-03-21 10:16",Hybrid,,,"2024-03-21 10:16"
+BCSB1001,White,,Considering,"2024-03-21 10:38",Remote,2023-12-24,,
+BCSB1002,"Native Hawaiian or Pacific Islander",Norris,Enrolled,"2024-03-21 10:40",In-Person,,"2024-04-09 12:00","2024-03-21 10:41"
+BCSB1003,White,,Enrolled,"2024-03-21 11:08",Remote,2024-01-04,,
+BCSB1004,White,,Enrolled,"2024-03-21 11:30",Remote,2024-03-16,,
+BCSB1005,White,,Enrolled,"2024-03-21 14:09",Remote,2024-01-10,,
+BCSB1006,White,Norris,Considering,"2024-03-21 11:40",Hybrid,,,"2024-03-21 12:16"
+BCSB1007,White,,Enrolled,"2024-03-21 13:35",Remote,2024-01-13,,
+BCSB1008,Asian,Norris,Enrolled,"2024-03-22 10:15",In-Person,,"2024-10-07 10:00","2024-03-22 10:17"
+BCSB1009,Asian,Norris,Enrolled,"2024-03-22 11:34",Remote,,,"2024-03-22 11:34"
+BCSB1010,"Hispanic or Latinx",,"Unable to Contact","2024-03-26 10:45",,2024-02-19,,
+BCSB1011,White,,Ineligible,"2024-03-26 12:47",Remote,2024-01-17,,
+BCSB1012,White,,Enrolled,"2024-03-26 13:15",Remote,2024-01-16,,
+BCSB1013,White,,Enrolled,"2024-03-26 13:33",Remote,2024-02-07,,
+BCSB1014,White,,Enrolled,"2024-03-26 15:57",Remote,2024-03-17,,
+BCSB1015,White,,Enrolled,"2024-03-27 09:45",Remote,2024-01-19,,
+BCSB1016,White,,Enrolled,"2024-03-27 10:40",Remote,2024-01-20,,
+BCSB1017,"Black or African American",,Enrolled,"2024-03-27 11:04",Remote,2024-03-23,,
+BCSB1018,White,,Enrolled,"2024-03-27 11:48",Remote,2024-01-17,,
+BCSB1019,White,,Refused,"2024-03-27 12:13",Remote,2024-03-15,,
+BCSB1020,White,,"Unable to Contact","2024-03-27 13:45",Remote,2024-01-19,,
+BCSB1021,White,,"Unable to Contact","2024-03-27 14:05",Remote,2024-01-18,,
+BCSB1022,White,,Refused,"2024-03-27 14:48",Remote,2024-01-05,,
+BCSB1023,White,,Enrolled,"2024-03-28 09:48",Remote,2024-02-03,,
+BCSB1024,White,,"Defer (Study Staff only)","2024-03-28 10:22",Remote,2024-01-02,,
+BCSB1025,White,,Enrolled,"2024-04-16 12:04",Remote,2024-01-20,,
+BCSB1026,White,,Enrolled,"2024-03-28 11:30",Remote,2024-01-05,,
+BCSB1027,White,,Enrolled,"2024-03-28 12:00",Remote,2024-03-14,,
+BCSB1028,White,,"Defer (Study Staff only)","2024-03-28 12:45",Remote,2024-01-20,,
+BCSB1029,White,,"Unable to Contact","2024-03-28 14:15",Remote,2024-02-26,,
+BCSB1030,White,,Enrolled,"2024-03-28 14:35",Remote,2024-03-16,,
+BCSB1031,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-04-29 09:05",In-Person,,,"2024-04-01 16:04"
+BCSB1032,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-04-01 16:05",In-Person,,,"2024-04-01 16:07"
+BCSB1033,Asian,Norris,Enrolled,"2024-04-02 09:34",Hybrid,,,"2024-04-02 09:36"
+BCSB1034,White,,Enrolled,"2024-04-02 09:17",Remote,2024-01-26,,
+BCSB1035,White,,Enrolled,"2024-04-02 09:48",Remote,2024-01-28,,
+BCSB1036,Asian,,Enrolled,"2024-04-02 10:18",Remote,2024-03-29,,
+BCSB1037,White,,Enrolled,"2024-04-02 11:30",Remote,2024-01-27,,
+BCSB1038,White,,Enrolled,"2024-04-02 12:15",Remote,2024-03-23,,
+BCSB1039,White,,Enrolled,"2024-04-02 12:45",Remote,2024-01-27,,
+BCSB1040,White,,"Unable to Contact","2024-04-02 13:59",Remote,2024-01-27,,
+BCSB1041,White,,Enrolled,"2024-04-02 14:41",Remote,2024-01-26,,
+BCSB1042,White,,Enrolled,"2024-04-03 09:20",Remote,2024-12-08,,
+BCSB1043,White,,Enrolled,"2024-04-03 09:50",Remote,2024-01-29,,
+BCSB1044,White,,"Unable to Contact","2024-04-03 11:00",Remote,2024-03-28,,
+BCSB1045,White,,Enrolled,"2024-04-04 09:21",Remote,2024-01-27,,
+BCSB1046,White,,Enrolled,"2024-04-18 14:44",Remote,2024-01-26,,
+BCSB1047,White,,"Unable to Contact","2024-04-03 14:15",Remote,2024-01-24,,
+BCSB1048,White,,"Unable to Contact","2024-04-03 15:00",Remote,2024-01-28,,
+BCSB1049,"Prefer not to answer",Norris,Considering,"2024-04-03 15:30",In-Person,,,"2024-04-03 15:00"
+BCSB1050,White,,"Defer (Study Staff only)","2024-04-03 15:45",Remote,2024-03-28,,
+BCSB1051,White,,Refused,"2024-04-04 09:06",Remote,2024-01-28,,
+BCSB1052,"Black or African American",,Enrolled,"2024-04-04 09:48",Remote,2024-02-05,,
+BCSB1053,White,,Enrolled,"2024-04-04 10:26",Remote,2024-01-30,,
+BCSB1054,White,,Enrolled,"2024-04-04 10:43",Remote,2024-01-30,,
+BCSB1055,White,Norris,"Unable to Contact","2024-04-04 11:48",In-Person,,,"2024-04-04 11:00"
+BCSB1056,White,Norris,Refused,"2024-04-04 12:15",In-Person,,,"2024-04-04 11:40"
+BCSB1057,White,,"Unable to Contact","2024-04-04 11:15",Remote,2024-03-15,,
+BCSB1058,White,,Enrolled,"2024-04-04 14:50",Remote,2024-03-28,,
+BCSB1059,"Hispanic or Latinx",,Ineligible,"2024-04-04 14:30",Remote,2024-02-03,,
+BCSB1060,"Hispanic or Latinx",Norris,Refused,"2024-04-04 16:27",In-Person,,,"2024-04-04 15:40"
+BCSB1061,Asian,Norris,Considering,"2024-04-05 09:53",Hybrid,,,"2024-04-05 10:00"
+BCSB1062,Asian,Norris,Enrolled,"2024-04-05 16:30",In-Person,,"2024-05-16 12:00","2024-04-05 16:00"
+BCSB1063,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-04-08 09:02",In-Person,,,"2024-04-08 08:30"
+BCSB1064,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-04-08 11:05",In-Person,,,"2024-04-08 09:30"
+BCSB1065,Asian,"LAGMC (LAC+USC)","Unable to Contact","2024-04-08 11:07",In-Person,,,"2024-04-08 10:00"
+BCSB1066,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-04-08 14:40",In-Person,,"2024-04-16 12:00","2024-04-08 14:00"
+BCSB1067,White,,Enrolled,"2024-04-09 10:00",Remote,2024-01-27,,
+BCSB1068,White,,"Unable to Contact","2024-04-09 09:05",Remote,2024-02-06,,
+BCSB1069,White,,Ineligible,"2024-04-09 10:19",Remote,2024-02-02,,
+BCSB1070,"Hispanic or Latinx",,Enrolled,"2024-04-09 11:01",Remote,2024-02-06,,
+BCSB1071,White,,Ineligible,"2024-04-09 11:37",Remote,2024-02-06,,
+BCSB1072,White,,Enrolled,"2024-04-09 14:14",Remote,2024-01-26,,
+BCSB1073,White,,Enrolled,"2024-04-09 15:26",Remote,2024-03-13,,
+BCSB1074,White,Norris,Enrolled,"2024-04-10 09:28",In-Person,2024-02-06,"2024-04-17 11:00",
+BCSB1075,White,,"Unable to Contact","2024-04-10 10:09",Remote,2024-01-23,,
+BCSB1076,White,,Enrolled,"2024-04-10 10:59",Remote,2024-02-06,,
+BCSB1077,White,,Enrolled,"2024-04-10 13:22",Remote,2024-03-29,,
+BCSB1078,White,,"Unable to Contact","2024-04-10 14:55",Remote,2024-02-04,,
+BCSB1079,White,,Enrolled,"2024-04-11 09:30",In-Person,2024-05-08,,
+BCSB1080,White,,Enrolled,"2024-04-11 11:00",Remote,2024-12-09,,
+BCSB1081,White,,Enrolled,"2024-04-11 13:32",Remote,2024-02-07,,
+BCSB1082,White,,Considering,"2024-04-11 13:55",Remote,2024-02-05,,
+BCSB1083,White,Norris,Enrolled,"2024-04-11 14:17",In-Person,,"2024-04-30 11:30","2024-04-11 13:40"
+BCSB1084,White,,"Defer (Study Staff only)","2024-04-11 14:30",Remote,2024-03-29,,
+BCSB1085,White,,Enrolled,"2024-04-11 14:56",Remote,2024-02-07,,
+BCSB1086,"Hispanic or Latinx",Norris,Enrolled,"2024-04-11 16:12",Hybrid,,,"2024-04-11 15:00"
+BCSB1087,White,Norris,Considering,"2024-04-12 13:29",In-Person,,,"2024-04-12 13:00"
+BCSB1088,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-04-15 08:59",In-Person,,,"2024-04-15 08:30"
+BCSB1089,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2024-04-15 09:32",In-Person,,,"2024-04-15 09:00"
+BCSB1090,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-04-15 10:49",In-Person,,,"2024-04-15 10:00"
+BCSB1091,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-04-15 14:11",In-Person,,"2024-05-01 08:00","2024-04-15 13:30"
+BCSB1092,Asian,"LAGMC (LAC+USC)",Refused,"2024-04-15 14:45",In-Person,,,"2024-04-15 14:48"
+BCSB1093,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-04-15 15:23",Hybrid,,,"2024-04-15 15:23"
+BCSB1094,"Hispanic or Latinx","LAGMC (LAC+USC)",Ineligible,"2024-04-15 16:12",In-Person,,"2024-04-22 10:00","2024-04-15 02:40"
+BCSB1095,White,,Enrolled,"2024-04-16 09:27",Remote,2024-02-06,,
+BCSB1096,"Hispanic or Latinx",,Enrolled,"2024-04-16 10:44",Remote,2024-02-07,,
+BCSB1097,White,,Ineligible,"2024-04-16 11:40",Remote,2024-02-09,,
+BCSB1098,White,,Enrolled,"2024-04-16 13:50",Remote,2024-02-08,,
+BCSB1099,White,,Enrolled,"2024-04-16 15:00",Remote,2024-02-08,,
+BCSB1100,White,,"Unable to Contact","2024-04-17 09:15",Remote,2024-02-09,,
+BCSB1101,White,,Enrolled,"2024-04-17 09:45",Remote,2024-02-12,,
+BCSB1102,White,,Considering,"2024-04-17 12:27",Remote,2024-02-12,,
+BCSB1103,White,,Enrolled,"2024-04-17 12:55",Remote,2024-02-09,,
+BCSB1104,White,,Enrolled,"2024-04-17 14:18",Remote,2024-02-12,,
+BCSB1105,"Hispanic or Latinx",Norris,Enrolled,"2024-04-17 14:34",Hybrid,,,"2024-04-17 14:00"
+BCSB1106,White,,Considering,"2024-04-17 14:55",Remote,2024-02-09,,
+BCSB1107,White,,Enrolled,"2024-04-18 09:16",Remote,2024-02-12,,
+BCSB1108,White,,"Unable to Contact","2024-04-18 09:45",Remote,2024-02-14,,
+BCSB1109,White,,"Unable to Contact","2024-04-18 10:11",Remote,2024-02-06,,
+BCSB1110,White,,Ineligible,"2024-04-18 11:25",Remote,2024-02-15,,
+BCSB1111,White,,Enrolled,"2024-04-18 13:14",Remote,2024-02-13,,
+BCSB1112,"Hispanic or Latinx",Norris,Considering,"2024-04-19 09:48",Hybrid,,,"2024-04-19 10:00"
+BCSB1113,White,Norris,"Defer (Study Staff only)","2024-04-19 11:52",In-Person,,,"2024-04-19 10:30"
+BCSB1114,White,,Considering,"2024-04-23 09:34",Remote,2024-02-10,,
+BCSB1115,"Hispanic or Latinx",,Enrolled,"2024-04-23 11:45",Remote,2024-04-22,,
+BCSB1116,White,,Enrolled,"2024-04-23 13:01",Remote,2024-02-19,,
+BCSB1117,"Black or African American",,Enrolled,"2024-04-23 13:24",Remote,2024-02-19,,
+BCSB1118,White,,Enrolled,"2024-04-23 14:24",Remote,2024-02-18,,
+BCSB1119,White,,Enrolled,"2024-04-23 15:05",Remote,2024-02-16,,
+BCSB1120,White,,"Unable to Contact","2024-04-24 11:30",Remote,2024-02-19,,
+BCSB1121,White,,Ineligible,"2024-04-24 12:07",Remote,2024-02-19,,
+BCSB1122,White,,Enrolled,"2024-04-24 13:00",Remote,2024-03-29,,
+BCSB1123,"Black or African American",,Enrolled,"2024-04-24 13:23",Remote,2024-02-20,,
+BCSB1124,White,,Enrolled,"2024-04-24 13:22",Remote,2024-04-23,,
+BCSB1125,White,,Ineligible,"2024-04-24 13:39",Remote,2024-02-20,,
+BCSB1126,White,,Enrolled,"2024-04-24 14:22",Remote,2023-12-28,,
+BCSB1127,White,,Ineligible,"2024-04-24 14:57",Remote,2024-02-13,,
+BCSB1128,White,,Refused,"2024-04-25 09:15",Remote,2024-02-24,,
+BCSB1129,White,,Considering,"2024-04-25 11:00",Remote,2024-04-24,,
+BCSB1130,White,,Refused,"2024-04-25 11:21",Remote,2024-02-20,,
+BCSB1131,White,,Enrolled,"2024-04-25 13:30",Remote,2024-02-19,,
+BCSB1132,White,,Enrolled,"2024-04-25 13:57",Remote,2024-02-13,,
+BCSB1133,White,,"Unable to Contact","2024-04-25 14:45",Remote,2024-02-24,,
+BCSB1134,White,,"Unable to Contact","2024-04-25 15:05",Remote,2024-01-31,,
+BCSB1135,White,,Enrolled,"2024-04-25 15:16",Remote,2024-04-24,,
+BCSB1136,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-04-29 09:36",In-Person,,"2024-06-03 08:00","2024-04-29 08:00"
+BCSB1137,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-04-29 11:28",In-Person,,"2024-08-29 09:30","2024-04-29 11:00"
+BCSB1138,White,,"Unable to Contact","2024-04-30 10:13",Remote,2024-02-15,,
+BCSB1139,White,,Refused,"2024-04-30 10:15",Remote,2024-02-20,,
+BCSB1140,White,,Ineligible,"2024-04-30 10:15",Remote,2024-02-22,,
+BCSB1141,White,,Enrolled,"2024-04-30 11:16",Remote,2024-02-22,,
+BCSB1142,White,,Enrolled,"2024-04-30 11:35",Remote,1953-02-21,,
+BCSB1143,White,,Enrolled,"2024-04-30 13:58",Remote,2024-02-22,,
+BCSB1144,White,,Enrolled,"2024-04-30 14:59",Remote,2024-04-24,,
+BCSB1145,White,,Enrolled,"2024-05-01 09:45",Remote,2024-02-24,,
+BCSB1146,White,,Ineligible,"2024-05-01 09:45",Remote,2024-04-29,,
+BCSB1147,White,,"Unable to Contact","2024-05-01 13:15",Remote,2024-02-26,,
+BCSB1148,White,,"Defer (Study Staff only)","2024-05-01 14:05",Remote,2024-02-23,,
+BCSB1149,White,,Ineligible,"2024-05-01 14:26",Remote,2023-12-05,,
+BCSB1150,White,,Enrolled,"2024-05-01 15:01",Remote,2023-12-26,,
+BCSB1151,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-05-06 10:46",In-Person,,,"2024-05-06 10:00"
+BCSB1152,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2024-05-06 10:00",In-Person,,,"2024-05-06 10:00"
+BCSB1153,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-05-06 11:00",In-Person,,,"2024-05-06 10:00"
+BCSB1154,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-05-06 15:15",In-Person,,,"2024-05-06 13:40"
+BCSB1155,Asian,Norris,Refused,"2024-05-08 11:03",In-Person,,,"2024-05-08 11:30"
+BCSB1156,"Hispanic or Latinx",,"Unable to Contact","2024-05-08 11:53",,2024-05-03,,
+BCSB1157,Asian,Norris,"Unable to Contact","2024-05-09 11:00",In-Person,,,"2024-05-09 10:20"
+BCSB1158,"Hispanic or Latinx",,"Unable to Contact","2024-05-09 10:15",Remote,2024-03-01,,
+BCSB1159,White,,Enrolled,"2024-05-14 14:00",Remote,2024-05-01,,
+BCSB1160,"Hispanic or Latinx",,"Unable to Contact","2024-05-09 13:45",Remote,2024-05-02,,
+BCSB1161,"Black or African American",,Enrolled,"2024-05-09 14:30",Remote,2024-03-04,,
+BCSB1162,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-05-13 09:27",In-Person,,,"2024-05-13 08:30"
+BCSB1163,"Prefer not to answer","LAGMC (LAC+USC)",Ineligible,"2024-05-13 13:40",In-Person,,,"2024-05-13 13:00"
+BCSB1164,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-05-13 14:00",In-Person,,"2024-06-24 11:00","2024-05-13 13:30"
+BCSB1165,"Hispanic or Latinx",Norris,Considering,"2024-05-14 11:10",In-Person,,,"2024-05-14 11:00"
+BCSB1166,"Hispanic or Latinx",Norris,Enrolled,"2024-05-14 11:42",Hybrid,,,"2024-05-14 11:45"
+BCSB1167,"Hispanic or Latinx",,Refused,"2024-05-16 10:40",Remote,2024-03-07,,
+BCSB1168,"American Indian or Alaskan Native",,"Unable to Contact","2024-05-14 14:00",Remote,2024-03-06,,
+BCSB1169,"Hispanic or Latinx",Norris,Refused,"2024-05-15 10:25",In-Person,,,"2024-05-15 10:00"
+BCSB1170,"Hispanic or Latinx",Norris,"Unable to Contact","2024-05-15 10:55",In-Person,,,"2024-05-15 11:00"
+BCSB1171,"Hispanic or Latinx",,"Unable to Contact","2024-05-15 13:30",Remote,2024-03-10,,
+BCSB1172,"Hispanic or Latinx",,"Unable to Contact","2024-05-15 14:15",Remote,2024-03-09,,
+BCSB1173,Asian,Norris,Refused,"2024-05-16 10:48",In-Person,,,"2024-05-16 10:20"
+BCSB1174,"Black or African American",,Enrolled,"2024-05-21 15:52",Remote,2024-03-08,,
+BCSB1175,"Hispanic or Latinx",,Considering,"2024-05-21 13:38",Remote,2024-03-10,,
+BCSB1176,"Hispanic or Latinx",Norris,Refused,"2024-05-16 14:45",In-Person,,,"2024-05-16 15:00"
+BCSB1177,"Hispanic or Latinx",Norris,Considering,"2024-05-17 09:54",In-Person,,,"2024-05-17 10:00"
+BCSB1178,Asian,Norris,Refused,"2024-05-17 10:21",In-Person,,,"2024-05-17 09:30"
+BCSB1179,White,Norris,Ineligible,"2024-05-17 11:25",In-Person,,,"2024-05-17 11:00"
+BCSB1180,"Black or African American",Norris,Refused,"2024-05-17 11:29",In-Person,,,"2024-05-17 11:15"
+BCSB1181,Asian,Norris,Refused,"2024-05-17 11:52",In-Person,,,"2024-05-17 11:00"
+BCSB1182,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-05-20 10:28",In-Person,,,"2024-05-20 09:30"
+BCSB1183,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-05-20 10:42",In-Person,,,"2024-05-20 09:30"
+BCSB1184,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-05-20 10:51",In-Person,,,"2024-05-20 10:00"
+BCSB1185,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-05-20 13:26",Hybrid,,"2024-08-19 10:00","2024-05-20 13:00"
+BCSB1186,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-05-20 13:35",In-Person,,"2024-08-20 09:00","2024-05-20 14:19"
+BCSB1187,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-05-20 15:03",In-Person,,"2024-05-23 13:30","2024-05-20 13:30"
+BCSB1188,"Hispanic or Latinx",Norris,Refused,"2024-05-22 10:50",In-Person,,,"2024-05-22 10:30"
+BCSB1189,White,Norris,Considering,"2024-05-24 11:18",Remote,,,"2024-05-24 11:00"
+BCSB1190,Asian,Norris,Refused,"2024-05-28 09:53",In-Person,,,"2024-05-28 09:53"
+BCSB1191,"Hispanic or Latinx",Norris,Ineligible,"2024-05-30 13:37",In-Person,,,"2024-05-30 13:20"
+BCSB1192,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-06-03 13:28",In-Person,,"2024-06-20 09:00","2024-06-03 13:30"
+BCSB1193,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-06-03 14:41",In-Person,,"2024-08-26 13:00","2024-06-03 13:30"
+BCSB1194,"Black or African American","LAGMC (LAC+USC)",Enrolled,"2024-06-03 14:48",In-Person,,,"2024-06-03 13:00"
+BCSB1195,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-06-03 15:29",In-Person,,"2024-06-10 11:00","2024-06-04 15:00"
+BCSB1196,Asian,Norris,Refused,"2024-06-04 10:35",In-Person,,,"2024-06-04 10:00"
+BCSB1197,"Hispanic or Latinx",Norris,"Unable to Contact","2024-06-04 09:30",In-Person,,,"2024-06-04 09:45"
+BCSB1198,"Black or African American",,Enrolled,"2024-06-04 10:25",Remote,2024-05-20,,
+BCSB1199,"Black or African American",Norris,Considering,"2024-06-04 15:07",In-Person,,,"2024-06-04 15:00"
+BCSB1200,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-06-10 08:58",In-Person,,"2024-06-18 09:00","2024-06-10 08:00"
+BCSB1201,"Hispanic or Latinx","LAGMC (LAC+USC)",Ineligible,"2024-06-10 09:30",In-Person,,,"2024-06-10 09:30"
+BCSB1202,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-06-10 10:26",In-Person,,,"2024-06-10 10:26"
+BCSB1203,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-06-10 10:33",Hybrid,,,"2024-06-10 10:00"
+BCSB1204,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-06-10 11:45",In-Person,,"2024-06-19 09:00","2024-06-10 09:30"
+BCSB1205,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-06-10 14:40",In-Person,,,"2024-06-10 14:30"
+BCSB1206,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-06-10 14:54",In-Person,,,"2024-06-10 14:54"
+BCSB1207,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-06-10 15:41",In-Person,,,"2024-06-10 15:41"
+BCSB1208,"Prefer not to answer",Norris,Considering,"2024-06-11 10:27",In-Person,,,"2024-06-11 10:00"
+BCSB1209,Asian,,Enrolled,"2024-06-11 10:45",Remote,2024-03-13,,
+BCSB1210,"Hispanic or Latinx",Norris,Enrolled,"2024-06-11 13:26",In-Person,,"2024-06-28 11:00","2024-06-11 13:00"
+BCSB1211,"Hispanic or Latinx",,Enrolled,"2024-06-11 13:40",Remote,2024-03-13,,
+BCSB1212,"Native Hawaiian or Pacific Islander",,Enrolled,"2024-06-12 12:00",Remote,2024-03-13,,
+BCSB1213,Asian,,Refused,"2024-05-29 13:45",Remote,2024-03-13,,
+BCSB1214,"Hispanic or Latinx",,"Unable to Contact","2024-05-28 09:15",Remote,2024-03-13,,
+BCSB1215,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-06-17 11:21",In-Person,,,"2024-06-17 11:21"
+BCSB1216,Asian,Norris,Refused,"2024-06-19 13:20",In-Person,,,"2024-06-19 13:00"
+BCSB1217,"Hispanic or Latinx",Norris,Enrolled,"2024-06-20 09:56",In-Person,,"2024-07-11 09:00","2024-06-20 09:56"
+BCSB1218,Asian,Norris,Enrolled,"2024-06-21 10:00",Remote,,,"2024-06-21 09:30"
+BCSB1219,"Hispanic or Latinx",Norris,Enrolled,"2024-06-21 11:37",Hybrid,,,"2024-06-21 11:45"
+BCSB1220,"Prefer not to answer","LAGMC (LAC+USC)",Considering,"2024-06-24 10:24",In-Person,,,"2024-06-24 09:30"
+BCSB1221,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-06-24 15:55",In-Person,,"2024-08-02 11:00","2024-06-24 15:00"
+BCSB1222,Asian,Norris,"Unable to Contact","2024-06-25 11:07",In-Person,,,"2024-06-25 10:45"
+BCSB1223,Asian,Norris,Refused,"2024-06-25 11:45",In-Person,,,"2024-06-25 10:40"
+BCSB1224,Asian,,Enrolled,"2024-06-25 09:16",Remote,2024-11-14,,
+BCSB1225,"Hispanic or Latinx",Norris,Enrolled,"2024-06-26 10:41",Remote,,,"2024-06-26 10:30"
+BCSB1226,"Hispanic or Latinx",,Enrolled,"2024-06-26 15:24",Remote,2024-06-21,,
+BCSB1227,"Hispanic or Latinx",Norris,Enrolled,"2024-06-27 10:31",Hybrid,,,"2024-06-27 10:00"
+BCSB1228,"Prefer not to answer",Norris,Enrolled,"2024-06-27 11:30",In-Person,,"2024-07-25 11:00","2024-06-27 10:40"
+BCSB1229,Asian,Norris,Considering,"2024-06-27 11:58",In-Person,,,"2024-06-27 11:20"
+BCSB1230,"Hispanic or Latinx",,Enrolled,"2024-06-27 12:53",Remote,2024-06-01,,
+BCSB1231,Asian,Norris,Enrolled,"2024-06-27 13:30",Hybrid,,,"2024-06-27 13:00"
+BCSB1232,"Prefer not to answer",Norris,Considering,"2024-06-28 13:55",In-Person,,,"2024-06-28 13:30"
+BCSB1233,"Hispanic or Latinx",Norris,Enrolled,"2024-06-28 14:50",In-Person,,,"2024-06-28 15:00"
+BCSB1234,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-01 09:41",In-Person,,"2024-07-09 10:00","2024-07-01 08:00"
+BCSB1235,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-01 14:42",In-Person,,"2024-07-11 09:00","2024-07-01 13:20"
+BCSB1236,"Hispanic or Latinx",,Enrolled,"2024-07-18 09:30",Remote,2024-06-01,,
+BCSB1237,Asian,Norris,Enrolled,"2024-07-02 10:08",Hybrid,,,"2024-07-02 10:15"
+BCSB1238,"Hispanic or Latinx",Norris,Enrolled,"2024-07-03 11:30",In-Person,,"2024-08-08 10:30","2024-07-03 10:45"
+BCSB1239,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-08 13:53",In-Person,,,"2024-07-08 13:00"
+BCSB1240,"Prefer not to answer","LAGMC (LAC+USC)",Considering,"2024-07-08 14:10",Hybrid,,"2024-07-08 14:11","2024-07-08 13:00"
+BCSB1241,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-08 15:41",In-Person,,"2024-07-31 13:00","2024-07-08 14:30"
+BCSB1242,Asian,Norris,Ineligible,"2024-07-09 14:20",In-Person,,,"2024-07-09 14:15"
+BCSB1243,"Hispanic or Latinx",,Enrolled,"2024-07-16 09:48",Remote,2024-06-21,,
+BCSB1244,"Hispanic or Latinx",Norris,Refused,"2024-07-11 14:45",In-Person,,,"2024-07-11 14:40"
+BCSB1245,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-15 09:06",In-Person,,"2024-07-16 16:00","2024-07-16 08:00"
+BCSB1246,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-15 10:13",In-Person,,"2024-08-02 08:00","2024-07-15 09:30"
+BCSB1247,Asian,"LAGMC (LAC+USC)",Enrolled,"2024-07-15 10:36",Hybrid,,"2024-07-15 10:41","2024-07-15 10:00"
+BCSB1248,Asian,"LAGMC (LAC+USC)",Enrolled,"2024-07-15 13:28",In-Person,,,"2024-07-15 13:00"
+BCSB1249,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-15 14:33",Hybrid,,"2024-09-11 11:00","2024-07-15 14:00"
+BCSB1250,"Hispanic or Latinx","LAGMC (LAC+USC)",Ineligible,"2024-07-15 10:00",In-Person,,"2024-07-22 10:00","2024-07-15 09:30"
+BCSB1251,"Hispanic or Latinx",Norris,Refused,"2024-07-17 15:00",In-Person,,,"2024-07-17 14:30"
+BCSB1252,"Hispanic or Latinx",Norris,Enrolled,"2024-07-18 11:03",Hybrid,,"2024-08-01 09:00","2024-07-18 10:00"
+BCSB1253,"Black or African American",Norris,Enrolled,"2024-07-18 11:28",In-Person,,,"2024-07-18 10:20"
+BCSB1254,Asian,,Enrolled,"2024-07-18 15:17",Remote,2024-07-11,,
+BCSB1255,"Hispanic or Latinx",Norris,Enrolled,"2024-07-19 11:06",Hybrid,,,"2024-07-19 11:00"
+BCSB1256,"Prefer not to answer",,"Unable to Contact","2024-07-25 01:12",Remote,2024-07-18,,
+BCSB1257,Asian,Norris,"Unable to Contact","2024-07-25 14:00",In-Person,,,"2024-07-25 13:30"
+BCSB1258,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-29 10:42",In-Person,,"2024-07-30 11:30","2024-07-29 10:00"
+BCSB1259,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-07-29 15:17",In-Person,,"2024-10-24 10:00","2024-07-29 15:17"
+BCSB1260,"Hispanic or Latinx","LAGMC (LAC+USC)","Defer (Study Staff only)","2024-07-29 15:40",In-Person,,,"2024-07-29 13:30"
+BCSB1261,Asian,Norris,"Unable to Contact","2024-08-01 10:00",In-Person,,,"2024-08-01 10:00"
+BCSB1262,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2024-08-05 09:51",In-Person,,,"2024-08-05 08:30"
+BCSB1263,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-08-05 10:12",In-Person,,"2024-08-26 10:00","2024-08-05 09:30"
+BCSB1264,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-08-05 14:19",In-Person,,,"2024-08-05 13:30"
+BCSB1265,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-08-05 14:45",In-Person,,,"2024-08-05 13:20"
+BCSB1266,"Black or African American","LAGMC (LAC+USC)",Considering,"2024-08-05 15:11",In-Person,,,"2024-08-05 14:00"
+BCSB1267,Asian,"LAGMC (LAC+USC)",Considering,"2024-08-05 15:35",In-Person,,,"2024-08-05 14:30"
+BCSB1268,Asian,Norris,"Unable to Contact","2024-08-06 10:25",In-Person,,,"2024-08-06 10:00"
+BCSB1269,Asian,Norris,Enrolled,"2024-08-07 10:12",Hybrid,,,"2024-08-07 09:00"
+BCSB1270,"Black or African American",Norris,Refused,"2024-08-07 15:02",In-Person,,,"2024-08-07 15:00"
+BCSB1271,Asian,,Enrolled,"2024-08-13 10:57",Remote,2024-08-07,"2024-08-13 10:45",
+BCSB1272,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-08-19 10:10",In-Person,,,"2024-08-19 09:00"
+BCSB1273,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-08-19 10:34",In-Person,,,"2024-08-19 09:30"
+BCSB1274,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-08-19 10:50",In-Person,,,"2024-08-19 09:30"
+BCSB1275,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2024-08-19 11:08",In-Person,,,"2024-08-19 10:00"
+BCSB1276,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-08-19 14:25",In-Person,,,"2024-08-19 13:00"
+BCSB1277,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-08-19 14:51",In-Person,,"2024-10-29 10:00","2024-08-19 13:00"
+BCSB1278,"Hispanic or Latinx","LAGMC (LAC+USC)","Unable to Contact","2024-08-19 16:15",In-Person,,,"2024-08-19 16:00"
+BCSB1279,"Hispanic or Latinx",Norris,"Defer (Study Staff only)","2024-08-21 11:42",In-Person,,,"2024-08-21 14:30"
+BCSB1280,"Hispanic or Latinx",Norris,Considering,"2024-08-22 11:34",In-Person,,,"2024-08-22 11:00"
+BCSB1281,"Hispanic or Latinx",Norris,"Unable to Contact","2024-08-22 13:56",In-Person,,,"2024-08-22 13:00"
+BCSB1282,"Hispanic or Latinx",Norris,Refused,"2024-08-22 14:09",In-Person,,,"2024-08-22 14:30"
+BCSB1283,"Hispanic or Latinx",Norris,"Unable to Contact","2024-08-22 11:10",In-Person,,,"2024-08-22 10:00"
+BCSB1284,Asian,Norris,"Unable to Contact","2024-08-22 15:35",In-Person,,,"2024-08-22 15:00"
+BCSB1285,"Hispanic or Latinx",,Ineligible,"2024-08-22 15:00",Remote,2024-08-18,,
+BCSB1286,"Hispanic or Latinx",Norris,Enrolled,"2024-08-23 10:10",Hybrid,,,"2024-08-23 09:40"
+BCSB1287,Asian,Norris,Enrolled,"2024-08-27 10:20",Hybrid,,,"2024-08-23 10:00"
+BCSB1288,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-08-26 09:52",In-Person,,"2024-09-13 09:00","2024-08-26 09:45"
+BCSB1289,Asian,"LAGMC (LAC+USC)",Considering,"2024-08-26 13:40",In-Person,,,"2024-08-26 13:00"
+BCSB1290,White,,"Defer (Study Staff only)","2024-08-27 11:50",Remote,2024-08-14,,
+BCSB1291,Asian,Norris,Refused,"2024-08-27 13:37",In-Person,,,"2024-08-27 13:45"
+BCSB1292,"Prefer not to answer",Norris,Refused,"2024-08-28 10:00",In-Person,,,"2024-08-28 08:00"
+BCSB1293,White,,Ineligible,"2024-08-28 11:05",Remote,2024-08-21,,
+BCSB1294,Asian,Norris,"Unable to Contact","2024-08-30 10:00",In-Person,,,"2024-08-30 10:00"
+BCSB1295,Asian,Norris,Considering,"2024-08-30 13:50",In-Person,,,"2024-08-30 13:30"
+BCSB1296,"Black or African American",Norris,Enrolled,"2024-09-04 10:16",Hybrid,,,"2024-09-04 10:30"
+BCSB1297,"Black or African American",Norris,Considering,"2024-09-04 13:00",In-Person,,,"2024-09-04 13:00"
+BCSB1298,"Hispanic or Latinx",Norris,Considering,"2024-09-05 10:27",In-Person,,,"2024-09-05 10:00"
+BCSB1299,"Hispanic or Latinx",Norris,Enrolled,"2024-09-06 10:26",Hybrid,,,"2024-09-06 10:00"
+BCSB1300,"Prefer not to answer",Norris,Refused,"2024-09-06 11:50",In-Person,,,"2024-09-06 10:45"
+BCSB1301,Asian,Norris,Enrolled,"2024-09-06 12:04",Hybrid,,,"2024-09-06 11:20"
+BCSB1302,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-09 09:14",In-Person,,,"2024-09-09 08:30"
+BCSB1303,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-09-09 09:49",In-Person,,,"2024-09-09 09:00"
+BCSB1304,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-09 13:30",In-Person,,"2024-09-17 11:00","2024-09-09 13:30"
+BCSB1305,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-09 14:23",In-Person,,"2024-09-10 14:00","2024-09-09 13:00"
+BCSB1306,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-09-09 15:05",In-Person,,,"2024-09-09 13:40"
+BCSB1307,"Prefer not to answer",Norris,Considering,"2024-09-10 10:10",Hybrid,,,"2024-09-10 09:40"
+BCSB1308,"Hispanic or Latinx",,Ineligible,"2024-09-10 12:30",Remote,,,
+BCSB1309,White,,"Defer (Study Staff only)","2024-09-10 10:00",Remote,2024-08-23,,
+BCSB1310,"Hispanic or Latinx",Norris,Enrolled,"2024-09-11 13:54",Hybrid,,,"2024-09-11 13:40"
+BCSB1311,White,Norris,"Defer (Study Staff only)","2024-09-11 15:05",In-Person,,,"2024-09-11 14:20"
+BCSB1312,"Prefer not to answer",Norris,Enrolled,"2024-09-12 09:38",Hybrid,,,"2024-09-12 09:00"
+BCSB1313,"Hispanic or Latinx",Norris,Enrolled,"2024-09-12 11:17",Remote,,,"2024-09-12 11:20"
+BCSB1314,Asian,Norris,Ineligible,"2024-09-12 13:42",In-Person,,,"2024-09-12 13:00"
+BCSB1315,"Prefer not to answer",Norris,Enrolled,"2024-09-12 16:09",Hybrid,,,"2024-09-12 16:00"
+BCSB1316,Asian,Norris,Refused,"2024-09-13 13:39",In-Person,,,"2024-09-13 13:30"
+BCSB1317,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-09-16 09:07",In-Person,,,"2024-09-16 08:00"
+BCSB1318,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-16 09:49",In-Person,,,"2024-09-16 08:30"
+BCSB1319,Asian,"LAGMC (LAC+USC)",Refused,"2024-09-16 10:31",In-Person,,,"2024-09-16 10:00"
+BCSB1320,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-16 10:46",In-Person,,"2024-09-24 09:00","2024-09-16 09:30"
+BCSB1321,"Hispanic or Latinx","LAGMC (LAC+USC)",Considering,"2024-09-16 13:27",In-Person,,,"2024-09-16 13:00"
+BCSB1322,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-09-16 13:34",In-Person,,,"2024-09-16 13:00"
+BCSB1323,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-16 14:02",Hybrid,,,"2024-09-16 13:00"
+BCSB1324,"Hispanic or Latinx","LAGMC (LAC+USC)",Refused,"2024-09-16 15:20",In-Person,,,"2024-09-16 14:30"
+BCSB1325,"Black or African American","LAGMC (LAC+USC)",Considering,"2024-09-16 16:00",In-Person,,,"2024-09-16 13:00"
+BCSB1326,"Hispanic or Latinx",Norris,"Unable to Contact","2024-09-18 14:19",In-Person,,,"2024-09-18 14:00"
+BCSB1327,"Hispanic or Latinx",Norris,"Unable to Contact","2024-09-19 11:03",In-Person,,,"2024-09-19 11:00"
+BCSB1328,"Black or African American",Norris,Enrolled,"2024-09-20 13:56",Hybrid,,,"2024-09-20 13:30"
+BCSB1329,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-23 10:30",In-Person,,"2024-09-25 10:00","2024-09-23 10:00"
+BCSB1330,"Hispanic or Latinx","LAGMC (LAC+USC)",Enrolled,"2024-09-23 13:49",In-Person,,,"2024-09-23 13:00"
+BCSB1331,Asian,,Enrolled,"2024-09-25 13:15",Remote,2024-09-23,,
+BCSB1332,Asian,Norris,Considering,"2024-09-25 14:35",Remote,,,"2024-09-25 14:30"
+BCSB1333,"Black or African American",,Enrolled,"2024-09-26 12:45",Remote,2024-09-05,,
+BCSB1334,White,,"Defer (Study Staff only)","2024-09-25 09:45",Remote,2024-09-21,,
+BCSB1335,White,,"Defer (Study Staff only)","2024-09-18 09:30",Remote,2024-03-11,,
+BCSB1336,"Prefer not to answer",,"Defer (Study Staff only)","2024-09-17 09:00",Remote,2024-09-06,,
+BCSB1337,White,,"Defer (Study Staff only)","2024-10-01 09:49",Remote,2024-09-27,,
+BCSB1338,"Prefer not to answer",,"Defer (Study Staff only)","2024-10-01 10:35",Remote,2024-09-04,,
+BCSB1339,"Black or African American",,Enrolled,"2024-10-09 12:40",Remote,2024-10-03,,
+BCSB1340,"Black or African American",,Enrolled,"2024-10-15 10:20",Remote,2024-10-04,,
+BCSB1341,"Prefer not to answer",,Enrolled,"2024-10-15 11:15",Remote,2024-09-05,,
+BCSB1342,White,,"Defer (Study Staff only)","2024-10-15 12:30",Remote,2024-10-05,,
+BCSB1343,White,,"Defer (Study Staff only)","2024-10-09 09:45",Remote,2024-10-04,,
+BCSB1344,White,,"Defer (Study Staff only)","2024-10-08 10:15",Remote,2024-10-02,,
+BCSB1345,White,,"Defer (Study Staff only)","2024-10-08 09:15",Remote,2024-10-03,,
+BCSB1346,"Black or African American",,Enrolled,"2024-10-16 13:30",Remote,2024-10-05,,
+BCSB1347,"Black or African American",,Enrolled,"2024-10-17 10:20",Remote,2024-10-05,,
+BCSB1348,"Black or African American",,Enrolled,"2024-10-17 12:30",Remote,2024-10-05,,
+BCSB1349,"Hispanic or Latinx",,Enrolled,"2024-10-22 10:15",Remote,2024-10-08,,
+BCSB1350,Asian,,Enrolled,"2024-10-22 11:30",Remote,2024-10-06,,
+BCSB1351,Asian,,Enrolled,"2024-10-29 10:20",Remote,2024-10-09,,
+BCSB1352,Asian,,Enrolled,"2024-10-31 14:00",Hybrid,2024-10-11,,
+BCSB1353,"Black or African American",,Ineligible,"2024-10-31 14:36",Remote,2024-10-11,,
+BCSB1354,"Hispanic or Latinx",,Enrolled,"2024-11-13 09:50",Remote,2024-09-03,,
+BCSB1355,"Black or African American",,Enrolled,"2024-11-13 11:55",Remote,2024-10-15,,
+BCSB1356,"Black or African American",,Enrolled,"2024-11-13 12:30",Remote,2024-10-12,,
+BCSB1357,"Hispanic or Latinx",,Enrolled,"2024-11-13 11:24",In-Person,2024-11-07,"2024-12-03 10:30",
+BCSB1358,Asian,,Enrolled,"2024-12-17 12:30",Remote,2024-10-15,,
+BCSB1359,White,,"Unable to Contact","2025-01-22 14:45",Remote,2024-11-19,,
+BCSB1360,"American Indian or Alaskan Native",,Enrolled,"2025-01-16 14:12",Remote,2024-11-17,,
+BCSB1361,White,,Ineligible,"2025-01-16 13:20",Remote,2024-10-30,,
+BCSB1362,"Black or African American",,Enrolled,"2025-01-16 12:30",Remote,2024-11-18,,
+BCSB1363,White,,Enrolled,"2025-01-16 10:00",Remote,2024-10-30,,
+BCSB1364,White,,Enrolled,"2025-01-15 12:58",Remote,2024-10-31,,
+BCSB1365,White,,Enrolled,"2025-01-22 12:07",Remote,2024-11-02,,
+BCSB1366,"Black or African American",,"Unable to Contact","2025-01-22 10:45",Remote,2024-11-01,,
+BCSB1367,"American Indian or Alaskan Native",,"Unable to Contact","2025-01-21 14:15",Remote,2024-11-19,,
+BCSB1368,"Black or African American",,Enrolled,"2025-01-21 14:15",Remote,2024-11-08,,
+BCSB1369,"Black or African American",,Enrolled,"2025-01-23 12:05",In-Person,2024-12-07,"2025-02-07 14:00",
+BCSB1370,White,,Enrolled,"2025-01-23 12:35",Remote,1970-03-18,,
+BCSB1371,White,,Enrolled,"2024-11-14 11:48",Remote,2024-11-08,,
+BCSB1372,White,,Enrolled,"2025-02-13 16:00",Hybrid,2024-11-01,,
+BCSB1373,White,,Considering,"2025-02-11 11:30",Remote,2024-10-23,,
+BCSB1374,"Native Hawaiian or Pacific Islander",,Refused,"2025-02-11 11:00",Remote,2024-10-31,,
+BCSB1375,"Black or African American",,Enrolled,"2025-02-18 17:21",Remote,2024-11-22,,
+BCSB1376,White,,Enrolled,"2025-01-14 14:15",Remote,2024-10-29,,
+BCSB1377,White,,Enrolled,"2024-11-07 10:35",Remote,2024-10-14,,
+BCSB1378,"Hispanic or Latinx",,"Unable to Contact","2025-03-04 11:30",Remote,2024-11-03,,
+BCSB1379,"Black or African American",,Enrolled,"2025-04-17 12:55",Remote,2024-10-18,,
+BCSB1380,White,,"Unable to Contact","2025-02-18 09:45",Remote,2024-10-22,,
+BCSB1381,White,,"Unable to Contact","2025-02-13 11:00",Remote,2024-11-05,,
+BCSB1382,White,,Enrolled,"2025-06-03 13:50",Remote,2025-05-31,,
+BCSB1383,White,,Enrolled,"2025-06-17 10:45",Remote,2025-06-15,,
+BCSB1384,"Hispanic or Latinx",,Enrolled,"2025-06-18 12:50",Remote,2025-06-15,,
+BCSB1385,"Black or African American",,Enrolled,"2025-06-18 13:54",Remote,2025-06-16,,
+BCSB1386,"Hispanic or Latinx",,Enrolled,"2025-06-18 14:20",Remote,2025-06-17,,
+BCSB1387,"Hispanic or Latinx",,Enrolled,"2025-06-24 11:30",Remote,2025-06-23,,
+BCSB1388,"Black or African American",,Enrolled,"2025-06-24 15:21",Remote,2025-06-24,,
+BCSB1389,"Black or African American",,"Unable to Contact","2025-06-19 09:30",Remote,2025-06-16,,
+BCSB1390,"Black or African American",,"Unable to Contact","2025-06-19 14:45",Remote,2025-06-15,,
+BCSB1391,"Hispanic or Latinx",,Enrolled,"2025-06-25 16:30",Remote,2025-06-24,,
+BCSB1392,"Native Hawaiian or Pacific Islander",,"Unable to Contact","2025-06-26 14:00",Remote,2025-06-26,,
+BCSB1393,"Black or African American",,Enrolled,"2025-06-26 14:30",Remote,2025-06-19,,
+BCSB1394,"Hispanic or Latinx",,Enrolled,"2025-06-26 15:17",Remote,2025-06-20,,
+BCSB1395,"Hispanic or Latinx",,Enrolled,"2025-07-01 09:45",Remote,2025-06-27,,
+BCSB1396,"Hispanic or Latinx",,Considering,"2025-07-17 15:21",Remote,2025-06-26,,
+BCSB1397,White,,Enrolled,"2025-07-01 12:00",Remote,2025-06-28,,
+BCSB1398,White,,"Unable to Contact","2025-07-08 12:30",Remote,2025-07-06,,
+BCSB1399,"Hispanic or Latinx",,Enrolled,"2025-07-10 14:31",Remote,2025-07-10,,
+BCSB1400,Asian,,Ineligible,"2025-07-10 11:15",Remote,2025-07-03,,
+BCSB1401,"Hispanic or Latinx",,Enrolled,"2025-07-10 12:00",In-Person,2025-07-07,,
+BCSB1402,"American Indian or Alaskan Native",,Ineligible,"2025-07-15 13:42",Remote,2025-07-08,,
+BCSB1403,"Black or African American",,Enrolled,"2025-07-23 14:01",Remote,2025-07-08,,
+BCSB1404,Asian,,Refused,"2025-07-02 11:22",Remote,2025-06-29,,
+BCSB1405,Asian,,Ineligible,"2025-06-25 11:15",Remote,2025-06-24,,
+BCSB1406,"Black or African American",,"Unable to Contact","2025-02-04 10:15",Remote,2024-10-25,,
+BCSB1407,"Black or African American",,"Unable to Contact","2025-02-04 09:30",Remote,2024-10-26,,
+BCSB1408,"Hispanic or Latinx",,"Unable to Contact","2025-01-30 15:30",Remote,2024-10-29,,
+BCSB1409,White,,"Unable to Contact","2025-01-30 11:15",Remote,2024-10-25,,
+BCSB1410,White,,"Unable to Contact","2025-01-30 10:30",Remote,2024-10-12,,
+BCSB1411,"Hispanic or Latinx",,Considering,"2025-01-29 15:30",Remote,2024-11-04,,
+BCSB1412,"Hispanic or Latinx",,Ineligible,"2025-01-29 11:05",Remote,2024-10-26,,
+BCSB1413,White,,Enrolled,"2025-01-29 10:15",Remote,2024-10-25,,
+BCSB1414,White,,Considering,"2025-01-29 11:00",Remote,2024-11-03,,
+BCSB1415,"Black or African American",,"Unable to Contact","2025-01-28 13:15",Remote,2024-11-02,,
+BCSB1416,White,,"Unable to Contact","2025-01-28 10:15",Remote,2025-10-24,,
+BCSB1417,"Hispanic or Latinx",,Ineligible,"2025-01-28 09:45",Remote,2024-11-12,,
+BCSB1418,"Prefer not to answer",,Ineligible,"2025-01-23 15:15",Remote,2024-12-23,,
+BCSB1419,"Black or African American",,"Unable to Contact","2025-01-22 10:30",Remote,2024-11-01,,
+BCSB1420,"Hispanic or Latinx",,"Unable to Contact","2025-01-21 11:30",Remote,2024-11-02,,
+BCSB1421,White,,Considering,"2025-01-21 10:00",Remote,2025-11-01,,
+BCSB1422,"Black or African American",,"Unable to Contact","2025-07-15 10:30",Remote,2025-06-29,,
+BCSB1423,"Hispanic or Latinx",,Ineligible,"2025-07-15 11:29",Remote,2025-07-05,,
+BCSB1424,"American Indian or Alaskan Native",,"Unable to Contact","2025-07-16 14:15",Remote,2025-07-06,,
+BCSB1425,"Hispanic or Latinx",,Ineligible,"2025-07-16 14:45",Remote,2025-07-10,,
+BCSB1426,"Black or African American",,Enrolled,"2025-07-16 15:30",Remote,2025-07-12,,
+BCSB1427,White,,Enrolled,"2025-07-17 15:37",Remote,2025-07-13,,
+BCSB1428,"American Indian or Alaskan Native",,Ineligible,"2025-07-22 09:45",Remote,2025-07-16,,
+BCSB1429,"Black or African American",,Enrolled,"2025-07-22 11:35",Remote,2025-07-14,,
+BCSB1430,"Hispanic or Latinx",,"Unable to Contact","2025-07-22 12:15",Remote,2025-07-13,,
+BCSB1431,"Black or African American",,"Unable to Contact","2025-07-24 09:30",Remote,2025-07-12,,
+BCSB1432,White,,Enrolled,"2025-07-29 13:55",Remote,2025-07-24,,
+BCSB1433,White,,Enrolled,"2025-07-29 14:30",Remote,2025-07-25,,
+BCSB1434,"Hispanic or Latinx",,"Unable to Contact","2025-07-29 14:45",Remote,2025-07-28,,
+BCSB1435,"Black or African American",,Enrolled,"2025-07-30 11:15",Remote,2025-07-29,,
+BCSB1436,"Black or African American",,Enrolled,"2025-07-30 15:45",In-Person,2025-07-19,,
+BCSB1437,White,,Enrolled,"2025-07-31 10:10",Remote,2025-07-27,,
+BCSB1438,"Black or African American",,"Unable to Contact","2025-08-05 15:30",Remote,2025-07-31,,
+BCSB1439,"Black or African American",,"Unable to Contact","2025-08-07 14:15",Remote,2025-07-31,,
+BCSB1440,"Hispanic or Latinx",,Enrolled,"2025-08-07 14:44",Hybrid,2025-08-05,,
+BCSB1441,"Hispanic or Latinx",,Considering,"2025-08-07 15:18",Remote,2025-07-31,,
+BCSB1442,"Hispanic or Latinx",,Considering,"2025-08-12 09:50",Remote,2025-08-01,,
+BCSB1443,White,,Enrolled,"2025-08-13 11:51",Remote,2025-08-08,,
+BCSB1444,"Black or African American",,"Unable to Contact","2025-08-14 10:15",Remote,2025-08-10,,
+BCSB1445,"Black or African American",,Ineligible,"2025-08-14 13:45",Remote,2025-08-05,,
+BCSB1446,"American Indian or Alaskan Native",,Enrolled,"2025-08-19 11:20",Remote,2025-08-07,,
+BCSB1447,"Hispanic or Latinx",,"Unable to Contact","2025-08-19 14:30",Remote,2025-08-12,,
+BCSB1448,"Hispanic or Latinx",,Enrolled,"2025-08-20 10:00",Remote,2025-08-19,,
+BCSB1449,"Prefer not to answer",,Ineligible,"2025-08-20 11:30",Remote,2025-07-31,,

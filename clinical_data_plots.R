@@ -3,6 +3,48 @@ library(tidyverse)
 library(ggrepel)
 source("theme_DB.R")
 source("str_list.R")
+getEarliestConsentDate <- function(dx_str){
+  cd <- read.csv(paste0( dx_str))
+  cd[cd == ""] <- NA
+  # Process cd (file_df)
+  na_rows <- cd %>% filter(is.na(dateconsentsignedbypt) & 
+                             is.na(dateconsentsignedbypt_v2) & 
+                             is.na(dateconsentsignedbypt_v2_v3) & 
+                             is.na(dateconsentsignedbypt_v4) & 
+                             is.na(dateconsentsignedbypt_v2sp) & 
+                             is.na(dateconsentsignedbypt_ch_v1) & 
+                             is.na(dateconsentsignedbypt_ko_v1) &
+                             is.na(dtconsentsignedbypt_sp_v2)& 
+                             is.na(dateconsentsignedbypt_v5) & 
+                             is.na(dateconsentsignedbypt_v2sp_v3) & 
+                             is.na(dateconsentsignedbypt_ch_v1_v2) &
+                             is.na(dateconsentsignedbypt_ko_v1_v2))
+  df.DxDa <- cd %>%
+    mutate(
+      dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
+      dateconsentsignedbypt_v2 = as.Date(dateconsentsignedbypt_v2),
+      dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
+      dateconsentsignedbypt_v4 = as.Date(dateconsentsignedbypt_v4),
+      dateconsentsignedbypt_v5 = as.Date(dateconsentsignedbypt_v5),
+      dateconsentsignedbypt_v2sp_v3 = as.Date(dateconsentsignedbypt_v2sp_v3),
+      dateconsentsignedbypt_ch_v1_v2 = as.Date(dateconsentsignedbypt_ch_v1_v2),
+      dateconsentsignedbypt_ko_v1_v2 = as.Date(dateconsentsignedbypt_ko_v1_v2),
+      dateconsentsignedbypt_v2sp = as.Date(dateconsentsignedbypt_v2sp),
+      dateconsentsignedbypt_ch_v1 = as.Date(dateconsentsignedbypt_ch_v1),
+      dateconsentsignedbypt_ko_v1 = as.Date(dateconsentsignedbypt_ko_v1),
+      dtconsentsignedbypt_sp_v2 = as.Date(dtconsentsignedbypt_sp_v2),
+      EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, 
+                                 dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,
+                                 dateconsentsignedbypt_v2sp,dtconsentsignedbypt_sp_v2,
+                                 dateconsentsignedbypt_ch_v1, dateconsentsignedbypt_ko_v1,
+                                 na.rm = TRUE),
+      breastcancerdiagdate = as.Date(breastcancerdiagdate)
+    ) %>%
+    filter(!is.na(EarliestConsentDate))
+  return(df.DxDa)
+  
+}
+
 source("collectionTimeStats.R")
 .dir <- "~/Documents/" 
 
@@ -267,48 +309,6 @@ getClinPie <- function(clind) {
 
 
 
-
-getEarliestConsentDate <- function(dx_str){
-  cd <- read.csv(paste0( dx_str))
-  cd[cd == ""] <- NA
-  # Process cd (file_df)
-  na_rows <- cd %>% filter(is.na(dateconsentsignedbypt) & 
-                             is.na(dateconsentsignedbypt_v2) & 
-                             is.na(dateconsentsignedbypt_v2_v3) & 
-                             is.na(dateconsentsignedbypt_v4) & 
-                             is.na(dateconsentsignedbypt_v2sp) & 
-                             is.na(dateconsentsignedbypt_ch_v1) & 
-                             is.na(dateconsentsignedbypt_ko_v1) &
-                             is.na(dtconsentsignedbypt_sp_v2)& 
-                             is.na(dateconsentsignedbypt_v5) & 
-                             is.na(dateconsentsignedbypt_v2sp_v3) & 
-                             is.na(dateconsentsignedbypt_ch_v1_v2) &
-                             is.na(dateconsentsignedbypt_ko_v1_v2))
-  df.DxDa <- cd %>%
-    mutate(
-      dateconsentsignedbypt = as.Date(dateconsentsignedbypt),
-      dateconsentsignedbypt_v2 = as.Date(dateconsentsignedbypt_v2),
-      dateconsentsignedbypt_v2_v3 = as.Date(dateconsentsignedbypt_v2_v3),
-      dateconsentsignedbypt_v4 = as.Date(dateconsentsignedbypt_v4),
-      dateconsentsignedbypt_v5 = as.Date(dateconsentsignedbypt_v5),
-      dateconsentsignedbypt_v2sp_v3 = as.Date(dateconsentsignedbypt_v2sp_v3),
-      dateconsentsignedbypt_ch_v1_v2 = as.Date(dateconsentsignedbypt_ch_v1_v2),
-      dateconsentsignedbypt_ko_v1_v2 = as.Date(dateconsentsignedbypt_ko_v1_v2),
-      dateconsentsignedbypt_v2sp = as.Date(dateconsentsignedbypt_v2sp),
-      dateconsentsignedbypt_ch_v1 = as.Date(dateconsentsignedbypt_ch_v1),
-      dateconsentsignedbypt_ko_v1 = as.Date(dateconsentsignedbypt_ko_v1),
-      dtconsentsignedbypt_sp_v2 = as.Date(dtconsentsignedbypt_sp_v2),
-      EarliestConsentDate = pmin(dateconsentsignedbypt, dateconsentsignedbypt_v2, 
-                                 dateconsentsignedbypt_v2_v3, dateconsentsignedbypt_v4,
-                                 dateconsentsignedbypt_v2sp,dtconsentsignedbypt_sp_v2,
-                                 dateconsentsignedbypt_ch_v1, dateconsentsignedbypt_ko_v1,
-                                 na.rm = TRUE),
-      breastcancerdiagdate = as.Date(breastcancerdiagdate)
-    ) %>%
-    filter(!is.na(EarliestConsentDate))
-  return(df.DxDa)
-  
-}
 #Diag <- getEarliestConsentDate(dx_str)
 
 DF <- getDF(merged_full)
